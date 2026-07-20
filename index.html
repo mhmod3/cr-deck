@@ -483,7 +483,6 @@
             <div class="discord">Discord: _.m6</div>
             <div class="github-link">
                 <a href="https://github.com/mhmod3" target="_blank">https://github.com/mhmod3</a>
-            <div class="AI">‫*للشفافية: تم انشاء هذه الموقع بشكل كامل مع Ai (اتوقع ان هذه الشيء واضح من تصميم الموقع)‬</div>
             </div>
         </div>
     </div>
@@ -574,8 +573,8 @@
                 }
 
                 generateBtn.disabled = true;
-                // ===== الحل: استخدام وسيط آمن (HTTPS) لتجاوز مشكلة Mixed Content =====
-                const proxyUrl = 'https://api.allorigins.win/raw?url=http://78.154.103.28:12820/cards';
+                // ===== استخدام بروكسي أسرع وأكثر استقراراً =====
+                const proxyUrl = 'https://api.codetabs.com/v1/proxy?quest=http://78.154.103.28:12820/cards';
                 fetch(proxyUrl)
                     .then(response => {
                         if (!response.ok) throw new Error('Network response not ok');
