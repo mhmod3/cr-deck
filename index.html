@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>منشئ التشكيلات</title>
+    <style>
+        /* ===== الخط ===== */
+        @font-face {
+            font-family: 'Adobe Arabic';
+            src: url('https://raw.githubusercontent.com/mhmod3/Sub-RTL-Fix/refs/heads/main/22016-adobearabic.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* ===== إعادة ضبط ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Adobe Arabic', 'Segoe UI', system-ui, sans-serif;
+            background: #1e1e1e;
+            color: #d0d0d0;
+            padding: 1.5rem 0.75rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            line-height: 1.8;
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+            direction: rtl;
+            unicode-bidi: embed;
+        }
+
+        .container {
+            max-width: 1300px;
+            width: 100%;
+            direction: rtl;
+            unicode-bidi: embed;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 3.6rem);
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            text-align: center;
+            color: #dcdcdc;
+            letter-spacing: 0.5px;
+        }
+
+        .sub {
+            color: #999;
+            font-size: clamp(1.2rem, 1.6vw, 1.6rem);
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.9rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            line-height: 2;
+        }
+
+        /* ===== شريط الأدوات ===== */
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem 1.8rem;
+            margin-bottom: 2rem;
+            padding: 1.2rem 1rem;
+            background: #1e1e1e;
+            border-radius: 14px;
+            border: 1px solid #333;
+        }
+
+        .toolbar .btn {
+            border: 1px solid #444;
+            background: #2a2a2a;
+            color: #c0c0c0;
+            padding: 0.8rem 2.2rem;
+            font-size: clamp(1.3rem, 1.6vw, 1.6rem);
+            cursor: pointer;
+            border-radius: 10px;
+            font-family: inherit;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+            min-width: 160px;
+        }
+
+        .toolbar .btn:hover:not(:disabled) {
+            background: #3a3a3a;
+            border-color: #555;
+            transform: scale(1.03);
+        }
+
+        .toolbar .btn:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .toolbar .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .toolbar .btn-primary {
+            background: #2a3a4a;
+            color: #c8d8e0;
+            border-color: #3a4a5a;
+        }
+
+        .toolbar .btn-primary:hover:not(:disabled) {
+            background: #1a3a4a;
+            border-color: #4a5a6a;
+        }
+
+        .toolbar .btn-copy {
+            background: #1a3a2a;
+            color: #b0d0b0;
+            border-color: #2a4a3a;
+        }
+
+        .toolbar .btn-copy:hover:not(:disabled) {
+            background: #1a4a2a;
+            border-color: #3a5a4a;
+        }
+
+        .toolbar .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: clamp(1.1rem, 1.3vw, 1.3rem);
+            color: #bbb;
+            cursor: pointer;
+        }
+
+        .toolbar .checkbox-group input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            accent-color: #4a6a8a;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        /* ===== رسالة الخطأ ===== */
+        .error-msg {
+            text-align: center;
+            color: #d07a7a;
+            font-size: clamp(1.1rem, 1.3vw, 1.3rem);
+            margin: 0.5rem 0 1.2rem;
+            padding: 0.8rem 1.5rem;
+            background: #3a1a1a;
+            border: 1px solid #5a2a2a;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .error-msg.visible {
+            display: block;
+        }
+
+        .error-msg .retry-btn {
+            background: transparent;
+            border: 1px solid #5a3a3a;
+            color: #d0a0a0;
+            padding: 0.2rem 1.2rem;
+            font-size: clamp(0.9rem, 1vw, 1rem);
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: inherit;
+            margin-right: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .error-msg .retry-btn:hover {
+            background: #2a1a1a;
+        }
+
+        /* ===== حاوية البطاقات ===== */
+        .deck-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            padding: 2.5rem 1rem;
+            min-height: 300px;
+            background: #1e1e1e;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .deck-container .placeholder {
+            width: 100%;
+            text-align: center;
+            color: #666;
+            font-size: clamp(1.4rem, 1.8vw, 1.8rem);
+            padding: 3rem 0;
+            user-select: none;
+        }
+
+        /* ===== البطاقة ===== */
+        .card-slot {
+            width: 170px; /* أكبر بكثير */
+            text-align: center;
+            background: #1e1e1e;
+            border: 2px solid #333;
+            border-radius: 18px;
+            padding: 0.9rem 0.3rem 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            position: relative;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .card-slot:hover {
+            transform: translateY(-6px);
+            border-color: #4a6a8a;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        /* إطار أصفر للأنميشن */
+        .card-slot .glow-frame {
+            position: absolute;
+            inset: -5px;
+            border-radius: 22px;
+            border: 5px solid transparent;
+            pointer-events: none;
+            transition: border-color 0.1s;
+            z-index: 10;
+        }
+
+        .card-slot .glow-frame.active {
+            border-color: #ffd700;
+            box-shadow: 0 0 20px #ffd70088, 0 0 40px #ffd70044;
+            animation: pulseGlow 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px #ffd70066, 0 0 20px #ffd70033; }
+            100% { box-shadow: 0 0 30px #ffd700cc, 0 0 60px #ffd70066; }
+        }
+
+        .card-slot img {
+            width: 120px;  /* حجم الصورة كبير */
+            height: 120px;
+            object-fit: contain;
+            display: block;
+            background: #1e1e1e;
+            border-radius: 12px;
+            border: 2px solid #2a2a2a;
+            transition: border-color 0.2s;
+            position: relative;
+            z-index: 5;
+            padding: 6px;
+        }
+
+        .card-slot:hover img {
+            border-color: #4a6a8a;
+        }
+
+        .card-slot .card-name {
+            font-size: clamp(1.1rem, 1.3vw, 1.4rem); /* خط كبير */
+            line-height: 1.6;
+            color: #e0e0e0;
+            max-width: 150px;
+            word-break: break-word;
+            font-weight: 400;
+            position: relative;
+            z-index: 5;
+            min-height: 3.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+            padding: 0 2px;
+        }
+
+        .card-slot .slot-index {
+            font-size: 1rem; /* حجم الرقم كبير وواضح */
+            font-weight: 500;
+            color: #aaa;
+            margin-top: 0.2rem;
+            position: relative;
+            z-index: 5;
+            background: #1e1e1e;
+            padding: 0 10px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            line-height: 1.8;
+        }
+
+        /* ===== استجابة للشاشات الصغيرة ===== */
+        @media (max-width: 700px) {
+            .container {
+                padding: 0 0.3rem;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.8rem;
+                padding: 1rem 0.8rem;
+            }
+
+            .toolbar .btn {
+                width: 100%;
+                min-width: unset;
+                padding: 0.8rem;
+                font-size: clamp(1.1rem, 1.5vw, 1.2rem);
+            }
+
+            .toolbar .checkbox-group {
+                justify-content: center;
+                font-size: clamp(1rem, 1.2vw, 1.1rem);
+            }
+
+            .card-slot {
+                width: 130px;
+                padding: 0.6rem 0.2rem 0.6rem;
+            }
+
+            .card-slot img {
+                width: 90px;
+                height: 90px;
+            }
+
+            .card-slot .card-name {
+                font-size: clamp(0.9rem, 1.1vw, 1rem);
+                max-width: 110px;
+                min-height: 2.6rem;
+            }
+
+            .card-slot .slot-index {
+                font-size: 0.85rem;
+            }
+
+            .deck-container {
+                gap: 1rem;
+                padding: 1.5rem 0.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-slot {
+                width: 100px;
+            }
+            .card-slot img {
+                width: 70px;
+                height: 70px;
+            }
+            .card-slot .card-name {
+                font-size: clamp(0.7rem, 0.9vw, 0.8rem);
+                max-width: 85px;
+                min-height: 2.2rem;
+            }
+            .card-slot .slot-index {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* ===== أنميشن ظهور البطاقات ===== */
+        @keyframes cardPopIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .card-slot {
+            animation: cardPopIn 0.5s ease both;
+        }
+
+        .card-slot:nth-child(1) { animation-delay: 0.02s; }
+        .card-slot:nth-child(2) { animation-delay: 0.06s; }
+        .card-slot:nth-child(3) { animation-delay: 0.10s; }
+        .card-slot:nth-child(4) { animation-delay: 0.14s; }
+        .card-slot:nth-child(5) { animation-delay: 0.18s; }
+        .card-slot:nth-child(6) { animation-delay: 0.22s; }
+        .card-slot:nth-child(7) { animation-delay: 0.26s; }
+        .card-slot:nth-child(8) { animation-delay: 0.30s; }
+        .card-slot:nth-child(9) { animation-delay: 0.34s; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>منشئ التشكيلات</h1>
+        <div class="sub">
+            <span>أنشئ تشكيلة عشوائية من البطاقات</span>
+        </div>
+
+        <div class="toolbar">
+            <button class="btn btn-primary" id="generateBtn">إنشاء تشكيلة</button>
+            <button class="btn btn-copy" id="copyBtn" disabled>نسخ التشكيلة</button>
+            <label class="checkbox-group">
+                <input type="checkbox" id="randomIconsCheck" />
+                أيقونات عشوائية
+            </label>
+            <label class="checkbox-group">
+                <input type="checkbox" id="forceSpellsCheck" />
+                إجباري التعويذات
+            </label>
+        </div>
+
+        <div id="errorMsg" class="error-msg"></div>
+
+        <div id="deckContainer" class="deck-container">
+            <div class="placeholder">اضغط على الزر لإنشاء تشكيلة</div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            "use strict";
+
+            const generateBtn = document.getElementById('generateBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const randomIconsCheck = document.getElementById('randomIconsCheck');
+            const forceSpellsCheck = document.getElementById('forceSpellsCheck');
+            const deckContainer = document.getElementById('deckContainer');
+            const errorMsg = document.getElementById('errorMsg');
+
+            let allCards = [];
+            let supportCards = [];
+            let spells = [];
+            let dataLoaded = false;
+            let isGenerating = false;
+            let lastDeckIds = null;
+            const STORAGE_KEY = 'cardsData';
+            const preloadedImages = new Map();
+
+            const SPELL_IDS = new Set([
+                28000000, 28000001, 28000002, 28000003, 28000004, 28000005,
+                28000006, 28000007, 28000008, 28000009, 28000010, 28000011,
+                28000012, 28000013, 28000014, 28000015, 28000017, 28000018,
+                28000023, 28000024, 28000026
+            ]);
+
+            function shuffleArray(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function processCard(card) {
+                const iconUrls = card.iconUrls || {};
+                const hasHero = iconUrls.hasOwnProperty('heroMedium');
+                const hasEvolution = iconUrls.hasOwnProperty('evolutionMedium');
+                const availableIcons = ['medium'];
+                if (hasHero) availableIcons.push('heroMedium');
+                if (hasEvolution) availableIcons.push('evolutionMedium');
+                return {
+                    ...card,
+                    hasHero,
+                    hasEvolution,
+                    availableIcons,
+                    champion: (card.rarity === 'champion'),
+                    isSpell: SPELL_IDS.has(card.id)
+                };
+            }
+
+            function preloadCardImages(cards) {
+                cards.forEach(card => {
+                    const urls = Object.values(card.iconUrls || {});
+                    urls.forEach(url => {
+                        if (!preloadedImages.has(url) && url) {
+                            const img = new Image();
+                            img.src = url;
+                            preloadedImages.set(url, img);
+                        }
+                    });
+                });
+            }
+
+            function loadData() {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    try {
+                        const parsed = JSON.parse(stored);
+                        if (parsed && Array.isArray(parsed.items) && parsed.items.length > 0 &&
+                            Array.isArray(parsed.supportItems) && parsed.supportItems.length > 0) {
+                            const processed = parsed.items.map(c => processCard(c));
+                            allCards = processed.filter(c => !c.isSpell);
+                            spells = processed.filter(c => c.isSpell);
+                            supportCards = parsed.supportItems.slice();
+                            preloadCardImages(processed);
+                            preloadCardImages(parsed.supportItems);
+                            dataLoaded = true;
+                            generateBtn.disabled = false;
+                            return true;
+                        }
+                    } catch (_) { /* ignore */ }
+                }
+
+                generateBtn.disabled = true;
+                fetch('http://78.154.103.28:12820/cards')
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response not ok');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data && Array.isArray(data.items) && data.items.length > 0 &&
+                            Array.isArray(data.supportItems) && data.supportItems.length > 0) {
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                                items: data.items,
+                                supportItems: data.supportItems
+                            }));
+                            const processed = data.items.map(c => processCard(c));
+                            allCards = processed.filter(c => !c.isSpell);
+                            spells = processed.filter(c => c.isSpell);
+                            supportCards = data.supportItems.slice();
+                            preloadCardImages(processed);
+                            preloadCardImages(data.supportItems);
+                            dataLoaded = true;
+                            generateBtn.disabled = false;
+                            hideError();
+                        } else {
+                            throw new Error('Invalid data structure');
+                        }
+                    })
+                    .catch(err => {
+                        console.warn('Fetch error:', err);
+                        showError('تعذر تحميل بيانات البطاقات. تأكد من اتصالك وحاول مجدداً.', true);
+                        generateBtn.disabled = true;
+                    });
+                return false;
+            }
+
+            function showError(msg, withRetry = false) {
+                errorMsg.textContent = msg;
+                errorMsg.classList.add('visible');
+                if (withRetry) {
+                    const retryBtn = document.createElement('button');
+                    retryBtn.textContent = 'إعادة المحاولة';
+                    retryBtn.className = 'retry-btn';
+                    retryBtn.onclick = function(e) {
+                        e.stopPropagation();
+                        errorMsg.classList.remove('visible');
+                        loadData();
+                    };
+                    errorMsg.appendChild(document.createTextNode(' '));
+                    errorMsg.appendChild(retryBtn);
+                } else {
+                    const oldBtn = errorMsg.querySelector('.retry-btn');
+                    if (oldBtn) oldBtn.remove();
+                }
+            }
+
+            function hideError() {
+                errorMsg.classList.remove('visible');
+                const oldBtn = errorMsg.querySelector('.retry-btn');
+                if (oldBtn) oldBtn.remove();
+            }
+
+            function pickEightCards(forceSpells) {
+                let pool = allCards.slice();
+                let shuffled = shuffleArray(pool);
+                let selected = shuffled.slice(0, 8);
+                let championCount = selected.filter(c => c.champion).length;
+
+                if (championCount <= 2) return selected;
+
+                for (let rep = 0; rep < 3; rep++) {
+                    if (championCount <= 2) break;
+                    const champIndices = [];
+                    selected.forEach((c, idx) => { if (c.champion) champIndices.push(idx); });
+                    if (champIndices.length === 0) break;
+                    const idxToReplace = champIndices[Math.floor(Math.random() * champIndices.length)];
+                    const candidates = pool.filter(c => !c.champion && !selected.includes(c));
+                    if (candidates.length === 0) break;
+                    const replacement = candidates[Math.floor(Math.random() * candidates.length)];
+                    selected[idxToReplace] = replacement;
+                    championCount = selected.filter(c => c.champion).length;
+                }
+
+                if (championCount <= 2) return selected;
+                return null;
+            }
+
+            function orderSlots(initialSelection, supportCard, useRandomIcons) {
+                let pool = initialSelection.map(item => ({
+                    ...item,
+                    currentIcon: item.selectedIcon,
+                    currentUrl: item.iconUrl
+                }));
+
+                function setIcon(item, iconName) {
+                    item.currentIcon = iconName;
+                    const cardData = item.cardData;
+                    if (cardData.iconUrls && cardData.iconUrls[iconName]) {
+                        item.currentUrl = cardData.iconUrls[iconName];
+                    } else {
+                        item.currentUrl = cardData.iconUrls && cardData.iconUrls.medium ? cardData.iconUrls.medium : '';
+                    }
+                }
+
+                function extractCard(criteria, iconToSetIfFound) {
+                    for (let i = 0; i < pool.length; i++) {
+                        const item = pool[i];
+                        if (criteria(item)) {
+                            const removed = pool.splice(i, 1)[0];
+                            if (iconToSetIfFound !== null) {
+                                setIcon(removed, iconToSetIfFound);
+                            }
+                            return removed;
+                        }
+                    }
+                    return null;
+                }
+
+                const deck = [];
+
+                if (!useRandomIcons) {
+                    const champions = [];
+                    const normal = [];
+                    const special = [];
+                    pool.forEach(item => {
+                        if (item.isChampion) {
+                            champions.push(item);
+                        } else if (!item.hasHero && !item.hasEvolution) {
+                            normal.push(item);
+                        } else {
+                            special.push(item);
+                        }
+                    });
+
+                    shuffleArray(normal);
+                    shuffleArray(special);
+                    shuffleArray(champions);
+
+                    let slot0 = null;
+                    if (normal.length > 0) {
+                        slot0 = normal.splice(0, 1)[0];
+                    } else if (special.length > 0) {
+                        slot0 = special.splice(0, 1)[0];
+                    } else {
+                        slot0 = champions.splice(0, 1)[0];
+                    }
+                    setIcon(slot0, 'medium');
+                    deck.push(slot0);
+
+                    let slot1 = null;
+                    if (champions.length > 0) {
+                        slot1 = champions.splice(0, 1)[0];
+                    } else if (normal.length > 0) {
+                        slot1 = normal.splice(0, 1)[0];
+                    } else if (special.length > 0) {
+                        slot1 = special.splice(0, 1)[0];
+                    } else {
+                        slot1 = { ...initialSelection[0] };
+                    }
+                    setIcon(slot1, 'medium');
+                    deck.push(slot1);
+
+                    let slot2 = null;
+                    if (champions.length > 0) {
+                        slot2 = champions.splice(0, 1)[0];
+                    } else if (normal.length > 0) {
+                        slot2 = normal.splice(0, 1)[0];
+                    } else if (special.length > 0) {
+                        slot2 = special.splice(0, 1)[0];
+                    } else {
+                        slot2 = { ...initialSelection[0] };
+                    }
+                    setIcon(slot2, 'medium');
+                    deck.push(slot2);
+
+                    const remaining = normal.concat(special, champions);
+                    shuffleArray(remaining);
+                    while (remaining.length > 0) {
+                        const item = remaining.splice(0, 1)[0];
+                        setIcon(item, 'medium');
+                        deck.push(item);
+                    }
+
+                    while (deck.length < 8) {
+                        const dummy = { ...initialSelection[0] };
+                        setIcon(dummy, 'medium');
+                        deck.push(dummy);
+                    }
+
+                    const supportObj = {
+                        cardData: supportCard,
+                        selectedIcon: 'medium',
+                        currentIcon: 'medium',
+                        isChampion: false,
+                        hasHero: false,
+                        hasEvolution: false,
+                        currentUrl: (supportCard.iconUrls && supportCard.iconUrls.medium) ? supportCard.iconUrls.medium :
+                        ''
+                    };
+                    deck.push(supportObj);
+
+                    return deck.map(item => ({
+                        cardData: item.cardData,
+                        selectedIcon: item.currentIcon,
+                        isChampion: item.isChampion || false,
+                        hasHero: item.hasHero || false,
+                        hasEvolution: item.hasEvolution || false,
+                        iconUrl: item.currentUrl || ''
+                    }));
+                }
+
+                // ---- الوضع العشوائي ----
+                let slot0 = null;
+                slot0 = extractCard(item => item.currentIcon === 'evolutionMedium', null);
+                if (!slot0) {
+                    slot0 = extractCard(item => !item.hasEvolution, 'medium');
+                }
+                if (!slot0) {
+                    slot0 = extractCard(item => !item.isChampion, 'medium');
+                }
+                if (!slot0) {
+                    return null;
+                }
+                deck.push(slot0);
+
+                let slot1 = null;
+                slot1 = extractCard(item => item.currentIcon === 'heroMedium', null);
+                if (!slot1) {
+                    slot1 = extractCard(item => item.isChampion, 'medium');
+                }
+                if (!slot1) {
+                    slot1 = extractCard(item => item.currentIcon === 'evolutionMedium', 'medium');
+                }
+                if (!slot1) {
+                    slot1 = extractCard(() => true, 'medium');
+                }
+                deck.push(slot1);
+
+                let slot2 = null;
+                slot2 = extractCard(item => item.currentIcon === 'heroMedium', null);
+                if (!slot2) {
+                    slot2 = extractCard(item => item.currentIcon === 'evolutionMedium', null);
+                }
+                if (!slot2) {
+                    slot2 = extractCard(item => item.isChampion, 'medium');
+                }
+                if (!slot2) {
+                    slot2 = extractCard(() => true, 'medium');
+                }
+                deck.push(slot2);
+
+                let championInPool = null;
+                let championIndex = -1;
+                for (let i = 0; i < pool.length; i++) {
+                    if (pool[i].isChampion) {
+                        championInPool = pool[i];
+                        championIndex = i;
+                        break;
+                    }
+                }
+
+                if (championInPool) {
+                    let targetSlotIndex = -1;
+                    const preference = [1, 2];
+                    for (const idx of preference) {
+                        const slot = deck[idx];
+                        if (!slot.isChampion && !slot.hasHero && !slot.hasEvolution && slot.currentIcon === 'medium') {
+                            targetSlotIndex = idx;
+                            break;
+                        }
+                    }
+                    if (targetSlotIndex === -1) {
+                        return null;
+                    }
+                    const replacedCard = deck[targetSlotIndex];
+                    setIcon(championInPool, 'medium');
+                    deck[targetSlotIndex] = championInPool;
+                    pool[championIndex] = replacedCard;
+                }
+
+                for (let i = 0; i < 3; i++) {
+                    const slot = deck[i];
+                    if (slot.currentIcon === 'medium' && (slot.hasHero || slot.hasEvolution)) {
+                        let replacementIdx = -1;
+                        for (let j = 0; j < pool.length; j++) {
+                            if (!pool[j].hasHero && !pool[j].hasEvolution) {
+                                replacementIdx = j;
+                                break;
+                            }
+                        }
+                        if (replacementIdx === -1) {
+                            return null;
+                        }
+                        const replacement = pool.splice(replacementIdx, 1)[0];
+                        setIcon(replacement, 'medium');
+                        pool.push(slot);
+                        deck[i] = replacement;
+                    }
+                }
+
+                let usedHero = 0;
+                let usedEvo = 0;
+                const firstThree = deck.slice(0, 3);
+                firstThree.forEach(item => {
+                    if (item.currentIcon === 'heroMedium') usedHero++;
+                    if (item.currentIcon === 'evolutionMedium') usedEvo++;
+                });
+
+                const remainingMedium = [];
+                const remainingHero = [];
+                const remainingEvo = [];
+                while (pool.length > 0) {
+                    const item = pool.splice(0, 1)[0];
+                    if (item.currentIcon === 'medium') {
+                        remainingMedium.push(item);
+                    } else if (item.currentIcon === 'heroMedium') {
+                        remainingHero.push(item);
+                    } else if (item.currentIcon === 'evolutionMedium') {
+                        remainingEvo.push(item);
+                    } else {
+                        remainingMedium.push(item);
+                    }
+                }
+                shuffleArray(remainingMedium);
+                shuffleArray(remainingHero);
+                shuffleArray(remainingEvo);
+
+                const sortedRemaining = remainingMedium.concat(remainingHero, remainingEvo);
+
+                for (const item of sortedRemaining) {
+                    if (item.currentIcon === 'heroMedium' && usedHero >= 2) {
+                        setIcon(item, 'medium');
+                    } else if (item.currentIcon === 'evolutionMedium' && usedEvo >= 2) {
+                        setIcon(item, 'medium');
+                    } else if (item.currentIcon === 'heroMedium') {
+                        usedHero++;
+                    } else if (item.currentIcon === 'evolutionMedium') {
+                        usedEvo++;
+                    }
+                    deck.push(item);
+                }
+
+                while (deck.length < 8) {
+                    const dummy = { ...initialSelection[0] };
+                    setIcon(dummy, 'medium');
+                    deck.push(dummy);
+                }
+
+                const supportObj = {
+                    cardData: supportCard,
+                    selectedIcon: 'medium',
+                    currentIcon: 'medium',
+                    isChampion: false,
+                    hasHero: false,
+                    hasEvolution: false,
+                    currentUrl: (supportCard.iconUrls && supportCard.iconUrls.medium) ? supportCard.iconUrls.medium : ''
+                };
+                deck.push(supportObj);
+
+                return deck.map(item => ({
+                    cardData: item.cardData,
+                    selectedIcon: item.currentIcon,
+                    isChampion: item.isChampion || false,
+                    hasHero: item.hasHero || false,
+                    hasEvolution: item.hasEvolution || false,
+                    iconUrl: item.currentUrl || ''
+                }));
+            }
+
+            function tryGenerateOnce(useRandomIcons, forceSpells) {
+                let eightCards = pickEightCards(forceSpells);
+                if (!eightCards) return null;
+
+                if (forceSpells && spells.length > 0) {
+                    const numSpells = Math.random() < 0.5 ? 1 : 2;
+                    const shuffledSpells = shuffleArray(spells.slice());
+                    const selectedSpells = shuffledSpells.slice(0, numSpells);
+                    let candidatesForReplacement = eightCards.map((c, idx) => ({ card: c, index: idx }))
+                        .filter(item => !item.card.isChampion && !item.card.hasHero && !item.card.hasEvolution);
+                    if (candidatesForReplacement.length < numSpells) {
+                        candidatesForReplacement = eightCards.map((c, idx) => ({ card: c, index: idx }));
+                    }
+                    shuffleArray(candidatesForReplacement);
+                    const toReplace = candidatesForReplacement.slice(0, numSpells);
+                    for (let i = 0; i < toReplace.length; i++) {
+                        const idx = toReplace[i].index;
+                        eightCards[idx] = selectedSpells[i];
+                    }
+                }
+
+                const supportIdx = Math.floor(Math.random() * supportCards.length);
+                const supportCard = { ...supportCards[supportIdx] };
+
+                let initialSelection = [];
+                if (useRandomIcons) {
+                    let success = false;
+                    let selectedIcons = [];
+                    for (let attempt = 0; attempt < 3; attempt++) {
+                        selectedIcons = eightCards.map(c => {
+                            const avail = c.availableIcons || ['medium'];
+                            return avail[Math.floor(Math.random() * avail.length)];
+                        });
+                        const heroCount = selectedIcons.filter(ic => ic === 'heroMedium').length;
+                        const evoCount = selectedIcons.filter(ic => ic === 'evolutionMedium').length;
+                        const champCount = eightCards.filter(c => c.champion).length;
+                        if (heroCount > 2 || evoCount > 2) continue;
+                        if (champCount === 2 && heroCount === 1) continue;
+                        if (heroCount === 2 && champCount === 1) continue;
+                        if (champCount === 2 && evoCount === 2) continue;
+                        success = true;
+                        break;
+                    }
+                    if (!success) return null;
+
+                    initialSelection = eightCards.map((card, idx) => {
+                        const icon = selectedIcons[idx];
+                        return {
+                            cardData: card,
+                            selectedIcon: icon,
+                            isChampion: card.champion || false,
+                            hasHero: card.hasHero || false,
+                            hasEvolution: card.hasEvolution || false,
+                            iconUrl: (card.iconUrls && card.iconUrls[icon]) ? card.iconUrls[icon] : (card
+                                .iconUrls && card.iconUrls.medium ? card.iconUrls.medium : '')
+                        };
+                    });
+                } else {
+                    initialSelection = eightCards.map(card => ({
+                        cardData: card,
+                        selectedIcon: 'medium',
+                        isChampion: card.champion || false,
+                        hasHero: card.hasHero || false,
+                        hasEvolution: card.hasEvolution || false,
+                        iconUrl: (card.iconUrls && card.iconUrls.medium) ? card.iconUrls.medium : ''
+                    }));
+                }
+
+                const deck = orderSlots(initialSelection, supportCard, useRandomIcons);
+                return deck;
+            }
+
+            // ---- أنميشن التغيير المتتالي ----
+            function animateCardSlot(cardElement, finalSlotData, delay) {
+                return new Promise((resolve) => {
+                    const img = cardElement.querySelector('img');
+                    const nameSpan = cardElement.querySelector('.card-name');
+                    const glow = cardElement.querySelector('.glow-frame');
+
+                    glow.classList.add('active');
+
+                    const allPossibleCards = [...allCards, ...supportCards];
+                    let intervalId;
+                    let counter = 0;
+                    const totalSteps = 20;
+                    const stepDuration = 80;
+
+                    function changeStep() {
+                        const randomCard = allPossibleCards[Math.floor(Math.random() * allPossibleCards.length)];
+                        const randomIcon = randomCard.iconUrls && randomCard.iconUrls.medium ? randomCard.iconUrls.medium :
+                            '';
+                        img.src = randomIcon;
+                        nameSpan.textContent = randomCard.name || '???';
+                        counter++;
+                        if (counter >= totalSteps) {
+                            clearInterval(intervalId);
+                            img.src = finalSlotData.iconUrl || '';
+                            nameSpan.textContent = finalSlotData.cardData.name || '---';
+                            setTimeout(() => {
+                                glow.classList.remove('active');
+                                resolve();
+                            }, 400);
+                        }
+                    }
+
+                    changeStep();
+                    intervalId = setInterval(changeStep, stepDuration);
+
+                    setTimeout(() => {
+                        if (intervalId) {
+                            clearInterval(intervalId);
+                            img.src = finalSlotData.iconUrl || '';
+                            nameSpan.textContent = finalSlotData.cardData.name || '---';
+                            glow.classList.remove('active');
+                            resolve();
+                        }
+                    }, (totalSteps + 2) * stepDuration + 500);
+                });
+            }
+
+            // ---- render مع الأنميشن ----
+            function renderDeck(deckSlots) {
+                deckContainer.innerHTML = '';
+                const ids = [];
+                const cardElements = [];
+
+                deckSlots.forEach((slot, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'card-slot';
+
+                    const glow = document.createElement('div');
+                    glow.className = 'glow-frame';
+                    div.appendChild(glow);
+
+                    const img = document.createElement('img');
+                    img.src = slot.iconUrl || '';
+                    img.alt = slot.cardData.name || 'بطاقة';
+                    img.loading = 'lazy';
+                    img.onerror = function() { this.style.display = 'none'; };
+
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'card-name';
+                    nameSpan.textContent = slot.cardData.name || '---';
+
+                    const indexSpan = document.createElement('span');
+                    indexSpan.className = 'slot-index';
+                    indexSpan.textContent = `#${idx+1}`;
+
+                    div.appendChild(img);
+                    div.appendChild(nameSpan);
+                    div.appendChild(indexSpan);
+                    deckContainer.appendChild(div);
+
+                    ids.push(slot.cardData.id);
+                    cardElements.push({ element: div, finalData: slot });
+                });
+
+                lastDeckIds = ids;
+                copyBtn.disabled = true;
+
+                const promises = cardElements.map((item, index) => {
+                    const delay = index * 200;
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            animateCardSlot(item.element, item.finalData, delay).then(resolve);
+                        }, delay);
+                    });
+                });
+
+                Promise.all(promises).then(() => {
+                    copyBtn.disabled = false;
+                });
+            }
+
+            function showPlaceholder() {
+                deckContainer.innerHTML = '<div class="placeholder">اضغط على الزر لإنشاء تشكيلة</div>';
+                copyBtn.disabled = true;
+                lastDeckIds = null;
+            }
+
+            // ---- copy ----
+            function copyDeck() {
+                if (!lastDeckIds || lastDeckIds.length !== 9) return;
+                const deckIds = lastDeckIds.slice(0, 8).join(';');
+                const supportId = lastDeckIds[8];
+                const url =
+                    `https://link.clashroyale.com/en/?clashroyale://copyDeck?deck=${deckIds}&l=Royals&tt=${supportId}`;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        copyBtn.textContent = 'تم النسخ!';
+                        setTimeout(() => { copyBtn.textContent = 'نسخ التشكيلة'; }, 1500);
+                    }).catch(() => {
+                        fallbackCopy(url);
+                    });
+                } else {
+                    fallbackCopy(url);
+                }
+            }
+
+            function fallbackCopy(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    copyBtn.textContent = 'تم النسخ!';
+                    setTimeout(() => { copyBtn.textContent = 'نسخ التشكيلة'; }, 1500);
+                } catch (e) {
+                    alert('تعذر نسخ الرابط. يمكنك نسخه يدوياً:\n' + text);
+                }
+                document.body.removeChild(textarea);
+            }
+
+            // ---- generate ----
+            function generateDeck() {
+                if (!dataLoaded || allCards.length === 0 || supportCards.length === 0) {
+                    showError('البيانات غير جاهزة بعد.', true);
+                    return;
+                }
+                if (isGenerating) return;
+                isGenerating = true;
+                generateBtn.disabled = true;
+                copyBtn.disabled = true;
+                hideError();
+
+                const useRandomIcons = randomIconsCheck.checked;
+                const forceSpells = forceSpellsCheck.checked;
+                let finalDeck = null;
+                let attempts = 0;
+                const MAX_ATTEMPTS = 3;
+
+                while (attempts < MAX_ATTEMPTS) {
+                    attempts++;
+                    const result = tryGenerateOnce(useRandomIcons, forceSpells);
+                    if (result) {
+                        finalDeck = result;
+                        break;
+                    }
+                }
+
+                if (finalDeck && finalDeck.length === 9) {
+                    renderDeck(finalDeck);
+                    hideError();
+                } else {
+                    showError('حدث خطأ أثناء إنشاء التشكيلة. يرجى المحاولة مرة أخرى.', false);
+                    showPlaceholder();
+                }
+
+                isGenerating = false;
+                generateBtn.disabled = false;
+            }
+
+            generateBtn.addEventListener('click', function() {
+                if (!dataLoaded) {
+                    loadData();
+                    return;
+                }
+                generateDeck();
+            });
+
+            copyBtn.addEventListener('click', copyDeck);
+
+            window.addEventListener('DOMContentLoaded', function() {
+                const loaded = loadData();
+                if (!loaded) {
+                    // جاري التحميل
+                } else {
+                    showPlaceholder();
+                }
+            });
+
+            window.loadData = loadData;
+        })();
+    </script>
+
+</body>
+</html>
