@@ -39,6 +39,9 @@
             width: 100%;
             direction: rtl;
             unicode-bidi: embed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         h1 {
@@ -142,6 +145,28 @@
             margin: 0;
         }
 
+        .toolbar .checkbox-group .help-icon {
+            display: inline-block;
+            width: 1.6rem;
+            height: 1.6rem;
+            border-radius: 50%;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #888;
+            text-align: center;
+            line-height: 1.6rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: help;
+            transition: background 0.2s, color 0.2s;
+            user-select: none;
+        }
+
+        .toolbar .checkbox-group .help-icon:hover {
+            background: #3a3a3a;
+            color: #ccc;
+        }
+
         /* ===== رسالة الخطأ ===== */
         .error-msg {
             text-align: center;
@@ -188,6 +213,7 @@
             border: 1px solid #2a2a2a;
             border-radius: 16px;
             transition: border-color 0.3s;
+            flex: 1;
         }
 
         .deck-container .placeholder {
@@ -201,7 +227,7 @@
 
         /* ===== البطاقة ===== */
         .card-slot {
-            width: 170px; /* أكبر بكثير */
+            width: 170px;
             text-align: center;
             background: #1e1e1e;
             border: 2px solid #333;
@@ -244,7 +270,7 @@
         }
 
         .card-slot img {
-            width: 120px;  /* حجم الصورة كبير */
+            width: 120px;
             height: 120px;
             object-fit: contain;
             display: block;
@@ -262,7 +288,7 @@
         }
 
         .card-slot .card-name {
-            font-size: clamp(1.1rem, 1.3vw, 1.4rem); /* خط كبير */
+            font-size: clamp(1.1rem, 1.3vw, 1.4rem);
             line-height: 1.6;
             color: #e0e0e0;
             max-width: 150px;
@@ -279,7 +305,7 @@
         }
 
         .card-slot .slot-index {
-            font-size: 1rem; /* حجم الرقم كبير وواضح */
+            font-size: 1rem;
             font-weight: 500;
             color: #aaa;
             margin-top: 0.2rem;
@@ -290,6 +316,37 @@
             border-radius: 20px;
             border: 1px solid #333;
             line-height: 1.8;
+        }
+
+        /* ===== التذييل ===== */
+        .footer {
+            margin-top: 2.5rem;
+            padding: 1.2rem 0.5rem;
+            border-top: 1px solid #333;
+            text-align: center;
+            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+            color: #777;
+            line-height: 2;
+            direction: rtl;
+        }
+        .footer a {
+            color: #6a8aaa;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer a:hover {
+            color: #9ab8d8;
+        }
+        .footer .name {
+            font-weight: 500;
+            color: #aaa;
+            font-size: 1.1em;
+        }
+        .footer .discord {
+            color: #99aabb;
+        }
+        .footer .github-link {
+            color: #7a8a9a;
         }
 
         /* ===== استجابة للشاشات الصغيرة ===== */
@@ -340,6 +397,11 @@
             .deck-container {
                 gap: 1rem;
                 padding: 1.5rem 0.3rem;
+            }
+
+            .footer {
+                font-size: 0.9rem;
+                padding: 1rem 0.2rem;
             }
         }
 
@@ -395,18 +457,34 @@
             <button class="btn btn-copy" id="copyBtn" disabled>نسخ التشكيلة</button>
             <label class="checkbox-group">
                 <input type="checkbox" id="randomIconsCheck" />
-                أيقونات عشوائية
+                اختيار بواسل و مطورات عشوائيا
+                <span class="help-icon" 
+                      title="عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة"
+                      onclick="alert('عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة')">?</span>
             </label>
             <label class="checkbox-group">
                 <input type="checkbox" id="forceSpellsCheck" />
                 إجباري التعويذات
+                <span class="help-icon" 
+                      title="يضع بشكل إجباري تعويذة واحد أو تعويذتين بشكل عشوائي أو قد لا يضع أي تعويذة"
+                      onclick="alert('يضع بشكل إجباري تعويذة واحد أو تعويذتين بشكل عشوائي أو قد لا يضع أي تعويذة')">?</span>
             </label>
         </div>
 
         <div id="errorMsg" class="error-msg"></div>
 
         <div id="deckContainer" class="deck-container">
-            <div class="placeholder">اضغط على الزر لإنشاء تشكيلة</div>
+            <div class="placeholder">اضغط على زر "أنشاء تشكيلة" لانشاء تشكيلة</div>
+        </div>
+
+        <!-- ===== التذييل ===== -->
+        <div class="footer">
+            <div class="name">M7mod</div>
+            <div class="discord">Discord: _.m6</div>
+            <div class="github-link">
+                <a href="https://github.com/mhmod3" target="_blank">https://github.com/mhmod3</a>
+            <div class="AI">‫*للشفافية: تم انشاء هذه الموقع بشكل كامل مع Ai (اتوقع ان هذه الشيء واضح من تصميم الموقع)‬</div>
+            </div>
         </div>
     </div>
 
@@ -496,7 +574,9 @@
                 }
 
                 generateBtn.disabled = true;
-                fetch('http://78.154.103.28:12820/cards')
+                // ===== الحل: استخدام وسيط آمن (HTTPS) لتجاوز مشكلة Mixed Content =====
+                const proxyUrl = 'https://api.allorigins.win/raw?url=http://78.154.103.28:12820/cards';
+                fetch(proxyUrl)
                     .then(response => {
                         if (!response.ok) throw new Error('Network response not ok');
                         return response.json();
@@ -1037,7 +1117,7 @@
             }
 
             function showPlaceholder() {
-                deckContainer.innerHTML = '<div class="placeholder">اضغط على الزر لإنشاء تشكيلة</div>';
+                deckContainer.innerHTML = '<div class="placeholder">اضغط على زر "أنشاء تشكيلة" لانشاء تشكيلة</div>';
                 copyBtn.disabled = true;
                 lastDeckIds = null;
             }
