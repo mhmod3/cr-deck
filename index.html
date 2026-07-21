@@ -33,8 +33,92 @@
             direction: rtl;
             unicode-bidi: embed;
             background-image: radial-gradient(circle at 20% 30%, #1a1a2e 0%, #121212 80%);
+            position: relative;
         }
 
+        /* ===== شاشة التحميل ===== */
+        #loadingScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #121212;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            font-family: 'Adobe Arabic', 'Segoe UI', system-ui, sans-serif;
+            direction: rtl;
+        }
+        #loadingScreen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #loadingContent {
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            padding: 2rem 1rem;
+        }
+        #loadingText {
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            color: #f0f0f0;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
+        }
+        #loadingProgress {
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            color: #aaa;
+            margin-bottom: 0.8rem;
+            direction: ltr;
+            display: inline-block;
+        }
+        #loadingBar {
+            width: 100%;
+            height: 8px;
+            background: #2a2a3a;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+        }
+        #loadingBarFill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3a7a8a, #6ab0d0);
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+        #loadingError {
+            margin-top: 1.5rem;
+            color: #e08a8a;
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            display: none;
+        }
+        #loadingError.visible {
+            display: block;
+        }
+        #loadingRetryBtn {
+            margin-top: 0.8rem;
+            background: transparent;
+            border: 1px solid #5a3a3a;
+            color: #d0a0a0;
+            padding: 0.4rem 1.8rem;
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            cursor: pointer;
+            border-radius: 8px;
+            font-family: inherit;
+            transition: background 0.2s;
+            display: none;
+        }
+        #loadingRetryBtn.visible {
+            display: inline-block;
+        }
+        #loadingRetryBtn:hover {
+            background: #2a1a1a;
+        }
+
+        /* باقي الأنماط */
         .container {
             max-width: 1300px;
             width: 100%;
@@ -66,7 +150,6 @@
             line-height: 2;
         }
 
-        /* ===== شريط الأدوات ===== */
         .toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -183,7 +266,6 @@
             color: #ccc;
         }
 
-        /* ===== رسالة الخطأ ===== */
         .error-msg {
             text-align: center;
             color: #e08a8a;
@@ -217,7 +299,6 @@
             background: #2a1a1a;
         }
 
-        /* ===== حاوية البطاقات ===== */
         .deck-container {
             display: flex;
             justify-content: center;
@@ -242,7 +323,6 @@
             user-select: none;
         }
 
-        /* ===== البطاقة ===== */
         .card-slot {
             width: 170px;
             text-align: center;
@@ -257,6 +337,7 @@
             position: relative;
             transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            animation: cardPopIn 0.5s ease both;
         }
 
         .card-slot:hover {
@@ -339,7 +420,6 @@
             line-height: 1.8;
         }
 
-        /* ===== التذييل ===== */
         .footer {
             margin-top: 2.5rem;
             padding: 1.2rem 0.5rem;
@@ -381,7 +461,6 @@
             margin-top: 0.3rem;
         }
 
-        /* ===== الزر الصغير المخفي ===== */
         .secret-btn {
             position: fixed;
             bottom: 20px;
@@ -418,62 +497,51 @@
             transform: scale(0.92);
         }
 
-        /* ===== استجابة للشاشات الصغيرة ===== */
         @media (max-width: 700px) {
             .container {
                 padding: 0 0.3rem;
             }
-
             .toolbar {
                 flex-direction: column;
                 align-items: stretch;
                 gap: 0.8rem;
                 padding: 1rem 0.8rem;
             }
-
             .toolbar .btn {
                 width: 100%;
                 min-width: unset;
                 padding: 0.8rem;
                 font-size: clamp(1.1rem, 1.5vw, 1.2rem);
             }
-
             .toolbar .checkbox-group {
                 justify-content: center;
                 font-size: clamp(1rem, 1.2vw, 1.1rem);
                 padding: 0.3rem 0.6rem;
             }
-
             .card-slot {
                 width: 130px;
                 padding: 0.6rem 0.2rem 0.6rem;
             }
-
             .card-slot img {
                 width: 90px;
                 height: 90px;
             }
-
             .card-slot .card-name {
                 font-size: clamp(0.9rem, 1.1vw, 1rem);
                 max-width: 110px;
                 min-height: 2.6rem;
             }
-
             .card-slot .slot-index {
                 font-size: 0.85rem;
             }
-
             .deck-container {
                 gap: 1rem;
                 padding: 1.5rem 0.3rem;
             }
-
             .footer {
                 font-size: 0.9rem;
                 padding: 1rem 0.2rem;
             }
-
             .secret-btn {
                 width: 34px;
                 height: 34px;
@@ -508,7 +576,6 @@
             }
         }
 
-        /* ===== أنميشن ظهور البطاقات ===== */
         @keyframes cardPopIn {
             0% {
                 opacity: 0;
@@ -518,10 +585,6 @@
                 opacity: 1;
                 transform: scale(1) translateY(0);
             }
-        }
-
-        .card-slot {
-            animation: cardPopIn 0.5s ease both;
         }
 
         .card-slot:nth-child(1) {
@@ -555,6 +618,23 @@
 </head>
 <body>
 
+    <!-- ===== شاشة التحميل ===== -->
+    <div id="loadingScreen">
+        <div id="loadingContent">
+            <div id="loadingText">جاري تحميل البطاقات...</div>
+            <div>
+                <span id="loadingProgress">0%</span>
+            </div>
+            <div id="loadingBar">
+                <div id="loadingBarFill" style="width:0%"></div>
+            </div>
+            <div id="loadingError">
+                <span id="loadingErrorText"></span>
+                <button id="loadingRetryBtn">إعادة المحاولة</button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <h1>منشئ التشكيلات</h1>
         <div class="sub">
@@ -562,7 +642,7 @@
         </div>
 
         <div class="toolbar">
-            <button class="btn btn-primary" id="generateBtn">إنشاء تشكيلة</button>
+            <button class="btn btn-primary" id="generateBtn" disabled>إنشاء تشكيلة</button>
             <button class="btn btn-copy" id="copyBtn" disabled>نسخ التشكيلة</button>
             <label class="checkbox-group">
                 <input type="checkbox" id="randomIconsCheck" />
@@ -586,7 +666,6 @@
             <div class="placeholder">اضغط على زر "أنشاء تشكيلة" لانشاء تشكيلة</div>
         </div>
 
-        <!-- ===== التذييل ===== -->
         <div class="footer">
             <div class="name">M7mod</div>
             <div class="discord">Discord: _.m6</div>
@@ -597,12 +676,20 @@
         </div>
     </div>
 
-    <!-- ===== الزر الصغير المخفي ===== -->
     <button class="secret-btn" id="secretBtn" title="??">⍰</button>
 
     <script>
         (function() {
             "use strict";
+
+            // عناصر شاشة التحميل
+            const loadingScreen = document.getElementById('loadingScreen');
+            const loadingText = document.getElementById('loadingText');
+            const loadingProgress = document.getElementById('loadingProgress');
+            const loadingBarFill = document.getElementById('loadingBarFill');
+            const loadingError = document.getElementById('loadingError');
+            const loadingErrorText = document.getElementById('loadingErrorText');
+            const loadingRetryBtn = document.getElementById('loadingRetryBtn');
 
             const generateBtn = document.getElementById('generateBtn');
             const copyBtn = document.getElementById('copyBtn');
@@ -627,14 +714,88 @@
                 28000023, 28000024, 28000026
             ]);
 
-            function shuffleArray(arr) {
-                for (let i = arr.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [arr[i], arr[j]] = [arr[j], arr[i]];
-                }
-                return arr;
+            // ===== دوال التحميل =====
+            function updateLoadingProgress(loaded, total) {
+                const percent = total === 0 ? 100 : Math.round((loaded / total) * 100);
+                loadingProgress.textContent = percent + '%';
+                loadingBarFill.style.width = percent + '%';
             }
 
+            function showLoadingError(msg) {
+                loadingErrorText.textContent = msg;
+                loadingError.classList.add('visible');
+                loadingRetryBtn.classList.add('visible');
+                loadingText.textContent = 'حدث خطأ';
+            }
+
+            function hideLoadingError() {
+                loadingError.classList.remove('visible');
+                loadingRetryBtn.classList.remove('visible');
+                loadingText.textContent = 'جاري تحميل البطاقات...';
+            }
+
+            function hideLoading() {
+                loadingScreen.classList.add('hidden');
+            }
+
+            function showLoading() {
+                loadingScreen.classList.remove('hidden');
+                loadingProgress.textContent = '0%';
+                loadingBarFill.style.width = '0%';
+                hideLoadingError();
+                loadingText.textContent = 'جاري تحميل البطاقات...';
+            }
+
+            // ===== تحميل الصور (بدون مهلة) =====
+            function loadAllImages(cards) {
+                const urls = new Set();
+                cards.forEach(card => {
+                    if (card.iconUrls) {
+                        Object.values(card.iconUrls).forEach(url => {
+                            if (url) urls.add(url);
+                        });
+                    }
+                });
+                const urlArray = Array.from(urls);
+                let loaded = 0;
+                const total = urlArray.length;
+
+                return new Promise((resolve) => {
+                    if (total === 0) {
+                        updateLoadingProgress(100, 100);
+                        resolve();
+                        return;
+                    }
+
+                    let resolved = false;
+                    function checkDone() {
+                        if (!resolved && loaded === total) {
+                            resolved = true;
+                            resolve();
+                        }
+                    }
+
+                    urlArray.forEach(url => {
+                        const img = new Image();
+                        img.onload = () => {
+                            loaded++;
+                            updateLoadingProgress(loaded, total);
+                            checkDone();
+                        };
+                        img.onerror = () => {
+                            // تجاهل الصورة الفاشلة واعتبارها محملة
+                            loaded++;
+                            updateLoadingProgress(loaded, total);
+                            checkDone();
+                        };
+                        img.src = url;
+                        // إضافة الصورة إلى الخريطة للاستخدام لاحقاً (اختياري)
+                        preloadedImages.set(url, img);
+                    });
+                });
+            }
+
+            // ===== معالجة البيانات =====
             function processCard(card) {
                 const iconUrls = card.iconUrls || {};
                 const hasHero = iconUrls.hasOwnProperty('heroMedium');
@@ -652,79 +813,74 @@
                 };
             }
 
-            function preloadCardImages(cards) {
-                cards.forEach(card => {
-                    const urls = Object.values(card.iconUrls || {});
-                    urls.forEach(url => {
-                        if (!preloadedImages.has(url) && url) {
-                            const img = new Image();
-                            img.src = url;
-                            preloadedImages.set(url, img);
-                        }
-                    });
-                });
-            }
+            // ===== تحميل البيانات (مع الصور) =====
+            async function loadData() {
+                showLoading();
+                generateBtn.disabled = true;
+                copyBtn.disabled = true;
 
-            // ===== دالة تحميل البيانات المعدلة =====
-            function loadData() {
                 const stored = localStorage.getItem(STORAGE_KEY);
+                let data = null;
+
                 if (stored) {
                     try {
                         const parsed = JSON.parse(stored);
                         if (parsed && Array.isArray(parsed.items) && parsed.items.length > 0 &&
                             Array.isArray(parsed.supportItems) && parsed.supportItems.length > 0) {
-                            const processed = parsed.items.map(c => processCard(c));
-                            allCards = processed.filter(c => !c.isSpell);
-                            spells = processed.filter(c => c.isSpell);
-                            supportCards = parsed.supportItems.slice();
-                            preloadCardImages(processed);
-                            preloadCardImages(parsed.supportItems);
-                            dataLoaded = true;
-                            generateBtn.disabled = false;
-                            return true;
+                            data = parsed;
                         }
                     } catch (_) { /* ignore */ }
                 }
 
-                generateBtn.disabled = true;
-                const apiUrl = 'https://f860-78-154-103-28.ngrok-free.app/cards';
-                fetch(apiUrl, {
-                    headers: {
-                        'ngrok-skip-browser-warning': 'true'
-                    }
-                })
-                    .then(response => {
+                if (!data) {
+                    // محاولة جلب من API
+                    try {
+                        const apiUrl = 'https://f860-78-154-103-28.ngrok-free.app/cards';
+                        const response = await fetch(apiUrl, {
+                            headers: { 'ngrok-skip-browser-warning': 'true' }
+                        });
                         if (!response.ok) throw new Error('Network response not ok');
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data && Array.isArray(data.items) && data.items.length > 0 &&
-                            Array.isArray(data.supportItems) && data.supportItems.length > 0) {
-                            localStorage.setItem(STORAGE_KEY, JSON.stringify({
-                                items: data.items,
-                                supportItems: data.supportItems
-                            }));
-                            const processed = data.items.map(c => processCard(c));
-                            allCards = processed.filter(c => !c.isSpell);
-                            spells = processed.filter(c => c.isSpell);
-                            supportCards = data.supportItems.slice();
-                            preloadCardImages(processed);
-                            preloadCardImages(data.supportItems);
-                            dataLoaded = true;
-                            generateBtn.disabled = false;
-                            hideError();
-                        } else {
+                        data = await response.json();
+                        if (!data || !Array.isArray(data.items) || data.items.length === 0 ||
+                            !Array.isArray(data.supportItems) || data.supportItems.length === 0) {
                             throw new Error('Invalid data structure');
                         }
-                    })
-                    .catch(err => {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                    } catch (err) {
                         console.warn('Fetch error:', err);
-                        showError('تعذر تحميل بيانات البطاقات. تأكد من اتصالك وحاول مجدداً.', true);
-                        generateBtn.disabled = true;
-                    });
-                return false;
+                        showLoadingError('تعذر تحميل البيانات. تأكد من اتصالك بالإنترنت وحاول مجدداً.');
+                        loadingRetryBtn.onclick = function() {
+                            hideLoadingError();
+                            loadData();
+                        };
+                        return;
+                    }
+                }
+
+                // معالجة البطاقات
+                const processedItems = data.items.map(c => processCard(c));
+                const processedSupport = data.supportItems.slice();
+
+                // تجميع كل البطاقات لتحميل الصور
+                const allCardsData = [...processedItems, ...processedSupport];
+
+                // تحميل الصور (انتظار حتى الانتهاء)
+                await loadAllImages(allCardsData);
+
+                // تعيين المتغيرات
+                allCards = processedItems.filter(c => !c.isSpell);
+                spells = processedItems.filter(c => c.isSpell);
+                supportCards = processedSupport;
+                dataLoaded = true;
+
+                // إخفاء شاشة التحميل
+                hideLoading();
+                generateBtn.disabled = false;
+                showPlaceholder();
+                hideError();
             }
 
+            // ===== دوال عرض الأخطاء والمكان الفارغ =====
             function showError(msg, withRetry = false) {
                 errorMsg.textContent = msg;
                 errorMsg.classList.add('visible');
@@ -749,6 +905,21 @@
                 errorMsg.classList.remove('visible');
                 const oldBtn = errorMsg.querySelector('.retry-btn');
                 if (oldBtn) oldBtn.remove();
+            }
+
+            function showPlaceholder() {
+                deckContainer.innerHTML = '<div class="placeholder">اضغط على زر "أنشاء تشكيلة" لانشاء تشكيلة</div>';
+                copyBtn.disabled = true;
+                lastDeckIds = null;
+            }
+
+            // ===== خوارزميات التشكيلة =====
+            function shuffleArray(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
             }
 
             function pickEightCards(forceSpells) {
@@ -1130,7 +1301,7 @@
                 return deck;
             }
 
-            // ---- أنميشن التغيير المتتالي ----
+            // ===== أنميشن و عرض =====
             function animateCardSlot(cardElement, finalSlotData, delay) {
                 return new Promise((resolve) => {
                     const img = cardElement.querySelector('img');
@@ -1178,7 +1349,6 @@
                 });
             }
 
-            // ---- render مع الأنميشن ----
             function renderDeck(deckSlots) {
                 deckContainer.innerHTML = '';
                 const ids = [];
@@ -1232,49 +1402,6 @@
                 });
             }
 
-            function showPlaceholder() {
-                deckContainer.innerHTML = '<div class="placeholder">اضغط على زر "أنشاء تشكيلة" لانشاء تشكيلة</div>';
-                copyBtn.disabled = true;
-                lastDeckIds = null;
-            }
-
-            // ---- copy ----
-            function copyDeck() {
-                if (!lastDeckIds || lastDeckIds.length !== 9) return;
-                const deckIds = lastDeckIds.slice(0, 8).join(';');
-                const supportId = lastDeckIds[8];
-                const url =
-                    `https://link.clashroyale.com/en/?clashroyale://copyDeck?deck=${deckIds}&l=Royals&tt=${supportId}`;
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(url).then(() => {
-                        copyBtn.textContent = 'تم النسخ!';
-                        setTimeout(() => { copyBtn.textContent = 'نسخ التشكيلة'; }, 1500);
-                    }).catch(() => {
-                        fallbackCopy(url);
-                    });
-                } else {
-                    fallbackCopy(url);
-                }
-            }
-
-            function fallbackCopy(text) {
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-                try {
-                    document.execCommand('copy');
-                    copyBtn.textContent = 'تم النسخ!';
-                    setTimeout(() => { copyBtn.textContent = 'نسخ التشكيلة'; }, 1500);
-                } catch (e) {
-                    alert('تعذر نسخ الرابط. يمكنك نسخه يدوياً:\n' + text);
-                }
-                document.body.removeChild(textarea);
-            }
-
-            // ---- generate ----
             function generateDeck() {
                 if (!dataLoaded || allCards.length === 0 || supportCards.length === 0) {
                     showError('البيانات غير جاهزة بعد.', true);
@@ -1313,6 +1440,43 @@
                 generateBtn.disabled = false;
             }
 
+            // ===== نسخ التشكيلة =====
+            function copyDeck() {
+                if (!lastDeckIds || lastDeckIds.length !== 9) return;
+                const deckIds = lastDeckIds.slice(0, 8).join(';');
+                const supportId = lastDeckIds[8];
+                const url =
+                    `https://link.clashroyale.com/en/?clashroyale://copyDeck?deck=${deckIds}&l=Royals&tt=${supportId}`;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        copyBtn.textContent = 'تم النسخ!';
+                        setTimeout(() => { copyBtn.textContent = 'نسخ التشكيلة'; }, 1500);
+                    }).catch(() => {
+                        fallbackCopy(url);
+                    });
+                } else {
+                    fallbackCopy(url);
+                }
+            }
+
+            function fallbackCopy(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    copyBtn.textContent = 'تم النسخ!';
+                    setTimeout(() => { copyBtn.textContent = 'نسخ التشكيلة'; }, 1500);
+                } catch (e) {
+                    alert('تعذر نسخ الرابط. يمكنك نسخه يدوياً:\n' + text);
+                }
+                document.body.removeChild(textarea);
+            }
+
+            // ===== ربط الأحداث =====
             generateBtn.addEventListener('click', function() {
                 if (!dataLoaded) {
                     loadData();
@@ -1323,24 +1487,20 @@
 
             copyBtn.addEventListener('click', copyDeck);
 
-            window.addEventListener('DOMContentLoaded', function() {
-                const loaded = loadData();
-                if (!loaded) {
-                    // جاري التحميل
-                } else {
-                    showPlaceholder();
-                }
-            });
-
-            window.loadData = loadData;
-
-            // ===== الزر السري =====
             document.getElementById('secretBtn').addEventListener('click', function() {
                 const confirmMsg = 'الموسيقى التالية قد تكون محمية بحقوق الطبع والنشر';
                 if (confirm(confirmMsg)) {
                     window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
                 }
             });
+
+            // ===== بدء التطبيق =====
+            window.addEventListener('DOMContentLoaded', function() {
+                loadData();
+            });
+
+            // جعل loadData متاحة عالمياً في حال الحاجة
+            window.loadData = loadData;
 
         })();
     </script>
