@@ -22,8 +22,8 @@
 
         body {
             font-family: 'Adobe Arabic', 'Segoe UI', system-ui, sans-serif;
-            background: #1e1e1e;
-            color: #d0d0d0;
+            background: #121212;
+            color: #e0e0e0;
             padding: 1.5rem 0.75rem;
             display: flex;
             justify-content: center;
@@ -32,6 +32,7 @@
             font-size: clamp(1.2rem, 1.8vw, 1.6rem);
             direction: rtl;
             unicode-bidi: embed;
+            background-image: radial-gradient(circle at 20% 30%, #1a1a2e 0%, #121212 80%);
         }
 
         .container {
@@ -42,22 +43,24 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            position: relative;
         }
 
         h1 {
             font-size: clamp(2.5rem, 5vw, 3.6rem);
             font-weight: 500;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
             text-align: center;
-            color: #dcdcdc;
+            color: #f0f0f0;
             letter-spacing: 0.5px;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
         }
 
         .sub {
-            color: #999;
+            color: #aaa;
             font-size: clamp(1.2rem, 1.6vw, 1.6rem);
-            border-bottom: 1px solid #333;
-            padding-bottom: 0.9rem;
+            border-bottom: 1px solid #2a2a3a;
+            padding-bottom: 0.8rem;
             margin-bottom: 2rem;
             text-align: center;
             line-height: 2;
@@ -71,29 +74,33 @@
             justify-content: center;
             gap: 0.8rem 1.8rem;
             margin-bottom: 2rem;
-            padding: 1.2rem 1rem;
-            background: #1e1e1e;
-            border-radius: 14px;
-            border: 1px solid #333;
+            padding: 1.2rem 1.5rem;
+            background: #1e1e2a;
+            border-radius: 16px;
+            border: 1px solid #2a2a3a;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
         }
 
         .toolbar .btn {
-            border: 1px solid #444;
-            background: #2a2a2a;
-            color: #c0c0c0;
+            border: 1px solid #3a3a4a;
+            background: #2a2a3a;
+            color: #d0d0e0;
             padding: 0.8rem 2.2rem;
             font-size: clamp(1.3rem, 1.6vw, 1.6rem);
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 12px;
             font-family: inherit;
-            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
             min-width: 160px;
+            letter-spacing: 0.3px;
         }
 
         .toolbar .btn:hover:not(:disabled) {
-            background: #3a3a3a;
-            border-color: #555;
-            transform: scale(1.03);
+            background: #3a3a4e;
+            border-color: #5a5a7a;
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
         }
 
         .toolbar .btn:active:not(:disabled) {
@@ -107,25 +114,25 @@
         }
 
         .toolbar .btn-primary {
-            background: #2a3a4a;
-            color: #c8d8e0;
-            border-color: #3a4a5a;
+            background: #1e3a4a;
+            color: #c8e0f0;
+            border-color: #2a5a6a;
         }
 
         .toolbar .btn-primary:hover:not(:disabled) {
-            background: #1a3a4a;
-            border-color: #4a5a6a;
+            background: #1a4a5a;
+            border-color: #3a7a8a;
         }
 
         .toolbar .btn-copy {
             background: #1a3a2a;
-            color: #b0d0b0;
-            border-color: #2a4a3a;
+            color: #b0e0b0;
+            border-color: #2a5a3a;
         }
 
         .toolbar .btn-copy:hover:not(:disabled) {
             background: #1a4a2a;
-            border-color: #3a5a4a;
+            border-color: #3a7a4a;
         }
 
         .toolbar .checkbox-group {
@@ -133,29 +140,38 @@
             align-items: center;
             gap: 0.5rem;
             font-size: clamp(1.1rem, 1.3vw, 1.3rem);
-            color: #bbb;
+            color: #ccc;
             cursor: pointer;
+            background: #1a1a28;
+            padding: 0.3rem 0.8rem 0.3rem 0.6rem;
+            border-radius: 30px;
+            border: 1px solid #2a2a3a;
+            transition: background 0.2s;
+        }
+
+        .toolbar .checkbox-group:hover {
+            background: #22223a;
         }
 
         .toolbar .checkbox-group input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
-            accent-color: #4a6a8a;
+            width: 22px;
+            height: 22px;
+            accent-color: #4a8aba;
             cursor: pointer;
             margin: 0;
         }
 
         .toolbar .checkbox-group .help-icon {
             display: inline-block;
-            width: 1.6rem;
-            height: 1.6rem;
+            width: 1.5rem;
+            height: 1.5rem;
             border-radius: 50%;
-            background: #2a2a2a;
-            border: 1px solid #444;
+            background: #2a2a3a;
+            border: 1px solid #3a3a4a;
             color: #888;
             text-align: center;
-            line-height: 1.6rem;
-            font-size: 1rem;
+            line-height: 1.5rem;
+            font-size: 0.95rem;
             font-weight: bold;
             cursor: help;
             transition: background 0.2s, color 0.2s;
@@ -163,20 +179,20 @@
         }
 
         .toolbar .checkbox-group .help-icon:hover {
-            background: #3a3a3a;
+            background: #3a3a4e;
             color: #ccc;
         }
 
         /* ===== رسالة الخطأ ===== */
         .error-msg {
             text-align: center;
-            color: #d07a7a;
+            color: #e08a8a;
             font-size: clamp(1.1rem, 1.3vw, 1.3rem);
             margin: 0.5rem 0 1.2rem;
             padding: 0.8rem 1.5rem;
-            background: #3a1a1a;
-            border: 1px solid #5a2a2a;
-            border-radius: 10px;
+            background: #2a1a1a;
+            border: 1px solid #4a2a2a;
+            border-radius: 12px;
             display: none;
         }
 
@@ -191,7 +207,7 @@
             padding: 0.2rem 1.2rem;
             font-size: clamp(0.9rem, 1vw, 1rem);
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 6px;
             font-family: inherit;
             margin-right: 0.5rem;
             transition: background 0.2s;
@@ -209,17 +225,18 @@
             flex-wrap: wrap;
             padding: 2.5rem 1rem;
             min-height: 300px;
-            background: #1e1e1e;
-            border: 1px solid #2a2a2a;
-            border-radius: 16px;
+            background: #16161e;
+            border: 1px solid #2a2a3a;
+            border-radius: 20px;
             transition: border-color 0.3s;
             flex: 1;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
         }
 
         .deck-container .placeholder {
             width: 100%;
             text-align: center;
-            color: #666;
+            color: #555;
             font-size: clamp(1.4rem, 1.8vw, 1.8rem);
             padding: 3rem 0;
             user-select: none;
@@ -229,9 +246,9 @@
         .card-slot {
             width: 170px;
             text-align: center;
-            background: #1e1e1e;
-            border: 2px solid #333;
-            border-radius: 18px;
+            background: #1a1a26;
+            border: 2px solid #2a2a3a;
+            border-radius: 20px;
             padding: 0.9rem 0.3rem 0.8rem;
             display: flex;
             flex-direction: column;
@@ -239,19 +256,19 @@
             gap: 0.4rem;
             position: relative;
             transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
         }
 
         .card-slot:hover {
             transform: translateY(-6px);
-            border-color: #4a6a8a;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            border-color: #4a7a9a;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
         }
 
-        /* إطار أصفر للأنميشن */
         .card-slot .glow-frame {
             position: absolute;
             inset: -5px;
-            border-radius: 22px;
+            border-radius: 24px;
             border: 5px solid transparent;
             pointer-events: none;
             transition: border-color 0.1s;
@@ -265,8 +282,12 @@
         }
 
         @keyframes pulseGlow {
-            0% { box-shadow: 0 0 10px #ffd70066, 0 0 20px #ffd70033; }
-            100% { box-shadow: 0 0 30px #ffd700cc, 0 0 60px #ffd70066; }
+            0% {
+                box-shadow: 0 0 10px #ffd70066, 0 0 20px #ffd70033;
+            }
+            100% {
+                box-shadow: 0 0 30px #ffd700cc, 0 0 60px #ffd70066;
+            }
         }
 
         .card-slot img {
@@ -274,9 +295,9 @@
             height: 120px;
             object-fit: contain;
             display: block;
-            background: #1e1e1e;
-            border-radius: 12px;
-            border: 2px solid #2a2a2a;
+            background: #1a1a26;
+            border-radius: 14px;
+            border: 2px solid #2a2a3a;
             transition: border-color 0.2s;
             position: relative;
             z-index: 5;
@@ -284,13 +305,13 @@
         }
 
         .card-slot:hover img {
-            border-color: #4a6a8a;
+            border-color: #4a7a9a;
         }
 
         .card-slot .card-name {
             font-size: clamp(1.1rem, 1.3vw, 1.4rem);
             line-height: 1.6;
-            color: #e0e0e0;
+            color: #e8e8f0;
             max-width: 150px;
             word-break: break-word;
             font-weight: 400;
@@ -300,7 +321,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
             padding: 0 2px;
         }
 
@@ -311,10 +332,10 @@
             margin-top: 0.2rem;
             position: relative;
             z-index: 5;
-            background: #1e1e1e;
-            padding: 0 10px;
+            background: #1a1a26;
+            padding: 0 12px;
             border-radius: 20px;
-            border: 1px solid #333;
+            border: 1px solid #2a2a3a;
             line-height: 1.8;
         }
 
@@ -322,31 +343,79 @@
         .footer {
             margin-top: 2.5rem;
             padding: 1.2rem 0.5rem;
-            border-top: 1px solid #333;
+            border-top: 1px solid #2a2a3a;
             text-align: center;
             font-size: clamp(0.9rem, 1.1vw, 1.1rem);
-            color: #777;
+            color: #666;
             line-height: 2;
             direction: rtl;
         }
+
         .footer a {
             color: #6a8aaa;
             text-decoration: none;
             transition: color 0.2s;
         }
+
         .footer a:hover {
             color: #9ab8d8;
         }
+
         .footer .name {
             font-weight: 500;
             color: #aaa;
             font-size: 1.1em;
         }
+
         .footer .discord {
             color: #99aabb;
         }
+
         .footer .github-link {
             color: #7a8a9a;
+        }
+
+        .footer .AI {
+            color: #555;
+            font-size: 0.85em;
+            margin-top: 0.3rem;
+        }
+
+        /* ===== الزر الصغير المخفي ===== */
+        .secret-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1;
+            padding: 0;
+            user-select: none;
+        }
+
+        .secret-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .secret-btn:active {
+            transform: scale(0.92);
         }
 
         /* ===== استجابة للشاشات الصغيرة ===== */
@@ -372,6 +441,7 @@
             .toolbar .checkbox-group {
                 justify-content: center;
                 font-size: clamp(1rem, 1.2vw, 1.1rem);
+                padding: 0.3rem 0.6rem;
             }
 
             .card-slot {
@@ -403,6 +473,14 @@
                 font-size: 0.9rem;
                 padding: 1rem 0.2rem;
             }
+
+            .secret-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 16px;
+                bottom: 16px;
+                right: 16px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -421,27 +499,58 @@
             .card-slot .slot-index {
                 font-size: 0.7rem;
             }
+            .secret-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+                bottom: 12px;
+                right: 12px;
+            }
         }
 
         /* ===== أنميشن ظهور البطاقات ===== */
         @keyframes cardPopIn {
-            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .card-slot {
             animation: cardPopIn 0.5s ease both;
         }
 
-        .card-slot:nth-child(1) { animation-delay: 0.02s; }
-        .card-slot:nth-child(2) { animation-delay: 0.06s; }
-        .card-slot:nth-child(3) { animation-delay: 0.10s; }
-        .card-slot:nth-child(4) { animation-delay: 0.14s; }
-        .card-slot:nth-child(5) { animation-delay: 0.18s; }
-        .card-slot:nth-child(6) { animation-delay: 0.22s; }
-        .card-slot:nth-child(7) { animation-delay: 0.26s; }
-        .card-slot:nth-child(8) { animation-delay: 0.30s; }
-        .card-slot:nth-child(9) { animation-delay: 0.34s; }
+        .card-slot:nth-child(1) {
+            animation-delay: 0.02s;
+        }
+        .card-slot:nth-child(2) {
+            animation-delay: 0.06s;
+        }
+        .card-slot:nth-child(3) {
+            animation-delay: 0.10s;
+        }
+        .card-slot:nth-child(4) {
+            animation-delay: 0.14s;
+        }
+        .card-slot:nth-child(5) {
+            animation-delay: 0.18s;
+        }
+        .card-slot:nth-child(6) {
+            animation-delay: 0.22s;
+        }
+        .card-slot:nth-child(7) {
+            animation-delay: 0.26s;
+        }
+        .card-slot:nth-child(8) {
+            animation-delay: 0.30s;
+        }
+        .card-slot:nth-child(9) {
+            animation-delay: 0.34s;
+        }
     </style>
 </head>
 <body>
@@ -487,6 +596,9 @@
             <div class="AI">*للشفافية: تم انشاء هذه الموقع بشكل كامل مع Ai (اتوقع ان هذه الشيء واضح من تصميم الموقع)</div>
         </div>
     </div>
+
+    <!-- ===== الزر الصغير المخفي ===== -->
+    <button class="secret-btn" id="secretBtn" title="??">⍰</button>
 
     <script>
         (function() {
@@ -575,7 +687,6 @@
                 }
 
                 generateBtn.disabled = true;
-                // ===== الرابط الجديد مع رأس ngrok-skip-browser-warning =====
                 const apiUrl = 'https://f860-78-154-103-28.ngrok-free.app/cards';
                 fetch(apiUrl, {
                     headers: {
@@ -775,7 +886,7 @@
                         hasHero: false,
                         hasEvolution: false,
                         currentUrl: (supportCard.iconUrls && supportCard.iconUrls.medium) ? supportCard.iconUrls.medium :
-                        ''
+                            ''
                     };
                     deck.push(supportObj);
 
@@ -1222,6 +1333,15 @@
             });
 
             window.loadData = loadData;
+
+            // ===== الزر السري =====
+            document.getElementById('secretBtn').addEventListener('click', function() {
+                const confirmMsg = 'الموسيقى التالية قد تكون محمية بحقوق الطبع والنشر';
+                if (confirm(confirmMsg)) {
+                    window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+                }
+            });
+
         })();
     </script>
 
