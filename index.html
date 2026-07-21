@@ -484,6 +484,7 @@
             <div class="github-link">
                 <a href="https://github.com/mhmod3" target="_blank">https://github.com/mhmod3</a>
             </div>
+            <div class="AI">*للشفافية: تم انشاء هذه الموقع بشكل كامل مع Ai (اتوقع ان هذه الشيء واضح من تصميم الموقع)</div>
         </div>
     </div>
 
@@ -552,23 +553,7 @@
                 });
             }
 
-            // ---- دالة الجلب مع بروكسي احتياطي ----
-            async function fetchWithProxy(url, proxyList) {
-                for (const proxy of proxyList) {
-                    try {
-                        const proxyUrl = proxy + encodeURIComponent(url);
-                        const response = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
-                        if (!response.ok) continue;
-                        const data = await response.json();
-                        return data;
-                    } catch (e) {
-                        console.warn(`Proxy ${proxy} failed:`, e);
-                        continue;
-                    }
-                }
-                throw new Error('جميع البروكسيات فشلت');
-            }
-
+            // ===== دالة تحميل البيانات المعدلة =====
             function loadData() {
                 const stored = localStorage.getItem(STORAGE_KEY);
                 if (stored) {
@@ -590,14 +575,17 @@
                 }
 
                 generateBtn.disabled = true;
-                const targetUrl = 'http://78.154.103.28:12820/cards';
-                const proxies = [
-                    'https://api.cors.lol/?url=',
-                    'https://api.allorigins.win/raw?url=',
-                    'https://corsproxy.io/?'
-                ];
-
-                fetchWithProxy(targetUrl, proxies)
+                // ===== الرابط الجديد مع رأس ngrok-skip-browser-warning =====
+                const apiUrl = 'https://f860-78-154-103-28.ngrok-free.app/cards';
+                fetch(apiUrl, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true'
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response not ok');
+                        return response.json();
+                    })
                     .then(data => {
                         if (data && Array.isArray(data.items) && data.items.length > 0 &&
                             Array.isArray(data.supportItems) && data.supportItems.length > 0) {
