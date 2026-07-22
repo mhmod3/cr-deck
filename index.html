@@ -22,17 +22,16 @@
 
         body {
             font-family: 'Adobe Arabic', 'Segoe UI', system-ui, sans-serif;
-            background: #121212;
-            color: #e0e0e0;
-            padding: 1.5rem 0.75rem;
+            background: #0a0a0c;
+            color: #d1d1d6;
+            padding: 1.5rem 0.8rem;
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            line-height: 1.8;
-            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+            line-height: 1.6;
+            font-size: clamp(1rem, 1.4vw, 1.2rem);
             direction: rtl;
             unicode-bidi: embed;
-            background-image: radial-gradient(circle at 20% 30%, #1a1a2e 0%, #121212 80%);
             position: relative;
         }
 
@@ -41,12 +40,12 @@
             position: fixed;
             inset: 0;
             z-index: 9999;
-            background: #121212;
+            background: #0a0a0c;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
             font-family: 'Adobe Arabic', 'Segoe UI', system-ui, sans-serif;
             direction: rtl;
         }
@@ -57,70 +56,71 @@
         }
         #loadingContent {
             text-align: center;
-            max-width: 400px;
+            max-width: 320px;
             width: 90%;
-            padding: 2rem 1rem;
+            padding: 1.5rem 1rem;
         }
         #loadingText {
-            font-size: clamp(1.6rem, 4vw, 2.4rem);
-            color: #f0f0f0;
-            margin-bottom: 1.2rem;
-            letter-spacing: 1px;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            color: #e5e5ea;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.5px;
         }
         #loadingProgress {
-            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-            color: #aaa;
-            margin-bottom: 0.8rem;
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            color: #8e8e93;
+            margin-bottom: 0.6rem;
             direction: ltr;
             display: inline-block;
         }
         #loadingBar {
             width: 100%;
-            height: 8px;
-            background: #2a2a3a;
-            border-radius: 20px;
+            height: 5px;
+            background: #1c1c1e;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+            border: 1px solid #2c2c2e;
         }
         #loadingBarFill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #3a7a8a, #6ab0d0);
-            border-radius: 20px;
-            transition: width 0.3s ease;
+            background: #e5e5ea;
+            border-radius: 10px;
+            transition: width 0.25s ease;
         }
         #loadingError {
-            margin-top: 1.5rem;
-            color: #e08a8a;
-            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            margin-top: 1.2rem;
+            color: #ff453a;
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
             display: none;
         }
         #loadingError.visible {
             display: block;
         }
         #loadingRetryBtn {
-            margin-top: 0.8rem;
-            background: transparent;
-            border: 1px solid #5a3a3a;
-            color: #d0a0a0;
-            padding: 0.4rem 1.8rem;
-            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            margin-top: 0.6rem;
+            background: #1c1c1e;
+            border: 1px solid #3a3a3c;
+            color: #e5e5ea;
+            padding: 0.3rem 1.2rem;
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 6px;
             font-family: inherit;
-            transition: background 0.2s;
+            transition: background 0.2s, border-color 0.2s;
             display: none;
         }
         #loadingRetryBtn.visible {
             display: inline-block;
         }
         #loadingRetryBtn:hover {
-            background: #2a1a1a;
+            background: #2c2c2e;
+            border-color: #48484a;
         }
 
-        /* باقي الأنماط */
+        /* ===== الحاوية الرئيسية ===== */
         .container {
-            max-width: 1300px;
+            max-width: 750px;
             width: 100%;
             direction: rtl;
             unicode-bidi: embed;
@@ -131,130 +131,129 @@
         }
 
         h1 {
-            font-size: clamp(2.5rem, 5vw, 3.6rem);
-            font-weight: 500;
-            margin-bottom: 0.2rem;
+            font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+            font-weight: 600;
+            margin-bottom: 0.1rem;
             text-align: center;
-            color: #f0f0f0;
+            color: #f2f2f7;
             letter-spacing: 0.5px;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
         }
 
         .sub {
-            color: #aaa;
-            font-size: clamp(1.2rem, 1.6vw, 1.6rem);
-            border-bottom: 1px solid #2a2a3a;
-            padding-bottom: 0.8rem;
-            margin-bottom: 2rem;
+            color: #8e8e93;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            border-bottom: 1px solid #1c1c1e;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.2rem;
             text-align: center;
-            line-height: 2;
+            line-height: 1.6;
         }
 
+        /* ===== شريط الأدوات وعناصر التحكم ===== */
         .toolbar {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: center;
-            gap: 0.8rem 1.8rem;
-            margin-bottom: 2rem;
-            padding: 1.2rem 1.5rem;
-            background: #1e1e2a;
-            border-radius: 16px;
-            border: 1px solid #2a2a3a;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(2px);
+            gap: 0.8rem 1.2rem;
+            margin-bottom: 1.5rem;
+            padding: 0.8rem 1rem;
+            background: #121214;
+            border-radius: 10px;
+            border: 1px solid #1c1c1e;
         }
 
         .toolbar .btn {
-            border: 1px solid #3a3a4a;
-            background: #2a2a3a;
-            color: #d0d0e0;
-            padding: 0.8rem 2.2rem;
-            font-size: clamp(1.3rem, 1.6vw, 1.6rem);
+            border: 1px solid #2c2c2e;
+            background: #1c1c1e;
+            color: #f2f2f7;
+            padding: 0.5rem 1.4rem;
+            font-size: clamp(1rem, 1.2vw, 1.15rem);
             cursor: pointer;
-            border-radius: 12px;
+            border-radius: 6px;
             font-family: inherit;
-            transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
-            min-width: 160px;
-            letter-spacing: 0.3px;
+            transition: all 0.2s ease;
+            min-width: 120px;
+            text-align: center;
+            outline: none;
         }
 
         .toolbar .btn:hover:not(:disabled) {
-            background: #3a3a4e;
-            border-color: #5a5a7a;
-            transform: scale(1.02);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+            background: #2c2c2e;
+            border-color: #3a3a3c;
+            color: #ffffff;
         }
 
         .toolbar .btn:active:not(:disabled) {
-            transform: scale(0.97);
+            background: #101012;
+            transform: scale(0.98);
         }
 
         .toolbar .btn:disabled {
-            opacity: 0.4;
+            opacity: 0.35;
             cursor: not-allowed;
-            transform: none;
+            border-color: #1c1c1e;
         }
 
         .toolbar .btn-primary {
-            background: #1e3a4a;
-            color: #c8e0f0;
-            border-color: #2a5a6a;
+            background: #f2f2f7;
+            color: #0a0a0c;
+            border-color: #ffffff;
+            font-weight: bold;
         }
 
         .toolbar .btn-primary:hover:not(:disabled) {
-            background: #1a4a5a;
-            border-color: #3a7a8a;
+            background: #e5e5ea;
+            border-color: #e5e5ea;
+            color: #000000;
         }
 
         .toolbar .btn-copy {
-            background: #1a3a2a;
-            color: #b0e0b0;
-            border-color: #2a5a3a;
-        }
-
-        .toolbar .btn-copy:hover:not(:disabled) {
-            background: #1a4a2a;
-            border-color: #3a7a4a;
+            background: #1c1c1e;
+            color: #d1d1d6;
+            border-color: #2c2c2e;
         }
 
         .toolbar .checkbox-group {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: clamp(1.1rem, 1.3vw, 1.3rem);
-            color: #ccc;
+            font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+            color: #aeaeb2;
             cursor: pointer;
-            background: #1a1a28;
-            padding: 0.3rem 0.8rem 0.3rem 0.6rem;
-            border-radius: 30px;
-            border: 1px solid #2a2a3a;
-            transition: background 0.2s;
+            background: #161618;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid #2c2c2e;
+            transition: background 0.2s, border-color 0.2s;
+            user-select: none;
         }
 
         .toolbar .checkbox-group:hover {
-            background: #22223a;
+            background: #1c1c1e;
+            border-color: #3a3a3c;
+            color: #f2f2f7;
         }
 
         .toolbar .checkbox-group input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
-            accent-color: #4a8aba;
+            width: 16px;
+            height: 16px;
+            accent-color: #e5e5ea;
             cursor: pointer;
             margin: 0;
         }
 
         .toolbar .checkbox-group .help-icon {
-            display: inline-block;
-            width: 1.5rem;
-            height: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.1rem;
+            height: 1.1rem;
             border-radius: 50%;
-            background: #2a2a3a;
-            border: 1px solid #3a3a4a;
-            color: #888;
-            text-align: center;
-            line-height: 1.5rem;
-            font-size: 0.95rem;
+            background: #2c2c2e;
+            border: 1px solid #3a3a3c;
+            color: #8e8e93;
+            font-size: 0.75rem;
             font-weight: bold;
             cursor: help;
             transition: background 0.2s, color 0.2s;
@@ -262,19 +261,19 @@
         }
 
         .toolbar .checkbox-group .help-icon:hover {
-            background: #3a3a4e;
-            color: #ccc;
+            background: #3a3a3c;
+            color: #f2f2f7;
         }
 
         .error-msg {
             text-align: center;
-            color: #e08a8a;
-            font-size: clamp(1.1rem, 1.3vw, 1.3rem);
-            margin: 0.5rem 0 1.2rem;
-            padding: 0.8rem 1.5rem;
-            background: #2a1a1a;
-            border: 1px solid #4a2a2a;
-            border-radius: 12px;
+            color: #ff453a;
+            font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+            margin: 0.4rem 0 1rem;
+            padding: 0.5rem 1rem;
+            background: #1c1010;
+            border: 1px solid #3a1c1c;
+            border-radius: 6px;
             display: none;
         }
 
@@ -284,202 +283,198 @@
 
         .error-msg .retry-btn {
             background: transparent;
-            border: 1px solid #5a3a3a;
-            color: #d0a0a0;
-            padding: 0.2rem 1.2rem;
-            font-size: clamp(0.9rem, 1vw, 1rem);
+            border: 1px solid #5a2c2c;
+            color: #ff8080;
+            padding: 0.15rem 0.8rem;
+            font-size: clamp(0.8rem, 0.95vw, 0.88rem);
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 4px;
             font-family: inherit;
-            margin-right: 0.5rem;
+            margin-right: 0.4rem;
             transition: background 0.2s;
         }
 
         .error-msg .retry-btn:hover {
-            background: #2a1a1a;
+            background: #2a1414;
         }
 
+        /* ===== منطقة التشكيلة (الصف الأول والصف الثاني والبطاقة الأخيرة) ===== */
         .deck-container {
             display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            padding: 2.5rem 1rem;
-            min-height: 300px;
-            background: #16161e;
-            border: 1px solid #2a2a3a;
-            border-radius: 20px;
-            transition: border-color 0.3s;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 0;
+            min-height: 250px;
             flex: 1;
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .deck-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.6rem;
+            width: 100%;
+            max-width: 520px; /* تم تصغير الحجم الأقصى للشبكة */
+            direction: ltr; /* العد من اليسار إلى اليمين */
         }
 
         .deck-container .placeholder {
             width: 100%;
             text-align: center;
-            color: #555;
-            font-size: clamp(1.4rem, 1.8vw, 1.8rem);
-            padding: 3rem 0;
+            color: #636366;
+            font-size: clamp(1rem, 1.3vw, 1.2rem);
+            padding: 4rem 0;
             user-select: none;
         }
 
+        /* ===== البطاقات الفردية أصغر حجماً ===== */
         .card-slot {
-            width: 170px;
-            text-align: center;
-            background: #1a1a26;
-            border: 2px solid #2a2a3a;
-            border-radius: 20px;
-            padding: 0.9rem 0.3rem 0.8rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.4rem;
             position: relative;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            animation: cardPopIn 0.5s ease both;
+            background: #121214;
+            border: 1px solid #1c1c1e;
+            border-radius: 8px;
+            padding: 0.35rem;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            animation: cardPopIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+            direction: rtl;
         }
 
         .card-slot:hover {
-            transform: translateY(-6px);
-            border-color: #4a7a9a;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+            transform: translateY(-3px);
+            border-color: #3a3a3c;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        /* البطاقة 9 السفلية (المساندة/الدعم) بحجم صغير ومنظم */
+        .card-slot.support-card {
+            width: 95px;
+            margin-top: 0.2rem;
+            border-color: #2c2c2e;
+            background: #0f0f11;
+        }
+
+        .card-slot img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1.22;
+            object-fit: contain;
+            display: block;
+            border-radius: 4px;
+            transition: filter 0.2s ease, opacity 0.2s ease;
+        }
+
+        /* إخفاء البطاقة أثناء الانميشن لتفادي معرفتها */
+        .card-slot.animating img {
+            filter: blur(4px) opacity(0.5);
         }
 
         .card-slot .glow-frame {
             position: absolute;
-            inset: -5px;
-            border-radius: 24px;
-            border: 5px solid transparent;
+            inset: -2px;
+            border-radius: 10px;
+            border: 2px solid transparent;
             pointer-events: none;
-            transition: border-color 0.1s;
+            transition: border-color 0.2s, box-shadow 0.2s;
             z-index: 10;
         }
 
         .card-slot .glow-frame.active {
-            border-color: #ffd700;
-            box-shadow: 0 0 20px #ffd70088, 0 0 40px #ffd70044;
-            animation: pulseGlow 0.5s ease-in-out infinite alternate;
+            border-color: #8e8e93;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+            animation: pulseGlow 0.4s ease-in-out infinite alternate;
         }
 
         @keyframes pulseGlow {
-            0% {
-                box-shadow: 0 0 10px #ffd70066, 0 0 20px #ffd70033;
-            }
-            100% {
-                box-shadow: 0 0 30px #ffd700cc, 0 0 60px #ffd70066;
-            }
-        }
-
-        .card-slot img {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
-            display: block;
-            background: #1a1a26;
-            border-radius: 14px;
-            border: 2px solid #2a2a3a;
-            transition: border-color 0.2s;
-            position: relative;
-            z-index: 5;
-            padding: 6px;
-        }
-
-        .card-slot:hover img {
-            border-color: #4a7a9a;
+            0% { box-shadow: 0 0 3px rgba(255, 255, 255, 0.1); }
+            100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.25); }
         }
 
         .card-slot .card-name {
-            font-size: clamp(1.1rem, 1.3vw, 1.4rem);
-            line-height: 1.6;
-            color: #e8e8f0;
-            max-width: 150px;
+            font-size: clamp(0.75rem, 0.9vw, 0.88rem);
+            line-height: 1.25;
+            color: #e5e5ea;
+            width: 100%;
             word-break: break-word;
             font-weight: 400;
-            position: relative;
-            z-index: 5;
-            min-height: 3.2rem;
+            margin-top: 0.35rem;
+            text-align: center;
+            padding: 0 1px;
+            min-height: 2.4em;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-            padding: 0 2px;
         }
 
         .card-slot .slot-index {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #aaa;
-            margin-top: 0.2rem;
-            position: relative;
-            z-index: 5;
-            background: #1a1a26;
-            padding: 0 12px;
-            border-radius: 20px;
-            border: 1px solid #2a2a3a;
-            line-height: 1.8;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #636366;
+            margin-top: 0.1rem;
+            line-height: 1;
         }
 
+        /* ===== الذيل (Footer) ===== */
         .footer {
-            margin-top: 2.5rem;
-            padding: 1.2rem 0.5rem;
-            border-top: 1px solid #2a2a3a;
+            margin-top: auto;
+            padding: 1.2rem 0.5rem 0.5rem;
+            border-top: 1px solid #1c1c1e;
             text-align: center;
-            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
-            color: #666;
-            line-height: 2;
+            font-size: clamp(0.8rem, 0.95vw, 0.9rem);
+            color: #636366;
+            line-height: 1.6;
             direction: rtl;
         }
 
         .footer a {
-            color: #6a8aaa;
+            color: #8e8e93;
             text-decoration: none;
             transition: color 0.2s;
         }
 
         .footer a:hover {
-            color: #9ab8d8;
+            color: #e5e5ea;
         }
 
         .footer .name {
             font-weight: 500;
-            color: #aaa;
-            font-size: 1.1em;
+            color: #aeaeb2;
+            font-size: 1.05em;
         }
 
         .footer .discord {
-            color: #99aabb;
+            color: #8e8e93;
         }
 
         .footer .github-link {
-            color: #7a8a9a;
+            color: #636366;
         }
 
         .footer .AI {
-            color: #555;
-            font-size: 0.85em;
-            margin-top: 0.3rem;
+            color: #48484a;
+            font-size: 0.82em;
+            margin-top: 0.2rem;
         }
 
         .secret-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
+            bottom: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.15);
-            font-size: 20px;
+            background: #121214;
+            border: 1px solid #1c1c1e;
+            color: #48484a;
+            font-size: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 999;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             font-family: 'Segoe UI', system-ui, sans-serif;
             line-height: 1;
             padding: 0;
@@ -487,132 +482,59 @@
         }
 
         .secret-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.4);
-            transform: scale(1.05);
+            background: #1c1c1e;
+            border-color: #2c2c2e;
+            color: #8e8e93;
         }
 
         .secret-btn:active {
             transform: scale(0.92);
         }
 
-        @media (max-width: 700px) {
-            .container {
-                padding: 0 0.3rem;
+        @media (max-width: 550px) {
+            .deck-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.4rem;
+                max-width: 100%;
+            }
+            .card-slot {
+                padding: 0.25rem;
+                border-radius: 6px;
+            }
+            .card-slot .card-name {
+                font-size: 0.68rem;
+                min-height: 2.2em;
+            }
+            .card-slot .slot-index {
+                font-size: 0.6rem;
+            }
+            .card-slot.support-card {
+                width: 75px;
             }
             .toolbar {
                 flex-direction: column;
                 align-items: stretch;
-                gap: 0.8rem;
-                padding: 1rem 0.8rem;
+                gap: 0.5rem;
             }
             .toolbar .btn {
                 width: 100%;
                 min-width: unset;
-                padding: 0.8rem;
-                font-size: clamp(1.1rem, 1.5vw, 1.2rem);
+                padding: 0.5rem;
             }
             .toolbar .checkbox-group {
                 justify-content: center;
-                font-size: clamp(1rem, 1.2vw, 1.1rem);
-                padding: 0.3rem 0.6rem;
-            }
-            .card-slot {
-                width: 130px;
-                padding: 0.6rem 0.2rem 0.6rem;
-            }
-            .card-slot img {
-                width: 90px;
-                height: 90px;
-            }
-            .card-slot .card-name {
-                font-size: clamp(0.9rem, 1.1vw, 1rem);
-                max-width: 110px;
-                min-height: 2.6rem;
-            }
-            .card-slot .slot-index {
-                font-size: 0.85rem;
-            }
-            .deck-container {
-                gap: 1rem;
-                padding: 1.5rem 0.3rem;
-            }
-            .footer {
-                font-size: 0.9rem;
-                padding: 1rem 0.2rem;
-            }
-            .secret-btn {
-                width: 34px;
-                height: 34px;
-                font-size: 16px;
-                bottom: 16px;
-                right: 16px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .card-slot {
-                width: 100px;
-            }
-            .card-slot img {
-                width: 70px;
-                height: 70px;
-            }
-            .card-slot .card-name {
-                font-size: clamp(0.7rem, 0.9vw, 0.8rem);
-                max-width: 85px;
-                min-height: 2.2rem;
-            }
-            .card-slot .slot-index {
-                font-size: 0.7rem;
-            }
-            .secret-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 14px;
-                bottom: 12px;
-                right: 12px;
             }
         }
 
         @keyframes cardPopIn {
             0% {
                 opacity: 0;
-                transform: scale(0.8) translateY(20px);
+                transform: scale(0.92);
             }
             100% {
                 opacity: 1;
-                transform: scale(1) translateY(0);
+                transform: scale(1);
             }
-        }
-
-        .card-slot:nth-child(1) {
-            animation-delay: 0.02s;
-        }
-        .card-slot:nth-child(2) {
-            animation-delay: 0.06s;
-        }
-        .card-slot:nth-child(3) {
-            animation-delay: 0.10s;
-        }
-        .card-slot:nth-child(4) {
-            animation-delay: 0.14s;
-        }
-        .card-slot:nth-child(5) {
-            animation-delay: 0.18s;
-        }
-        .card-slot:nth-child(6) {
-            animation-delay: 0.22s;
-        }
-        .card-slot:nth-child(7) {
-            animation-delay: 0.26s;
-        }
-        .card-slot:nth-child(8) {
-            animation-delay: 0.30s;
-        }
-        .card-slot:nth-child(9) {
-            animation-delay: 0.34s;
         }
     </style>
 </head>
@@ -643,7 +565,7 @@
 
         <div class="toolbar">
             <button class="btn btn-primary" id="generateBtn" disabled>إنشاء تشكيلة</button>
-            <button class="btn btn-copy" id="copyBtn" disabled>نسخ رابط التشكيلة</button>
+            <button class="btn btn-copy" id="copyBtn" disabled>نسخ التشكيلة</button>
             <label class="checkbox-group">
                 <input type="checkbox" id="randomIconsCheck" />
                 اختيار بواسل و مطورات عشوائيا
@@ -663,7 +585,7 @@
         <div id="errorMsg" class="error-msg"></div>
 
         <div id="deckContainer" class="deck-container">
-            <div class="placeholder">اضغط على زر "أنشاء تشكيلة" لانشاء تشكيلة</div>
+            <div class="placeholder">اضغط على زر "إنشاء تشكيلة" لإصدار التشكيلة</div>
         </div>
 
         <div class="footer">
@@ -672,7 +594,7 @@
             <div class="github-link">
                 <a href="https://github.com/mhmod3" target="_blank">https://github.com/mhmod3</a>
             </div>
-            <div class="AI">*للشفافية: تم انشاء هذه الموقع بشكل كامل مع Ai (اتوقع ان هذه الشيء واضح من تصميم الموقع)</div>
+            <div class="AI">*للشفافية: تم إنشاء هذا الموقع بشكل كامل مع Ai</div>
         </div>
     </div>
 
@@ -682,7 +604,6 @@
         (function() {
             "use strict";
 
-            // عناصر شاشة التحميل
             const loadingScreen = document.getElementById('loadingScreen');
             const loadingText = document.getElementById('loadingText');
             const loadingProgress = document.getElementById('loadingProgress');
@@ -714,7 +635,6 @@
                 28000023, 28000024, 28000026
             ]);
 
-            // ===== دوال التحميل =====
             function updateLoadingProgress(loaded, total) {
                 const percent = total === 0 ? 100 : Math.round((loaded / total) * 100);
                 loadingProgress.textContent = percent + '%';
@@ -746,7 +666,6 @@
                 loadingText.textContent = 'جاري تحميل البطاقات...';
             }
 
-            // ===== تحميل الصور (بدون مهلة) =====
             function loadAllImages(cards) {
                 const urls = new Set();
                 cards.forEach(card => {
@@ -783,19 +702,16 @@
                             checkDone();
                         };
                         img.onerror = () => {
-                            // تجاهل الصورة الفاشلة واعتبارها محملة
                             loaded++;
                             updateLoadingProgress(loaded, total);
                             checkDone();
                         };
                         img.src = url;
-                        // إضافة الصورة إلى الخريطة للاستخدام لاحقاً (اختياري)
                         preloadedImages.set(url, img);
                     });
                 });
             }
 
-            // ===== معالجة البيانات =====
             function processCard(card) {
                 const iconUrls = card.iconUrls || {};
                 const hasHero = iconUrls.hasOwnProperty('heroMedium');
@@ -813,7 +729,6 @@
                 };
             }
 
-            // ===== تحميل البيانات (مع الصور) =====
             async function loadData() {
                 showLoading();
                 generateBtn.disabled = true;
@@ -829,11 +744,10 @@
                             Array.isArray(parsed.supportItems) && parsed.supportItems.length > 0) {
                             data = parsed;
                         }
-                    } catch (_) { /* ignore */ }
+                    } catch (_) { }
                 }
 
                 if (!data) {
-                    // محاولة جلب من API
                     try {
                         const apiUrl = 'https://f860-78-154-103-28.ngrok-free.app/cards';
                         const response = await fetch(apiUrl, {
@@ -857,30 +771,23 @@
                     }
                 }
 
-                // معالجة البطاقات
                 const processedItems = data.items.map(c => processCard(c));
                 const processedSupport = data.supportItems.slice();
-
-                // تجميع كل البطاقات لتحميل الصور
                 const allCardsData = [...processedItems, ...processedSupport];
 
-                // تحميل الصور (انتظار حتى الانتهاء)
                 await loadAllImages(allCardsData);
 
-                // تعيين المتغيرات
                 allCards = processedItems.filter(c => !c.isSpell);
                 spells = processedItems.filter(c => c.isSpell);
                 supportCards = processedSupport;
                 dataLoaded = true;
 
-                // إخفاء شاشة التحميل
                 hideLoading();
                 generateBtn.disabled = false;
                 showPlaceholder();
                 hideError();
             }
 
-            // ===== دوال عرض الأخطاء والمكان الفارغ =====
             function showError(msg, withRetry = false) {
                 errorMsg.textContent = msg;
                 errorMsg.classList.add('visible');
@@ -908,12 +815,11 @@
             }
 
             function showPlaceholder() {
-                deckContainer.innerHTML = '<div class="placeholder">اضغط على زر "أنشاء تشكيلة" لانشاء تشكيلة</div>';
+                deckContainer.innerHTML = '<div class="placeholder">اضغط على زر "إنشاء تشكيلة" لإصدار التشكيلة</div>';
                 copyBtn.disabled = true;
                 lastDeckIds = null;
             }
 
-            // ===== خوارزميات التشكيلة =====
             function shuffleArray(arr) {
                 for (let i = arr.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -998,40 +904,15 @@
                     shuffleArray(special);
                     shuffleArray(champions);
 
-                    let slot0 = null;
-                    if (normal.length > 0) {
-                        slot0 = normal.splice(0, 1)[0];
-                    } else if (special.length > 0) {
-                        slot0 = special.splice(0, 1)[0];
-                    } else {
-                        slot0 = champions.splice(0, 1)[0];
-                    }
+                    let slot0 = normal.length > 0 ? normal.splice(0, 1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : champions.splice(0, 1)[0]);
                     setIcon(slot0, 'medium');
                     deck.push(slot0);
 
-                    let slot1 = null;
-                    if (champions.length > 0) {
-                        slot1 = champions.splice(0, 1)[0];
-                    } else if (normal.length > 0) {
-                        slot1 = normal.splice(0, 1)[0];
-                    } else if (special.length > 0) {
-                        slot1 = special.splice(0, 1)[0];
-                    } else {
-                        slot1 = { ...initialSelection[0] };
-                    }
+                    let slot1 = champions.length > 0 ? champions.splice(0, 1)[0] : (normal.length > 0 ? normal.splice(0, 1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : { ...initialSelection[0] }));
                     setIcon(slot1, 'medium');
                     deck.push(slot1);
 
-                    let slot2 = null;
-                    if (champions.length > 0) {
-                        slot2 = champions.splice(0, 1)[0];
-                    } else if (normal.length > 0) {
-                        slot2 = normal.splice(0, 1)[0];
-                    } else if (special.length > 0) {
-                        slot2 = special.splice(0, 1)[0];
-                    } else {
-                        slot2 = { ...initialSelection[0] };
-                    }
+                    let slot2 = champions.length > 0 ? champions.splice(0, 1)[0] : (normal.length > 0 ? normal.splice(0, 1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : { ...initialSelection[0] }));
                     setIcon(slot2, 'medium');
                     deck.push(slot2);
 
@@ -1056,8 +937,7 @@
                         isChampion: false,
                         hasHero: false,
                         hasEvolution: false,
-                        currentUrl: (supportCard.iconUrls && supportCard.iconUrls.medium) ? supportCard.iconUrls.medium :
-                            ''
+                        currentUrl: (supportCard.iconUrls && supportCard.iconUrls.medium) ? supportCard.iconUrls.medium : ''
                     };
                     deck.push(supportObj);
 
@@ -1071,44 +951,22 @@
                     }));
                 }
 
-                // ---- الوضع العشوائي ----
-                let slot0 = null;
-                slot0 = extractCard(item => item.currentIcon === 'evolutionMedium', null);
-                if (!slot0) {
-                    slot0 = extractCard(item => !item.hasEvolution, 'medium');
-                }
-                if (!slot0) {
-                    slot0 = extractCard(item => !item.isChampion, 'medium');
-                }
-                if (!slot0) {
-                    return null;
-                }
+                let slot0 = extractCard(item => item.currentIcon === 'evolutionMedium', null);
+                if (!slot0) slot0 = extractCard(item => !item.hasEvolution, 'medium');
+                if (!slot0) slot0 = extractCard(item => !item.isChampion, 'medium');
+                if (!slot0) return null;
                 deck.push(slot0);
 
-                let slot1 = null;
-                slot1 = extractCard(item => item.currentIcon === 'heroMedium', null);
-                if (!slot1) {
-                    slot1 = extractCard(item => item.isChampion, 'medium');
-                }
-                if (!slot1) {
-                    slot1 = extractCard(item => item.currentIcon === 'evolutionMedium', 'medium');
-                }
-                if (!slot1) {
-                    slot1 = extractCard(() => true, 'medium');
-                }
+                let slot1 = extractCard(item => item.currentIcon === 'heroMedium', null);
+                if (!slot1) slot1 = extractCard(item => item.isChampion, 'medium');
+                if (!slot1) slot1 = extractCard(item => item.currentIcon === 'evolutionMedium', 'medium');
+                if (!slot1) slot1 = extractCard(() => true, 'medium');
                 deck.push(slot1);
 
-                let slot2 = null;
-                slot2 = extractCard(item => item.currentIcon === 'heroMedium', null);
-                if (!slot2) {
-                    slot2 = extractCard(item => item.currentIcon === 'evolutionMedium', null);
-                }
-                if (!slot2) {
-                    slot2 = extractCard(item => item.isChampion, 'medium');
-                }
-                if (!slot2) {
-                    slot2 = extractCard(() => true, 'medium');
-                }
+                let slot2 = extractCard(item => item.currentIcon === 'heroMedium', null);
+                if (!slot2) slot2 = extractCard(item => item.currentIcon === 'evolutionMedium', null);
+                if (!slot2) slot2 = extractCard(item => item.isChampion, 'medium');
+                if (!slot2) slot2 = extractCard(() => true, 'medium');
                 deck.push(slot2);
 
                 let championInPool = null;
@@ -1123,17 +981,14 @@
 
                 if (championInPool) {
                     let targetSlotIndex = -1;
-                    const preference = [1, 2];
-                    for (const idx of preference) {
+                    for (const idx of [1, 2]) {
                         const slot = deck[idx];
                         if (!slot.isChampion && !slot.hasHero && !slot.hasEvolution && slot.currentIcon === 'medium') {
                             targetSlotIndex = idx;
                             break;
                         }
                     }
-                    if (targetSlotIndex === -1) {
-                        return null;
-                    }
+                    if (targetSlotIndex === -1) return null;
                     const replacedCard = deck[targetSlotIndex];
                     setIcon(championInPool, 'medium');
                     deck[targetSlotIndex] = championInPool;
@@ -1150,9 +1005,7 @@
                                 break;
                             }
                         }
-                        if (replacementIdx === -1) {
-                            return null;
-                        }
+                        if (replacementIdx === -1) return null;
                         const replacement = pool.splice(replacementIdx, 1)[0];
                         setIcon(replacement, 'medium');
                         pool.push(slot);
@@ -1162,8 +1015,7 @@
 
                 let usedHero = 0;
                 let usedEvo = 0;
-                const firstThree = deck.slice(0, 3);
-                firstThree.forEach(item => {
+                deck.slice(0, 3).forEach(item => {
                     if (item.currentIcon === 'heroMedium') usedHero++;
                     if (item.currentIcon === 'evolutionMedium') usedEvo++;
                 });
@@ -1173,32 +1025,20 @@
                 const remainingEvo = [];
                 while (pool.length > 0) {
                     const item = pool.splice(0, 1)[0];
-                    if (item.currentIcon === 'medium') {
-                        remainingMedium.push(item);
-                    } else if (item.currentIcon === 'heroMedium') {
-                        remainingHero.push(item);
-                    } else if (item.currentIcon === 'evolutionMedium') {
-                        remainingEvo.push(item);
-                    } else {
-                        remainingMedium.push(item);
-                    }
+                    if (item.currentIcon === 'medium') remainingMedium.push(item);
+                    else if (item.currentIcon === 'heroMedium') remainingHero.push(item);
+                    else if (item.currentIcon === 'evolutionMedium') remainingEvo.push(item);
+                    else remainingMedium.push(item);
                 }
                 shuffleArray(remainingMedium);
                 shuffleArray(remainingHero);
                 shuffleArray(remainingEvo);
 
-                const sortedRemaining = remainingMedium.concat(remainingHero, remainingEvo);
-
-                for (const item of sortedRemaining) {
-                    if (item.currentIcon === 'heroMedium' && usedHero >= 2) {
-                        setIcon(item, 'medium');
-                    } else if (item.currentIcon === 'evolutionMedium' && usedEvo >= 2) {
-                        setIcon(item, 'medium');
-                    } else if (item.currentIcon === 'heroMedium') {
-                        usedHero++;
-                    } else if (item.currentIcon === 'evolutionMedium') {
-                        usedEvo++;
-                    }
+                for (const item of remainingMedium.concat(remainingHero, remainingEvo)) {
+                    if (item.currentIcon === 'heroMedium' && usedHero >= 2) setIcon(item, 'medium');
+                    else if (item.currentIcon === 'evolutionMedium' && usedEvo >= 2) setIcon(item, 'medium');
+                    else if (item.currentIcon === 'heroMedium') usedHero++;
+                    else if (item.currentIcon === 'evolutionMedium') usedEvo++;
                     deck.push(item);
                 }
 
@@ -1282,8 +1122,7 @@
                             isChampion: card.champion || false,
                             hasHero: card.hasHero || false,
                             hasEvolution: card.hasEvolution || false,
-                            iconUrl: (card.iconUrls && card.iconUrls[icon]) ? card.iconUrls[icon] : (card
-                                .iconUrls && card.iconUrls.medium ? card.iconUrls.medium : '')
+                            iconUrl: (card.iconUrls && card.iconUrls[icon]) ? card.iconUrls[icon] : (card.iconUrls && card.iconUrls.medium ? card.iconUrls.medium : '')
                         };
                     });
                 } else {
@@ -1297,11 +1136,9 @@
                     }));
                 }
 
-                const deck = orderSlots(initialSelection, supportCard, useRandomIcons);
-                return deck;
+                return orderSlots(initialSelection, supportCard, useRandomIcons);
             }
 
-            // ===== أنميشن و عرض =====
             function animateCardSlot(cardElement, finalSlotData, delay) {
                 return new Promise((resolve) => {
                     const img = cardElement.querySelector('img');
@@ -1309,28 +1146,29 @@
                     const glow = cardElement.querySelector('.glow-frame');
 
                     glow.classList.add('active');
+                    cardElement.classList.add('animating');
 
                     const allPossibleCards = [...allCards, ...supportCards];
                     let intervalId;
                     let counter = 0;
-                    const totalSteps = 20;
-                    const stepDuration = 80;
+                    const totalSteps = 12;
+                    const stepDuration = 60;
 
                     function changeStep() {
                         const randomCard = allPossibleCards[Math.floor(Math.random() * allPossibleCards.length)];
-                        const randomIcon = randomCard.iconUrls && randomCard.iconUrls.medium ? randomCard.iconUrls.medium :
-                            '';
+                        const randomIcon = randomCard.iconUrls && randomCard.iconUrls.medium ? randomCard.iconUrls.medium : '';
                         img.src = randomIcon;
-                        nameSpan.textContent = randomCard.name || '???';
+                        nameSpan.textContent = '???';
                         counter++;
                         if (counter >= totalSteps) {
                             clearInterval(intervalId);
                             img.src = finalSlotData.iconUrl || '';
                             nameSpan.textContent = finalSlotData.cardData.name || '---';
+                            cardElement.classList.remove('animating');
                             setTimeout(() => {
                                 glow.classList.remove('active');
                                 resolve();
-                            }, 400);
+                            }, 200);
                         }
                     }
 
@@ -1342,10 +1180,11 @@
                             clearInterval(intervalId);
                             img.src = finalSlotData.iconUrl || '';
                             nameSpan.textContent = finalSlotData.cardData.name || '---';
+                            cardElement.classList.remove('animating');
                             glow.classList.remove('active');
                             resolve();
                         }
-                    }, (totalSteps + 2) * stepDuration + 500);
+                    }, (totalSteps + 2) * stepDuration + 200);
                 });
             }
 
@@ -1354,42 +1193,32 @@
                 const ids = [];
                 const cardElements = [];
 
-                deckSlots.forEach((slot, idx) => {
-                    const div = document.createElement('div');
-                    div.className = 'card-slot';
+                const gridDiv = document.createElement('div');
+                gridDiv.className = 'deck-grid';
 
-                    const glow = document.createElement('div');
-                    glow.className = 'glow-frame';
-                    div.appendChild(glow);
-
-                    const img = document.createElement('img');
-                    img.src = slot.iconUrl || '';
-                    img.alt = slot.cardData.name || 'بطاقة';
-                    img.loading = 'lazy';
-                    img.onerror = function() { this.style.display = 'none'; };
-
-                    const nameSpan = document.createElement('span');
-                    nameSpan.className = 'card-name';
-                    nameSpan.textContent = slot.cardData.name || '---';
-
-                    const indexSpan = document.createElement('span');
-                    indexSpan.className = 'slot-index';
-                    indexSpan.textContent = `#${idx+1}`;
-
-                    div.appendChild(img);
-                    div.appendChild(nameSpan);
-                    div.appendChild(indexSpan);
-                    deckContainer.appendChild(div);
-
+                deckSlots.slice(0, 8).forEach((slot, idx) => {
+                    const div = createCardElement(slot, idx);
+                    gridDiv.appendChild(div);
                     ids.push(slot.cardData.id);
                     cardElements.push({ element: div, finalData: slot });
                 });
+
+                deckContainer.appendChild(gridDiv);
+
+                if (deckSlots.length === 9) {
+                    const supportSlot = deckSlots[8];
+                    const supportDiv = createCardElement(supportSlot, 8);
+                    supportDiv.classList.add('support-card');
+                    deckContainer.appendChild(supportDiv);
+                    ids.push(supportSlot.cardData.id);
+                    cardElements.push({ element: supportDiv, finalData: supportSlot });
+                }
 
                 lastDeckIds = ids;
                 copyBtn.disabled = true;
 
                 const promises = cardElements.map((item, index) => {
-                    const delay = index * 200;
+                    const delay = index * 80;
                     return new Promise((resolve) => {
                         setTimeout(() => {
                             animateCardSlot(item.element, item.finalData, delay).then(resolve);
@@ -1400,6 +1229,35 @@
                 Promise.all(promises).then(() => {
                     copyBtn.disabled = false;
                 });
+            }
+
+            function createCardElement(slot, idx) {
+                const div = document.createElement('div');
+                div.className = 'card-slot';
+
+                const glow = document.createElement('div');
+                glow.className = 'glow-frame';
+                div.appendChild(glow);
+
+                const img = document.createElement('img');
+                img.src = slot.iconUrl || '';
+                img.alt = slot.cardData.name || 'بطاقة';
+                img.loading = 'lazy';
+                img.onerror = function() { this.style.display = 'none'; };
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'card-name';
+                nameSpan.textContent = slot.cardData.name || '---';
+
+                const indexSpan = document.createElement('span');
+                indexSpan.className = 'slot-index';
+                indexSpan.textContent = `#${idx+1}`;
+
+                div.appendChild(img);
+                div.appendChild(nameSpan);
+                div.appendChild(indexSpan);
+
+                return div;
             }
 
             function generateDeck() {
@@ -1417,9 +1275,8 @@
                 const forceSpells = forceSpellsCheck.checked;
                 let finalDeck = null;
                 let attempts = 0;
-                const MAX_ATTEMPTS = 3;
 
-                while (attempts < MAX_ATTEMPTS) {
+                while (attempts < 3) {
                     attempts++;
                     const result = tryGenerateOnce(useRandomIcons, forceSpells);
                     if (result) {
@@ -1440,20 +1297,16 @@
                 generateBtn.disabled = false;
             }
 
-            // ===== نسخ التشكيلة =====
             function copyDeck() {
                 if (!lastDeckIds || lastDeckIds.length !== 9) return;
                 const deckIds = lastDeckIds.slice(0, 8).join(';');
                 const supportId = lastDeckIds[8];
-                const url =
-                    `https://link.clashroyale.com/en/?clashroyale://copyDeck?deck=${deckIds}&l=Royals&tt=${supportId}`;
+                const url = `https://link.clashroyale.com/en/?clashroyale://copyDeck?deck=${deckIds}&l=Royals&tt=${supportId}`;
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(url).then(() => {
                         copyBtn.textContent = 'تم النسخ!';
-                        setTimeout(() => { copyBtn.textContent = 'نسخ رابط التشكيلة'; }, 1500);
-                    }).catch(() => {
-                        fallbackCopy(url);
-                    });
+                        setTimeout(() => { copyBtn.textContent = 'نسخ التشكيلة'; }, 1500);
+                    }).catch(() => fallbackCopy(url));
                 } else {
                     fallbackCopy(url);
                 }
@@ -1469,14 +1322,13 @@
                 try {
                     document.execCommand('copy');
                     copyBtn.textContent = 'تم النسخ!';
-                    setTimeout(() => { copyBtn.textContent = 'نسخ رابط التشكيلة'; }, 1500);
+                    setTimeout(() => { copyBtn.textContent = 'نسخ التشكيلة'; }, 1500);
                 } catch (e) {
                     alert('تعذر نسخ الرابط. يمكنك نسخه يدوياً:\n' + text);
                 }
                 document.body.removeChild(textarea);
             }
 
-            // ===== ربط الأحداث =====
             generateBtn.addEventListener('click', function() {
                 if (!dataLoaded) {
                     loadData();
@@ -1488,22 +1340,14 @@
             copyBtn.addEventListener('click', copyDeck);
 
             document.getElementById('secretBtn').addEventListener('click', function() {
-                const confirmMsg = 'الموسيقى التالية قد تكون محمية بحقوق الطبع والنشر';
-                if (confirm(confirmMsg)) {
+                if (confirm('الموسيقى التالية قد تكون محمية بحقوق الطبع والنشر')) {
                     window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
                 }
             });
 
-            // ===== بدء التطبيق =====
-            window.addEventListener('DOMContentLoaded', function() {
-                loadData();
-            });
-
-            // جعل loadData متاحة عالمياً في حال الحاجة
+            window.addEventListener('DOMContentLoaded', loadData);
             window.loadData = loadData;
-
         })();
     </script>
-
 </body>
 </html>
