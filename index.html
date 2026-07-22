@@ -565,7 +565,7 @@
 
         <div class="toolbar">
             <button class="btn btn-primary" id="generateBtn" disabled>إنشاء تشكيلة</button>
-            <button class="btn btn-copy" id="copyBtn" disabled>نسخ التشكيلة</button>
+            <button class="btn btn-copy" id="copyBtn" disabled>نسخ رابط التشكيلة</button>
             <label class="checkbox-group">
                 <input type="checkbox" id="randomIconsCheck" />
                 اختيار بواسل و مطورات عشوائيا
@@ -1305,7 +1305,7 @@
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(url).then(() => {
                         copyBtn.textContent = 'تم النسخ!';
-                        setTimeout(() => { copyBtn.textContent = 'نسخ التشكيلة'; }, 1500);
+                        setTimeout(() => { copyBtn.textContent = 'نسخ رابط التشكيلة'; }, 1500);
                     }).catch(() => fallbackCopy(url));
                 } else {
                     fallbackCopy(url);
@@ -1322,7 +1322,7 @@
                 try {
                     document.execCommand('copy');
                     copyBtn.textContent = 'تم النسخ!';
-                    setTimeout(() => { copyBtn.textContent = 'نسخ التشكيلة'; }, 1500);
+                    setTimeout(() => { copyBtn.textContent = 'نسخ رابط التشكيلة'; }, 1500);
                 } catch (e) {
                     alert('تعذر نسخ الرابط. يمكنك نسخه يدوياً:\n' + text);
                 }
