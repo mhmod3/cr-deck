@@ -298,7 +298,7 @@
             background: #2a1414;
         }
 
-        /* ===== منطقة التشكيلة (الصف الأول والصف الثاني والبطاقة الأخيرة) ===== */
+        /* ===== منطقة التشكيلة ===== */
         .deck-container {
             display: flex;
             flex-direction: column;
@@ -314,8 +314,8 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 0.6rem;
             width: 100%;
-            max-width: 520px; /* تم تصغير الحجم الأقصى للشبكة */
-            direction: ltr; /* العد من اليسار إلى اليمين */
+            max-width: 520px;
+            direction: ltr;
         }
 
         .deck-container .placeholder {
@@ -327,7 +327,6 @@
             user-select: none;
         }
 
-        /* ===== البطاقات الفردية أصغر حجماً ===== */
         .card-slot {
             display: flex;
             flex-direction: column;
@@ -348,7 +347,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
         }
 
-        /* البطاقة 9 السفلية (المساندة/الدعم) بحجم صغير ومنظم */
         .card-slot.support-card {
             width: 95px;
             margin-top: 0.2rem;
@@ -366,7 +364,6 @@
             transition: filter 0.2s ease, opacity 0.2s ease;
         }
 
-        /* إخفاء البطاقة أثناء الانميشن لتفادي معرفتها */
         .card-slot.animating img {
             filter: blur(4px) opacity(0.5);
         }
@@ -416,7 +413,6 @@
             line-height: 1;
         }
 
-        /* ===== الذيل (Footer) ===== */
         .footer {
             margin-top: auto;
             padding: 1.2rem 0.5rem 0.5rem;
@@ -635,6 +631,7 @@
                 28000023, 28000024, 28000026
             ]);
 
+            // ===== دوال شاشة التحميل =====
             function updateLoadingProgress(loaded, total) {
                 const percent = total === 0 ? 100 : Math.round((loaded / total) * 100);
                 loadingProgress.textContent = percent + '%';
@@ -666,6 +663,7 @@
                 loadingText.textContent = 'جاري تحميل البطاقات...';
             }
 
+            // ===== تحميل الصور =====
             function loadAllImages(cards) {
                 const urls = new Set();
                 cards.forEach(card => {
@@ -712,6 +710,7 @@
                 });
             }
 
+            // ===== معالجة البطاقة =====
             function processCard(card) {
                 const iconUrls = card.iconUrls || {};
                 const hasHero = iconUrls.hasOwnProperty('heroMedium');
@@ -729,11 +728,13 @@
                 };
             }
 
+            // ===== تحميل البيانات (مع تعديل إزالة الرأس غير الضروري) =====
             async function loadData() {
                 showLoading();
                 generateBtn.disabled = true;
                 copyBtn.disabled = true;
 
+                // 1. محاولة قراءة من localStorage
                 const stored = localStorage.getItem(STORAGE_KEY);
                 let data = null;
 
@@ -747,18 +748,19 @@
                     } catch (_) { }
                 }
 
+                // 2. إذا لم توجد بيانات مخزنة أو كانت غير صالحة، نجلب من الشبكة
                 if (!data) {
                     try {
-                        const apiUrl = 'https://f860-78-154-103-28.ngrok-free.app/cards';
-                        const response = await fetch(apiUrl, {
-                            headers: { 'ngrok-skip-browser-warning': 'true' }
-                        });
+                        const apiUrl = 'https://raw.githubusercontent.com/mhmod3/cr-deck/refs/heads/main/data.json';
+                        // ✅ إزالة الرأس ngrok-skip-browser-warning لتجنب طلب OPTIONS
+                        const response = await fetch(apiUrl);
                         if (!response.ok) throw new Error('Network response not ok');
                         data = await response.json();
                         if (!data || !Array.isArray(data.items) || data.items.length === 0 ||
                             !Array.isArray(data.supportItems) || data.supportItems.length === 0) {
                             throw new Error('Invalid data structure');
                         }
+                        // تخزين البيانات في localStorage
                         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
                     } catch (err) {
                         console.warn('Fetch error:', err);
@@ -771,6 +773,7 @@
                     }
                 }
 
+                // 3. معالجة البيانات وتحميل الصور
                 const processedItems = data.items.map(c => processCard(c));
                 const processedSupport = data.supportItems.slice();
                 const allCardsData = [...processedItems, ...processedSupport];
@@ -788,6 +791,7 @@
                 hideError();
             }
 
+            // ===== دوال العرض =====
             function showError(msg, withRetry = false) {
                 errorMsg.textContent = msg;
                 errorMsg.classList.add('visible');
@@ -820,6 +824,7 @@
                 lastDeckIds = null;
             }
 
+            // ===== دوال إنشاء التشكيلة ===== (لم تتغير)
             function shuffleArray(arr) {
                 for (let i = arr.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -1139,6 +1144,7 @@
                 return orderSlots(initialSelection, supportCard, useRandomIcons);
             }
 
+            // ===== دوال عرض التشكيلة =====
             function animateCardSlot(cardElement, finalSlotData, delay) {
                 return new Promise((resolve) => {
                     const img = cardElement.querySelector('img');
@@ -1260,6 +1266,7 @@
                 return div;
             }
 
+            // ===== توليد التشكيلة =====
             function generateDeck() {
                 if (!dataLoaded || allCards.length === 0 || supportCards.length === 0) {
                     showError('البيانات غير جاهزة بعد.', true);
@@ -1297,6 +1304,7 @@
                 generateBtn.disabled = false;
             }
 
+            // ===== نسخ الرابط =====
             function copyDeck() {
                 if (!lastDeckIds || lastDeckIds.length !== 9) return;
                 const deckIds = lastDeckIds.slice(0, 8).join(';');
@@ -1329,6 +1337,7 @@
                 document.body.removeChild(textarea);
             }
 
+            // ===== ربط الأحداث =====
             generateBtn.addEventListener('click', function() {
                 if (!dataLoaded) {
                     loadData();
@@ -1345,6 +1354,7 @@
                 }
             });
 
+            // ===== بدء التحميل عند تحميل الصفحة =====
             window.addEventListener('DOMContentLoaded', loadData);
             window.loadData = loadData;
         })();
