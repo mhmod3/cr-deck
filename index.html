@@ -6,7 +6,7 @@
     <title>منشئ التشكيلات</title>
     <style>
         /* ===== الخطوط ===== */
-        @import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@600;700;800;900&display=swap');
 
         @font-face {
             font-family: 'Adobe Arabic';
@@ -20,6 +20,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-weight: 700;
         }
 
         html {
@@ -29,12 +30,13 @@
         body {
             font-family: 'Cairo', 'Adobe Arabic', 'Segoe UI', system-ui, sans-serif;
             color: #eaf4ff;
-            padding: 1.2rem 0.7rem 2rem;
+            padding: 0.5rem;
             display: flex;
             justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            line-height: 1.6;
-            font-size: clamp(1rem, 1.4vw, 1.2rem);
+            line-height: 1.4;
+            font-size: clamp(0.85rem, 1.2vw, 1rem);
             direction: rtl;
             unicode-bidi: embed;
             position: relative;
@@ -42,9 +44,9 @@
                 repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 22px, rgba(255,255,255,0) 22px 44px),
                 radial-gradient(ellipse at 50% -10%, #2f7fbd 0%, #1a5686 35%, #0c3355 65%, #061c30 100%);
             background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        /* textura de estrellas doradas sutiles en el fondo */
         body::before {
             content: "";
             position: fixed;
@@ -71,7 +73,7 @@
             justify-content: center;
             flex-direction: column;
             transition: opacity 0.4s ease, visibility 0.4s ease;
-            font-family: 'Cairo', 'Adobe Arabic', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Cairo', 'Adobe Arabic', 'Segoe UI', sans-serif;
             direction: rtl;
         }
         #loadingScreen.hidden {
@@ -83,36 +85,34 @@
             text-align: center;
             max-width: 320px;
             width: 90%;
-            padding: 1.6rem 1.3rem;
+            padding: 1.2rem;
             background: linear-gradient(180deg, #1d5f92, #123a5c);
             border: 3px solid #ffd166;
             border-radius: 18px;
-            box-shadow: 0 8px 0 #0a2338, 0 12px 24px rgba(0,0,0,0.5), inset 0 0 18px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 0 #0a2338, 0 12px 24px rgba(0,0,0,0.5);
         }
         #loadingText {
             font-family: 'Lalezar', 'Cairo', sans-serif;
-            font-size: clamp(1.4rem, 3vw, 1.9rem);
+            font-size: 1.5rem;
             color: #ffe27a;
-            text-shadow: 0 2px 0 #7a4a00, 0 3px 6px rgba(0,0,0,0.5);
-            margin-bottom: 0.9rem;
-            letter-spacing: 0.5px;
+            text-shadow: 0 2px 0 #7a4a00;
+            margin-bottom: 0.5rem;
         }
         #loadingProgress {
-            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            font-size: 1.1rem;
             color: #bfe0ff;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
             direction: ltr;
             display: inline-block;
-            font-weight: 700;
+            font-weight: 800;
         }
         #loadingBar {
             width: 100%;
-            height: 12px;
+            height: 10px;
             background: #0a2338;
             border-radius: 10px;
             overflow: hidden;
             border: 2px solid #06182a;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
         }
         #loadingBarFill {
             height: 100%;
@@ -120,131 +120,98 @@
             background: linear-gradient(180deg, #ffe27a, #ffb200);
             border-radius: 10px;
             transition: width 0.25s ease;
-            box-shadow: 0 0 8px rgba(255, 178, 0, 0.6);
         }
         #loadingError {
-            margin-top: 1.2rem;
+            margin-top: 1rem;
             color: #ff8a80;
-            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            font-size: 0.9rem;
             display: none;
         }
-        #loadingError.visible {
-            display: block;
-        }
+        #loadingError.visible { display: block; }
         #loadingRetryBtn {
-            margin-top: 0.6rem;
+            margin-top: 0.5rem;
             background: #a52a2a;
             border: 2px solid #ffb3ab;
             color: #fff;
-            padding: 0.35rem 1.3rem;
-            font-size: clamp(0.85rem, 1vw, 0.95rem);
+            padding: 0.3rem 1rem;
             cursor: pointer;
             border-radius: 8px;
-            font-family: inherit;
-            font-weight: 700;
-            transition: background 0.2s, border-color 0.2s;
+            font-weight: 800;
             display: none;
         }
-        #loadingRetryBtn.visible {
-            display: inline-block;
-        }
-        #loadingRetryBtn:hover {
-            background: #c23a3a;
-        }
+        #loadingRetryBtn.visible { display: inline-block; }
 
         /* ===== الحاوية الرئيسية ===== */
         .container {
-            max-width: 750px;
+            max-width: 620px;
             width: 100%;
             direction: rtl;
             unicode-bidi: embed;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            justify-content: center;
             position: relative;
             z-index: 1;
         }
 
-        /* ===== الشعار / العنوان بأسلوب Clash Royale ===== */
         .title-banner {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.2rem;
         }
 
         .title-banner h1 {
             font-family: 'Lalezar', 'Cairo', sans-serif;
             font-weight: 400;
-            font-size: clamp(1.9rem, 4vw, 2.6rem);
+            font-size: clamp(1.5rem, 3vw, 2.1rem);
             text-align: center;
-            letter-spacing: 1px;
             color: #ffe27a;
             background: linear-gradient(180deg, #fff3c4 0%, #ffd54a 45%, #ff9d00 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 0 #7a3f00) drop-shadow(0 4px 6px rgba(0,0,0,0.55));
-            padding: 0.2rem 0;
+            filter: drop-shadow(0 2px 0 #7a3f00);
+            padding: 0.1rem 0;
         }
 
         .sub {
             color: #bfe0ff;
-            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-            padding-bottom: 0.7rem;
-            margin-bottom: 1.3rem;
+            font-size: clamp(0.8rem, 1vw, 0.95rem);
+            margin-bottom: 0.6rem;
             text-align: center;
-            line-height: 1.6;
-            font-weight: 600;
+            font-weight: 700;
             position: relative;
         }
-        .sub::after {
-            content: "";
-            display: block;
-            width: 140px;
-            height: 3px;
-            margin: 0.6rem auto 0;
-            background: linear-gradient(90deg, transparent, #ffd166, transparent);
-            border-radius: 3px;
-        }
 
-        /* ===== شريط الأدوات وعناصر التحكم ===== */
+        /* ===== شريط الأدوات ===== */
         .toolbar {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: center;
-            gap: 0.8rem 1.1rem;
-            margin-bottom: 1.4rem;
-            padding: 0.9rem 1rem;
+            gap: 0.4rem 0.6rem;
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 0.8rem;
             background: linear-gradient(180deg, #1d5f92 0%, #14446b 100%);
-            border-radius: 14px;
+            border-radius: 12px;
             border: 2px solid #0c2e4a;
-            box-shadow: 0 4px 0 #0a2338, 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);
+            box-shadow: 0 3px 0 #0a2338, 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .toolbar .btn {
             border: none;
             font-family: 'Cairo', sans-serif;
             color: #ffffff;
-            padding: 0.65rem 1.5rem;
-            font-size: clamp(1rem, 1.2vw, 1.15rem);
+            padding: 0.4rem 1rem;
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
             font-weight: 800;
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 8px;
             transition: all 0.15s ease;
-            min-width: 130px;
             text-align: center;
             outline: none;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-            box-shadow: 0 4px 0 rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
-            position: relative;
-            top: 0;
-        }
-
-        .toolbar .btn:active:not(:disabled) {
-            top: 3px;
-            box-shadow: 0 1px 0 rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.35);
         }
 
         .toolbar .btn:disabled {
@@ -253,145 +220,103 @@
             filter: grayscale(0.4);
         }
 
-        /* زر أخضر أساسي (مثل زر المعركة) */
         .toolbar .btn-primary {
             background: linear-gradient(180deg, #8be04a 0%, #4a9e1e 55%, #3d7f17 100%);
             border: 2px solid #2e5f10;
         }
 
-        .toolbar .btn-primary:hover:not(:disabled) {
-            filter: brightness(1.08);
-        }
-
-        /* زر ذهبي/بنفسجي للنسخ */
         .toolbar .btn-copy {
             background: linear-gradient(180deg, #8a6bff 0%, #5b3fd6 55%, #492fb5 100%);
             border: 2px solid #34208c;
         }
 
-        .toolbar .btn-copy:hover:not(:disabled) {
-            filter: brightness(1.08);
-        }
-
         .toolbar .checkbox-group {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: clamp(0.88rem, 1.1vw, 1rem);
+            gap: 0.3rem;
+            font-size: clamp(0.75rem, 0.9vw, 0.85rem);
             color: #eaf4ff;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             background: #0d3454;
-            padding: 0.4rem 0.8rem;
-            border-radius: 8px;
-            border: 2px solid #082238;
-            transition: background 0.2s, border-color 0.2s;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            border: 1px solid #082238;
             user-select: none;
         }
 
-        .toolbar .checkbox-group:hover {
-            background: #124370;
-            border-color: #1a5686;
-        }
-
         .toolbar .checkbox-group input[type="checkbox"] {
-            width: 17px;
-            height: 17px;
+            width: 14px;
+            height: 14px;
             accent-color: #ffd166;
             cursor: pointer;
-            margin: 0;
         }
 
         .toolbar .checkbox-group .help-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 1.2rem;
-            height: 1.2rem;
+            width: 1.1rem;
+            height: 1.1rem;
             border-radius: 50%;
             background: #ffd166;
             border: 1px solid #a5771c;
             color: #3d2600;
-            font-size: 0.75rem;
-            font-weight: bold;
+            font-size: 0.7rem;
+            font-weight: 900;
             cursor: help;
-            transition: filter 0.2s;
             user-select: none;
-        }
-
-        .toolbar .checkbox-group .help-icon:hover {
-            filter: brightness(1.15);
         }
 
         .error-msg {
             text-align: center;
             color: #ffdcd6;
-            font-size: clamp(0.9rem, 1.1vw, 1.05rem);
-            margin: 0.4rem 0 1rem;
-            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+            margin: 0.2rem 0 0.6rem;
+            padding: 0.4rem;
             background: linear-gradient(180deg, #7a1f1f, #591414);
-            border: 2px solid #ff8a80;
-            border-radius: 10px;
+            border: 1px solid #ff8a80;
+            border-radius: 8px;
             display: none;
-            font-weight: 600;
+            font-weight: 700;
         }
+        .error-msg.visible { display: block; }
 
-        .error-msg.visible {
-            display: block;
-        }
-
-        .error-msg .retry-btn {
-            background: #ffdcd6;
-            border: none;
-            color: #7a1f1f;
-            padding: 0.2rem 0.9rem;
-            font-size: clamp(0.8rem, 0.95vw, 0.88rem);
-            cursor: pointer;
-            border-radius: 6px;
-            font-family: inherit;
-            font-weight: 800;
-            margin-right: 0.4rem;
-            transition: filter 0.2s;
-        }
-
-        .error-msg .retry-btn:hover {
-            filter: brightness(0.95);
-        }
-
-        /* ===== لوحة التشكيلة (إطار مثل واجهة اللعبة) ===== */
+        /* ===== لوحة التشكيلة ===== */
         .deck-panel {
             background: linear-gradient(180deg, #1a5c8f 0%, #0f3b5f 100%);
-            border: 3px solid #ffd166;
-            border-radius: 18px;
-            box-shadow: 0 6px 0 #0a2338, 0 10px 20px rgba(0,0,0,0.45), inset 0 0 22px rgba(0,0,0,0.3);
-            padding: 1rem 0.8rem 1.2rem;
-            margin-bottom: 1.4rem;
-            position: relative;
+            border: 2px solid #ffd166;
+            border-radius: 14px;
+            box-shadow: 0 4px 0 #0a2338, 0 6px 15px rgba(0,0,0,0.4);
+            padding: 0.6rem 0.6rem 0.8rem;
+            margin-bottom: 0.6rem;
         }
 
         .deck-panel-title {
             font-family: 'Lalezar', 'Cairo', sans-serif;
             text-align: center;
-            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-size: clamp(1.2rem, 1.8vw, 1.4rem);
             color: #ffe27a;
-            text-shadow: 0 2px 0 #7a3f00, 0 3px 4px rgba(0,0,0,0.5);
-            margin-bottom: 0.8rem;
+            text-shadow: 0 2px 0 #7a3f00;
+            margin-bottom: 0.5rem;
             letter-spacing: 0.5px;
+            font-weight: 800;
         }
 
         .deck-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.9rem;
+            gap: 0.5rem;
+            perspective: 1000px;
         }
 
         .deck-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0.55rem;
+            gap: 0.4rem;
             width: 100%;
-            max-width: 520px;
+            max-width: 440px;
             direction: ltr;
         }
 
@@ -399,75 +324,67 @@
             width: 100%;
             text-align: center;
             color: #bfe0ff;
-            font-size: clamp(0.85rem, 1.2vw, 1rem);
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 700;
             padding-top: 0.2rem;
-            user-select: none;
         }
 
-        /* ===== بطاقة فارغة (قبل الإنشاء) بنمط خانات المعركة الفارغة ===== */
+        /* ===== الخانات والبطاقات ===== */
         .card-slot.empty-slot {
-            aspect-ratio: 1 / 1.15;
+            aspect-ratio: 1 / 1.12;
             background:
                 repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 10px, rgba(255,255,255,0) 10px 20px),
                 linear-gradient(160deg, #226596, #163f63 60%, #0e2c48);
             border: 2px solid rgba(255, 255, 255, 0.18);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.35);
         }
 
         .card-slot.empty-slot .crown-icon {
-            width: 46%;
-            height: 46%;
+            width: 40%;
+            height: 40%;
             color: rgba(255, 255, 255, 0.22);
         }
 
         .card-slot.empty-slot .slot-num {
             position: absolute;
-            bottom: 4px;
-            font-size: 0.65rem;
-            color: rgba(255,255,255,0.35);
-            font-weight: 700;
+            bottom: 2px;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.4);
+            font-weight: 800;
         }
 
-        /* ===== بطاقة مُنشأة (بعد التوليد) ===== */
         .card-slot {
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
             background: linear-gradient(160deg, #1a4a70, #0e2c48 70%);
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 0;
             overflow: hidden;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-            animation: cardPopIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+            animation: cardPopIn 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) both;
             direction: rtl;
             border: 2px solid #0a2338;
-            box-shadow: 0 3px 0 rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.35);
-        }
-
-        .card-slot:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 0 rgba(0,0,0,0.4), 0 10px 16px rgba(0,0,0,0.45);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            will-change: transform, opacity;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .card-slot.support-card {
-            width: 105px;
-            margin-top: 0.2rem;
+            width: 85px;
+            margin-top: 0.1rem;
         }
 
-        /* ألوان الندرة - إطار علوي وتوهج مطابق للعبة */
-        .card-slot.rarity-common { border-color: #b7c1cc; box-shadow: 0 3px 0 rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.35), inset 0 0 0 2px rgba(183,193,204,0.35); }
-        .card-slot.rarity-rare { border-color: #ff9d2e; box-shadow: 0 3px 0 rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.35), inset 0 0 0 2px rgba(255,157,46,0.4), 0 0 10px rgba(255,157,46,0.35); }
-        .card-slot.rarity-epic { border-color: #b455e0; box-shadow: 0 3px 0 rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.35), inset 0 0 0 2px rgba(180,85,224,0.45), 0 0 12px rgba(180,85,224,0.4); }
-        .card-slot.rarity-legendary { border-color: #ffd54a; box-shadow: 0 3px 0 rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.35), inset 0 0 0 2px rgba(255,213,74,0.5), 0 0 14px rgba(255, 213, 74, 0.5); }
-        .card-slot.rarity-champion { border-color: #ffb300; box-shadow: 0 3px 0 rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.35), inset 0 0 0 2px rgba(255,179,0,0.55), 0 0 16px rgba(255, 179, 0, 0.55); }
-        .card-slot.rarity-support { border-color: #8fd3ff; box-shadow: 0 3px 0 rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.35), inset 0 0 0 2px rgba(143,211,255,0.45); }
+        .card-slot.rarity-common { border-color: #b7c1cc; }
+        .card-slot.rarity-rare { border-color: #ff9d2e; }
+        .card-slot.rarity-epic { border-color: #b455e0; }
+        .card-slot.rarity-legendary { border-color: #ffd54a; }
+        .card-slot.rarity-champion { border-color: #ffb300; }
+        .card-slot.rarity-support { border-color: #8fd3ff; }
 
         .card-art {
             width: 100%;
@@ -484,28 +401,87 @@
             height: 100%;
             object-fit: contain;
             display: block;
-            transition: filter 0.2s ease, opacity 0.2s ease;
             filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+            transition: opacity 0.2s ease;
         }
 
+        /* إخفاء الصورة أثناء الحركة */
         .card-slot.animating img {
-            filter: blur(4px) opacity(0.5);
+            display: none !important;
         }
 
-        /* شارة تكلفة الإكسير (نقطة أرجوانية) */
+        .card-slot .animating-placeholder {
+            display: none;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #ffe27a;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+        }
+
+        .card-slot.animating .animating-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            animation: pulseQuestion 0.4s ease-in-out infinite alternate;
+        }
+
+        /* ===== الأنميشنات الحديثة ===== */
+        .card-slot.animating {
+            transform: scale(0.96);
+        }
+
+        /* أنميشن ظهور البطاقة النهائي */
+        .card-slot.reveal-anim {
+            animation: cardReveal 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes cardReveal {
+            0% {
+                transform: scale(0.82) rotateY(90deg);
+                opacity: 0.7;
+            }
+            70% {
+                transform: scale(1.06) rotateY(0deg);
+            }
+            100% {
+                transform: scale(1) rotateY(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulseQuestion {
+            0% { transform: scale(0.85); opacity: 0.6; }
+            100% { transform: scale(1.15); opacity: 1; color: #ffffff; }
+        }
+
+        @keyframes glowPulse {
+            0% {
+                box-shadow: 0 0 5px rgba(255, 226, 122, 0.4), inset 0 0 5px rgba(255, 226, 122, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 16px rgba(255, 226, 122, 0.9), inset 0 0 10px rgba(255, 226, 122, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 5px rgba(255, 226, 122, 0.4), inset 0 0 5px rgba(255, 226, 122, 0.4);
+            }
+        }
+
         .elixir-badge {
             position: absolute;
-            top: -4px;
-            left: -4px;
-            width: 24px;
-            height: 26px;
+            top: -3px;
+            left: -3px;
+            width: 20px;
+            height: 22px;
             background: radial-gradient(ellipse at 35% 30%, #d17bff, #9b2fd6 55%, #6b0fa0 100%);
-            border: 2px solid #4a0870;
+            border: 1.5px solid #4a0870;
             border-radius: 50% 50% 50% 0;
             transform: rotate(45deg);
-            box-shadow: 0 2px 3px rgba(0,0,0,0.5);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.5);
             z-index: 5;
         }
+
         .elixir-badge span {
             position: absolute;
             inset: 0;
@@ -515,41 +491,34 @@
             transform: rotate(-45deg);
             color: #fff;
             font-weight: 900;
-            font-size: 0.72rem;
-            text-shadow: 0 1px 1px rgba(0,0,0,0.6);
+            font-size: 0.65rem;
         }
 
         .card-slot .glow-frame {
             position: absolute;
             inset: -2px;
-            border-radius: 12px;
+            border-radius: 8px;
             border: 2px solid transparent;
             pointer-events: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
             z-index: 10;
+            transition: border-color 0.2s ease;
         }
 
         .card-slot .glow-frame.active {
             border-color: #ffe27a;
-            box-shadow: 0 0 12px rgba(255, 226, 122, 0.55);
-            animation: pulseGlow 0.4s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 4px rgba(255, 226, 122, 0.3); }
-            100% { box-shadow: 0 0 14px rgba(255, 226, 122, 0.7); }
+            animation: glowPulse 0.6s ease-in-out infinite;
         }
 
         .card-slot .card-name {
-            font-size: clamp(0.68rem, 0.85vw, 0.8rem);
-            line-height: 1.2;
+            font-size: 0.65rem;
+            line-height: 1.1;
             color: #ffe9b3;
             width: 100%;
             word-break: break-word;
-            font-weight: 700;
+            font-weight: 800;
             text-align: center;
-            padding: 0.28rem 3px;
-            min-height: 2.2em;
+            padding: 0.2rem 2px;
+            min-height: 2em;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -557,128 +526,65 @@
             border-top: 1px solid rgba(255,255,255,0.08);
         }
 
-        .card-slot .slot-index {
-            display: none;
-        }
-
+        /* ===== الفوتر ===== */
         .footer {
-            margin-top: auto;
-            padding: 1.2rem 0.5rem 0.5rem;
-            border-top: 2px solid rgba(255, 209, 102, 0.25);
+            margin-top: 0.2rem;
+            padding-top: 0.4rem;
+            border-top: 1px solid rgba(255, 209, 102, 0.25);
             text-align: center;
-            font-size: clamp(0.8rem, 0.95vw, 0.9rem);
+            font-size: 0.75rem;
             color: #bfe0ff;
-            line-height: 1.6;
+            line-height: 1.3;
             direction: rtl;
         }
 
         .footer a {
             color: #ffe27a;
             text-decoration: none;
-            transition: color 0.2s;
-            font-weight: 700;
-        }
-
-        .footer a:hover {
-            color: #fff3c4;
+            font-weight: 800;
         }
 
         .footer .name {
-            font-weight: 800;
+            font-weight: 900;
             color: #ffe27a;
-            font-size: 1.05em;
             font-family: 'Lalezar', 'Cairo', sans-serif;
-        }
-
-        .footer .discord {
-            color: #bfe0ff;
-        }
-
-        .footer .github-link {
-            color: #8fbadd;
         }
 
         .footer .AI {
             color: #6a94b8;
-            font-size: 0.82em;
-            margin-top: 0.2rem;
+            font-size: 0.7em;
         }
 
         .secret-btn {
             position: fixed;
-            bottom: 12px;
-            right: 12px;
-            width: 30px;
-            height: 30px;
+            bottom: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             background: #123a5c;
-            border: 2px solid #ffd166;
+            border: 1px solid #ffd166;
             color: #ffd166;
-            font-size: 12px;
+            font-size: 10px;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 999;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            line-height: 1;
-            padding: 0;
-            user-select: none;
-        }
-
-        .secret-btn:hover {
-            background: #1a5686;
-        }
-
-        .secret-btn:active {
-            transform: scale(0.92);
         }
 
         @media (max-width: 550px) {
-            .deck-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 0.4rem;
-                max-width: 100%;
-            }
-            .card-slot .card-name {
-                font-size: 0.62rem;
-                min-height: 2em;
-            }
-            .card-slot.support-card {
-                width: 80px;
-            }
-            .toolbar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 0.5rem;
-            }
-            .toolbar .btn {
-                width: 100%;
-                min-width: unset;
-                padding: 0.6rem;
-            }
-            .toolbar .checkbox-group {
-                justify-content: center;
-            }
-            .elixir-badge {
-                width: 20px;
-                height: 22px;
-            }
-            .elixir-badge span {
-                font-size: 0.62rem;
-            }
+            .deck-grid { gap: 0.3rem; }
+            .card-slot .card-name { font-size: 0.58rem; }
+            .card-slot.support-card { width: 75px; }
+            .toolbar { flex-direction: column; align-items: stretch; gap: 0.4rem; }
+            .toolbar .btn { width: 100%; padding: 0.4rem; }
+            .toolbar .checkbox-group { justify-content: center; }
         }
 
         @keyframes cardPopIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
@@ -726,12 +632,19 @@
                       title="يضع بشكل إجباري تعويذة واحد أو تعويذتين بشكل عشوائي أو قد لا يضع أي تعويذة"
                       onclick="alert('يضع بشكل إجباري تعويذة واحد أو تعويذتين بشكل عشوائي أو قد لا يضع أي تعويذة')">?</span>
             </label>
+            <label class="checkbox-group">
+                <input type="checkbox" id="forcePrincessCheck" />
+                إجباري برج الأميرة
+                <span class="help-icon"
+                      title="سيتم اختيار برج الأميرة في كل التشكيلات"
+                      onclick="alert('سيتم اختيار برج الأميرة في كل التشكيلات')">?</span>
+            </label>
         </div>
 
         <div id="errorMsg" class="error-msg"></div>
 
         <div class="deck-panel">
-            <div class="deck-panel-title">Battle Deck</div>
+            <div class="deck-panel-title">تشكيلة المعركة</div>
             <div id="deckContainer" class="deck-container"></div>
         </div>
 
@@ -763,8 +676,19 @@
             const copyBtn = document.getElementById('copyBtn');
             const randomIconsCheck = document.getElementById('randomIconsCheck');
             const forceSpellsCheck = document.getElementById('forceSpellsCheck');
+            const forcePrincessCheck = document.getElementById('forcePrincessCheck');
             const deckContainer = document.getElementById('deckContainer');
             const errorMsg = document.getElementById('errorMsg');
+
+            const TOWER_PRINCESS_CARD = {
+                "name": "Tower Princess",
+                "id": 159000000,
+                "maxLevel": 16,
+                "iconUrls": {
+                    "medium": "https://api-assets.clashroyale.com/cards/300/Nzo5Gjbh7NG6O3Hyu7ev54Pu5zK7vDMR2fbpGdVsS64.png"
+                },
+                "rarity": "common"
+            };
 
             let allCards = [];
             let supportCards = [];
@@ -784,7 +708,6 @@
 
             const CROWN_SVG = '<svg class="crown-icon" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg"><path d="M8 68 L14 28 L34 46 L50 14 L66 46 L86 28 L92 68 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
 
-            // ===== دوال شاشة التحميل =====
             function updateLoadingProgress(loaded, total) {
                 const percent = total === 0 ? 100 : Math.round((loaded / total) * 100);
                 loadingProgress.textContent = percent + '%';
@@ -804,10 +727,7 @@
                 loadingText.textContent = 'جاري تحميل البطاقات...';
             }
 
-            function hideLoading() {
-                loadingScreen.classList.add('hidden');
-            }
-
+            function hideLoading() { loadingScreen.classList.add('hidden'); }
             function showLoading() {
                 loadingScreen.classList.remove('hidden');
                 loadingProgress.textContent = '0%';
@@ -816,54 +736,35 @@
                 loadingText.textContent = 'جاري تحميل البطاقات...';
             }
 
-            // ===== تحميل الصور =====
             function loadAllImages(cards) {
                 const urls = new Set();
                 cards.forEach(card => {
                     if (card.iconUrls) {
-                        Object.values(card.iconUrls).forEach(url => {
-                            if (url) urls.add(url);
-                        });
+                        Object.values(card.iconUrls).forEach(url => { if (url) urls.add(url); });
                     }
                 });
+                if (TOWER_PRINCESS_CARD.iconUrls.medium) urls.add(TOWER_PRINCESS_CARD.iconUrls.medium);
+
                 const urlArray = Array.from(urls);
                 let loaded = 0;
                 const total = urlArray.length;
 
                 return new Promise((resolve) => {
-                    if (total === 0) {
-                        updateLoadingProgress(100, 100);
-                        resolve();
-                        return;
-                    }
-
+                    if (total === 0) { updateLoadingProgress(100, 100); resolve(); return; }
                     let resolved = false;
                     function checkDone() {
-                        if (!resolved && loaded === total) {
-                            resolved = true;
-                            resolve();
-                        }
+                        if (!resolved && loaded === total) { resolved = true; resolve(); }
                     }
-
                     urlArray.forEach(url => {
                         const img = new Image();
-                        img.onload = () => {
-                            loaded++;
-                            updateLoadingProgress(loaded, total);
-                            checkDone();
-                        };
-                        img.onerror = () => {
-                            loaded++;
-                            updateLoadingProgress(loaded, total);
-                            checkDone();
-                        };
+                        img.onload = () => { loaded++; updateLoadingProgress(loaded, total); checkDone(); };
+                        img.onerror = () => { loaded++; updateLoadingProgress(loaded, total); checkDone(); };
                         img.src = url;
                         preloadedImages.set(url, img);
                     });
                 });
             }
 
-            // ===== معالجة البطاقة =====
             function processCard(card) {
                 const iconUrls = card.iconUrls || {};
                 const hasHero = iconUrls.hasOwnProperty('heroMedium');
@@ -881,13 +782,11 @@
                 };
             }
 
-            // ===== تحميل البيانات (مع تعديل إزالة الرأس غير الضروري) =====
             async function loadData() {
                 showLoading();
                 generateBtn.disabled = true;
                 copyBtn.disabled = true;
 
-                // 1. محاولة قراءة من localStorage
                 const stored = localStorage.getItem(STORAGE_KEY);
                 let data = null;
 
@@ -901,11 +800,9 @@
                     } catch (_) { }
                 }
 
-                // 2. إذا لم توجد بيانات مخزنة أو كانت غير صالحة، نجلب من الشبكة
                 if (!data) {
                     try {
                         const apiUrl = 'https://raw.githubusercontent.com/mhmod3/cr-deck/refs/heads/main/data.json';
-                        // ✅ إزالة الرأس ngrok-skip-browser-warning لتجنب طلب OPTIONS
                         const response = await fetch(apiUrl);
                         if (!response.ok) throw new Error('Network response not ok');
                         data = await response.json();
@@ -913,20 +810,15 @@
                             !Array.isArray(data.supportItems) || data.supportItems.length === 0) {
                             throw new Error('Invalid data structure');
                         }
-                        // تخزين البيانات في localStorage
                         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
                     } catch (err) {
                         console.warn('Fetch error:', err);
                         showLoadingError('تعذر تحميل البيانات. تأكد من اتصالك بالإنترنت وحاول مجدداً.');
-                        loadingRetryBtn.onclick = function() {
-                            hideLoadingError();
-                            loadData();
-                        };
+                        loadingRetryBtn.onclick = function() { hideLoadingError(); loadData(); };
                         return;
                     }
                 }
 
-                // 3. معالجة البيانات وتحميل الصور
                 const processedItems = data.items.map(c => processCard(c));
                 const processedSupport = data.supportItems.slice();
                 const allCardsData = [...processedItems, ...processedSupport];
@@ -944,31 +836,13 @@
                 hideError();
             }
 
-            // ===== دوال العرض =====
-            function showError(msg, withRetry = false) {
+            function showError(msg) {
                 errorMsg.textContent = msg;
                 errorMsg.classList.add('visible');
-                if (withRetry) {
-                    const retryBtn = document.createElement('button');
-                    retryBtn.textContent = 'إعادة المحاولة';
-                    retryBtn.className = 'retry-btn';
-                    retryBtn.onclick = function(e) {
-                        e.stopPropagation();
-                        errorMsg.classList.remove('visible');
-                        loadData();
-                    };
-                    errorMsg.appendChild(document.createTextNode(' '));
-                    errorMsg.appendChild(retryBtn);
-                } else {
-                    const oldBtn = errorMsg.querySelector('.retry-btn');
-                    if (oldBtn) oldBtn.remove();
-                }
             }
 
             function hideError() {
                 errorMsg.classList.remove('visible');
-                const oldBtn = errorMsg.querySelector('.retry-btn');
-                if (oldBtn) oldBtn.remove();
             }
 
             function showPlaceholder() {
@@ -998,7 +872,6 @@
                 lastDeckIds = null;
             }
 
-            // ===== دوال إنشاء التشكيلة ===== (لم تتغير)
             function shuffleArray(arr) {
                 for (let i = arr.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -1007,7 +880,7 @@
                 return arr;
             }
 
-            function pickEightCards(forceSpells) {
+            function pickEightCards() {
                 let pool = allCards.slice();
                 let shuffled = shuffleArray(pool);
                 let selected = shuffled.slice(0, 8);
@@ -1054,9 +927,7 @@
                         const item = pool[i];
                         if (criteria(item)) {
                             const removed = pool.splice(i, 1)[0];
-                            if (iconToSetIfFound !== null) {
-                                setIcon(removed, iconToSetIfFound);
-                            }
+                            if (iconToSetIfFound !== null) setIcon(removed, iconToSetIfFound);
                             return removed;
                         }
                     }
@@ -1066,47 +937,34 @@
                 const deck = [];
 
                 if (!useRandomIcons) {
-                    const champions = [];
-                    const normal = [];
-                    const special = [];
+                    const champions = [], normal = [], special = [];
                     pool.forEach(item => {
-                        if (item.isChampion) {
-                            champions.push(item);
-                        } else if (!item.hasHero && !item.hasEvolution) {
-                            normal.push(item);
-                        } else {
-                            special.push(item);
-                        }
+                        if (item.isChampion) champions.push(item);
+                        else if (!item.hasHero && !item.hasEvolution) normal.push(item);
+                        else special.push(item);
                     });
 
-                    shuffleArray(normal);
-                    shuffleArray(special);
-                    shuffleArray(champions);
+                    shuffleArray(normal); shuffleArray(special); shuffleArray(champions);
 
                     let slot0 = normal.length > 0 ? normal.splice(0, 1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : champions.splice(0, 1)[0]);
-                    setIcon(slot0, 'medium');
-                    deck.push(slot0);
+                    setIcon(slot0, 'medium'); deck.push(slot0);
 
                     let slot1 = champions.length > 0 ? champions.splice(0, 1)[0] : (normal.length > 0 ? normal.splice(0, 1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : { ...initialSelection[0] }));
-                    setIcon(slot1, 'medium');
-                    deck.push(slot1);
+                    setIcon(slot1, 'medium'); deck.push(slot1);
 
                     let slot2 = champions.length > 0 ? champions.splice(0, 1)[0] : (normal.length > 0 ? normal.splice(0, 1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : { ...initialSelection[0] }));
-                    setIcon(slot2, 'medium');
-                    deck.push(slot2);
+                    setIcon(slot2, 'medium'); deck.push(slot2);
 
                     const remaining = normal.concat(special, champions);
                     shuffleArray(remaining);
                     while (remaining.length > 0) {
                         const item = remaining.splice(0, 1)[0];
-                        setIcon(item, 'medium');
-                        deck.push(item);
+                        setIcon(item, 'medium'); deck.push(item);
                     }
 
                     while (deck.length < 8) {
                         const dummy = { ...initialSelection[0] };
-                        setIcon(dummy, 'medium');
-                        deck.push(dummy);
+                        setIcon(dummy, 'medium'); deck.push(dummy);
                     }
 
                     const supportObj = {
@@ -1130,42 +988,26 @@
                     }));
                 }
 
-                let slot0 = extractCard(item => item.currentIcon === 'evolutionMedium', null);
-                if (!slot0) slot0 = extractCard(item => !item.hasEvolution, 'medium');
-                if (!slot0) slot0 = extractCard(item => !item.isChampion, 'medium');
+                let slot0 = extractCard(item => item.currentIcon === 'evolutionMedium', null) || extractCard(item => !item.hasEvolution, 'medium') || extractCard(item => !item.isChampion, 'medium');
                 if (!slot0) return null;
                 deck.push(slot0);
 
-                let slot1 = extractCard(item => item.currentIcon === 'heroMedium', null);
-                if (!slot1) slot1 = extractCard(item => item.isChampion, 'medium');
-                if (!slot1) slot1 = extractCard(item => item.currentIcon === 'evolutionMedium', 'medium');
-                if (!slot1) slot1 = extractCard(() => true, 'medium');
+                let slot1 = extractCard(item => item.currentIcon === 'heroMedium', null) || extractCard(item => item.isChampion, 'medium') || extractCard(item => item.currentIcon === 'evolutionMedium', 'medium') || extractCard(() => true, 'medium');
                 deck.push(slot1);
 
-                let slot2 = extractCard(item => item.currentIcon === 'heroMedium', null);
-                if (!slot2) slot2 = extractCard(item => item.currentIcon === 'evolutionMedium', null);
-                if (!slot2) slot2 = extractCard(item => item.isChampion, 'medium');
-                if (!slot2) slot2 = extractCard(() => true, 'medium');
+                let slot2 = extractCard(item => item.currentIcon === 'heroMedium', null) || extractCard(item => item.currentIcon === 'evolutionMedium', null) || extractCard(item => item.isChampion, 'medium') || extractCard(() => true, 'medium');
                 deck.push(slot2);
 
-                let championInPool = null;
-                let championIndex = -1;
+                let championInPool = null, championIndex = -1;
                 for (let i = 0; i < pool.length; i++) {
-                    if (pool[i].isChampion) {
-                        championInPool = pool[i];
-                        championIndex = i;
-                        break;
-                    }
+                    if (pool[i].isChampion) { championInPool = pool[i]; championIndex = i; break; }
                 }
 
                 if (championInPool) {
                     let targetSlotIndex = -1;
                     for (const idx of [1, 2]) {
                         const slot = deck[idx];
-                        if (!slot.isChampion && !slot.hasHero && !slot.hasEvolution && slot.currentIcon === 'medium') {
-                            targetSlotIndex = idx;
-                            break;
-                        }
+                        if (!slot.isChampion && !slot.hasHero && !slot.hasEvolution && slot.currentIcon === 'medium') { targetSlotIndex = idx; break; }
                     }
                     if (targetSlotIndex === -1) return null;
                     const replacedCard = deck[targetSlotIndex];
@@ -1179,10 +1021,7 @@
                     if (slot.currentIcon === 'medium' && (slot.hasHero || slot.hasEvolution)) {
                         let replacementIdx = -1;
                         for (let j = 0; j < pool.length; j++) {
-                            if (!pool[j].hasHero && !pool[j].hasEvolution) {
-                                replacementIdx = j;
-                                break;
-                            }
+                            if (!pool[j].hasHero && !pool[j].hasEvolution) { replacementIdx = j; break; }
                         }
                         if (replacementIdx === -1) return null;
                         const replacement = pool.splice(replacementIdx, 1)[0];
@@ -1192,16 +1031,13 @@
                     }
                 }
 
-                let usedHero = 0;
-                let usedEvo = 0;
+                let usedHero = 0, usedEvo = 0;
                 deck.slice(0, 3).forEach(item => {
                     if (item.currentIcon === 'heroMedium') usedHero++;
                     if (item.currentIcon === 'evolutionMedium') usedEvo++;
                 });
 
-                const remainingMedium = [];
-                const remainingHero = [];
-                const remainingEvo = [];
+                const remainingMedium = [], remainingHero = [], remainingEvo = [];
                 while (pool.length > 0) {
                     const item = pool.splice(0, 1)[0];
                     if (item.currentIcon === 'medium') remainingMedium.push(item);
@@ -1209,9 +1045,7 @@
                     else if (item.currentIcon === 'evolutionMedium') remainingEvo.push(item);
                     else remainingMedium.push(item);
                 }
-                shuffleArray(remainingMedium);
-                shuffleArray(remainingHero);
-                shuffleArray(remainingEvo);
+                shuffleArray(remainingMedium); shuffleArray(remainingHero); shuffleArray(remainingEvo);
 
                 for (const item of remainingMedium.concat(remainingHero, remainingEvo)) {
                     if (item.currentIcon === 'heroMedium' && usedHero >= 2) setIcon(item, 'medium');
@@ -1223,8 +1057,7 @@
 
                 while (deck.length < 8) {
                     const dummy = { ...initialSelection[0] };
-                    setIcon(dummy, 'medium');
-                    deck.push(dummy);
+                    setIcon(dummy, 'medium'); deck.push(dummy);
                 }
 
                 const supportObj = {
@@ -1248,8 +1081,8 @@
                 }));
             }
 
-            function tryGenerateOnce(useRandomIcons, forceSpells) {
-                let eightCards = pickEightCards(forceSpells);
+            function tryGenerateOnce(useRandomIcons, forceSpells, forcePrincess) {
+                let eightCards = pickEightCards();
                 if (!eightCards) return null;
 
                 if (forceSpells && spells.length > 0) {
@@ -1269,13 +1102,17 @@
                     }
                 }
 
-                const supportIdx = Math.floor(Math.random() * supportCards.length);
-                const supportCard = { ...supportCards[supportIdx] };
+                let supportCard;
+                if (forcePrincess) {
+                    supportCard = { ...TOWER_PRINCESS_CARD };
+                } else {
+                    const supportIdx = Math.floor(Math.random() * supportCards.length);
+                    supportCard = { ...supportCards[supportIdx] };
+                }
 
                 let initialSelection = [];
                 if (useRandomIcons) {
-                    let success = false;
-                    let selectedIcons = [];
+                    let success = false, selectedIcons = [];
                     for (let attempt = 0; attempt < 3; attempt++) {
                         selectedIcons = eightCards.map(c => {
                             const avail = c.availableIcons || ['medium'];
@@ -1318,8 +1155,8 @@
                 return orderSlots(initialSelection, supportCard, useRandomIcons);
             }
 
-            // ===== دوال عرض التشكيلة =====
-            function animateCardSlot(cardElement, finalSlotData, delay) {
+            /* ===== أنميشن الاختيار الجديد (سلس وجميل بدون تعقيد) ===== */
+            function animateCardSlot(cardElement, finalSlotData) {
                 return new Promise((resolve) => {
                     const img = cardElement.querySelector('img');
                     const nameSpan = cardElement.querySelector('.card-name');
@@ -1329,46 +1166,33 @@
                     glow.classList.add('active');
                     cardElement.classList.add('animating');
 
-                    const allPossibleCards = [...allCards, ...supportCards];
-                    let intervalId;
                     let counter = 0;
-                    const totalSteps = 12;
-                    const stepDuration = 60;
+                    const totalSteps = 8;
+                    const stepDuration = 45;
 
-                    function changeStep() {
-                        const randomCard = allPossibleCards[Math.floor(Math.random() * allPossibleCards.length)];
-                        const randomIcon = randomCard.iconUrls && randomCard.iconUrls.medium ? randomCard.iconUrls.medium : '';
-                        img.src = randomIcon;
+                    const intervalId = setInterval(() => {
                         nameSpan.textContent = '???';
-                        if (elixirSpan) elixirSpan.textContent = (randomCard.elixirCost !== undefined) ? randomCard.elixirCost : '?';
+                        if (elixirSpan) elixirSpan.textContent = '?';
                         counter++;
+
                         if (counter >= totalSteps) {
                             clearInterval(intervalId);
+                            
+                            // تعيين البيانات النهائية للبطاقة
                             img.src = finalSlotData.iconUrl || '';
                             nameSpan.textContent = finalSlotData.cardData.name || '---';
                             if (elixirSpan) elixirSpan.textContent = (finalSlotData.cardData.elixirCost !== undefined) ? finalSlotData.cardData.elixirCost : '?';
+                            
+                            // إزالة الأنميشن القديمة وتفعيل أنميشن الكشف الأنيق
                             cardElement.classList.remove('animating');
+                            cardElement.classList.add('reveal-anim');
+
                             setTimeout(() => {
                                 glow.classList.remove('active');
                                 resolve();
                             }, 200);
                         }
-                    }
-
-                    changeStep();
-                    intervalId = setInterval(changeStep, stepDuration);
-
-                    setTimeout(() => {
-                        if (intervalId) {
-                            clearInterval(intervalId);
-                            img.src = finalSlotData.iconUrl || '';
-                            nameSpan.textContent = finalSlotData.cardData.name || '---';
-                            if (elixirSpan) elixirSpan.textContent = (finalSlotData.cardData.elixirCost !== undefined) ? finalSlotData.cardData.elixirCost : '?';
-                            cardElement.classList.remove('animating');
-                            glow.classList.remove('active');
-                            resolve();
-                        }
-                    }, (totalSteps + 2) * stepDuration + 200);
+                    }, stepDuration);
                 });
             }
 
@@ -1402,11 +1226,12 @@
                 lastDeckIds = ids;
                 copyBtn.disabled = true;
 
+                // تتابع التوقيت بين البطاقات لخلق حركة متناسقة وسريعة
                 const promises = cardElements.map((item, index) => {
-                    const delay = index * 80;
+                    const delay = index * 50;
                     return new Promise((resolve) => {
                         setTimeout(() => {
-                            animateCardSlot(item.element, item.finalData, delay).then(resolve);
+                            animateCardSlot(item.element, item.finalData).then(resolve);
                         }, delay);
                     });
                 });
@@ -1439,33 +1264,35 @@
                 const elixirBadge = document.createElement('div');
                 elixirBadge.className = 'elixir-badge';
                 const elixirText = document.createElement('span');
-                elixirText.textContent = (slot.cardData.elixirCost !== undefined) ? slot.cardData.elixirCost : '?';
+                elixirText.textContent = '?';
                 elixirBadge.appendChild(elixirText);
                 div.appendChild(elixirBadge);
 
                 const artWrap = document.createElement('div');
                 artWrap.className = 'card-art';
 
+                const placeholder = document.createElement('div');
+                placeholder.className = 'animating-placeholder';
+                placeholder.textContent = '?';
+                artWrap.appendChild(placeholder);
+
                 const img = document.createElement('img');
-                img.src = slot.iconUrl || '';
-                img.alt = slot.cardData.name || 'بطاقة';
-                img.loading = 'lazy';
+                img.loading = 'eager';
                 img.onerror = function() { this.style.display = 'none'; };
                 artWrap.appendChild(img);
                 div.appendChild(artWrap);
 
                 const nameSpan = document.createElement('span');
                 nameSpan.className = 'card-name';
-                nameSpan.textContent = slot.cardData.name || '---';
+                nameSpan.textContent = '???';
                 div.appendChild(nameSpan);
 
                 return div;
             }
 
-            // ===== توليد التشكيلة =====
             function generateDeck() {
                 if (!dataLoaded || allCards.length === 0 || supportCards.length === 0) {
-                    showError('البيانات غير جاهزة بعد.', true);
+                    showError('البيانات غير جاهزة بعد.');
                     return;
                 }
                 if (isGenerating) return;
@@ -1476,12 +1303,13 @@
 
                 const useRandomIcons = randomIconsCheck.checked;
                 const forceSpells = forceSpellsCheck.checked;
+                const forcePrincess = forcePrincessCheck.checked;
                 let finalDeck = null;
                 let attempts = 0;
 
-                while (attempts < 3) {
+                while (attempts < 5) {
                     attempts++;
-                    const result = tryGenerateOnce(useRandomIcons, forceSpells);
+                    const result = tryGenerateOnce(useRandomIcons, forceSpells, forcePrincess);
                     if (result) {
                         finalDeck = result;
                         break;
@@ -1492,7 +1320,7 @@
                     renderDeck(finalDeck);
                     hideError();
                 } else {
-                    showError('حدث خطأ أثناء إنشاء التشكيلة. يرجى المحاولة مرة أخرى.', false);
+                    showError('حدث خطأ أثناء إنشاء التشكيلة. يرجى المحاولة مرة أخرى.');
                     showPlaceholder();
                 }
 
@@ -1500,7 +1328,6 @@
                 generateBtn.disabled = false;
             }
 
-            // ===== نسخ الرابط =====
             function copyDeck() {
                 if (!lastDeckIds || lastDeckIds.length !== 9) return;
                 const deckIds = lastDeckIds.slice(0, 8).join(';');
@@ -1533,12 +1360,8 @@
                 document.body.removeChild(textarea);
             }
 
-            // ===== ربط الأحداث =====
             generateBtn.addEventListener('click', function() {
-                if (!dataLoaded) {
-                    loadData();
-                    return;
-                }
+                if (!dataLoaded) { loadData(); return; }
                 generateDeck();
             });
 
@@ -1550,7 +1373,6 @@
                 }
             });
 
-            // ===== بدء التحميل عند تحميل الصفحة =====
             window.addEventListener('DOMContentLoaded', loadData);
             window.loadData = loadData;
         })();
