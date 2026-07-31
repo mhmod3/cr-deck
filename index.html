@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>منشئ التشكيلات</title>
-    <!-- مكتبة QRCode.js لإنشاء الـ QR محلياً -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
     <style>
         /* ===== الخطوط ===== */
         @import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@600;700;800;900&display=swap');
@@ -43,7 +43,7 @@
             unicode-bidi: embed;
             position: relative;
             background:
-                repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 22px, rgba(255,255,255,0) 22px 44px),
+                repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0 22px, rgba(255, 255, 255, 0) 22px 44px),
                 radial-gradient(ellipse at 50% -10%, #2f7fbd 0%, #1a5686 35%, #0c3355 65%, #061c30 100%);
             background-attachment: fixed;
             overflow-x: hidden;
@@ -68,7 +68,7 @@
             inset: 0;
             z-index: 9999;
             background:
-                repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 22px, rgba(255,255,255,0) 22px 44px),
+                repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0 22px, rgba(255, 255, 255, 0) 22px 44px),
                 radial-gradient(ellipse at 50% -10%, #2f7fbd 0%, #1a5686 35%, #0c3355 65%, #061c30 100%);
             display: flex;
             align-items: center;
@@ -91,7 +91,7 @@
             background: linear-gradient(180deg, #1d5f92, #123a5c);
             border: 3px solid #ffd166;
             border-radius: 18px;
-            box-shadow: 0 8px 0 #0a2338, 0 12px 24px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 0 #0a2338, 0 12px 24px rgba(0, 0, 0, 0.5);
         }
         #loadingText {
             font-family: 'Lalezar', 'Cairo', sans-serif;
@@ -129,7 +129,9 @@
             font-size: 0.9rem;
             display: none;
         }
-        #loadingError.visible { display: block; }
+        #loadingError.visible {
+            display: block;
+        }
         #loadingRetryBtn {
             margin-top: 0.5rem;
             background: #a52a2a;
@@ -141,7 +143,9 @@
             font-weight: 800;
             display: none;
         }
-        #loadingRetryBtn.visible { display: inline-block; }
+        #loadingRetryBtn.visible {
+            display: inline-block;
+        }
 
         /* ===== الحاوية الرئيسية ===== */
         .container {
@@ -198,8 +202,8 @@
             background: linear-gradient(180deg, #1d5f92 0%, #14446b 100%);
             border-radius: 12px;
             border: 2px solid #0c2e4a;
-            box-shadow: 0 3px 0 #0a2338, 0 4px 10px rgba(0,0,0,0.3);
-            position: relative; /* لجعل المنبثق نسبة له */
+            box-shadow: 0 3px 0 #0a2338, 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
 
         .toolbar .btn {
@@ -214,7 +218,7 @@
             transition: all 0.15s ease;
             text-align: center;
             outline: none;
-            box-shadow: 0 3px 0 rgba(0,0,0,0.35);
+            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
         }
 
         .toolbar .btn:disabled {
@@ -231,7 +235,7 @@
         .toolbar .btn-copy {
             background: linear-gradient(180deg, #8a6bff 0%, #5b3fd6 55%, #492fb5 100%);
             border: 2px solid #34208c;
-            position: relative; /* لجعل المنبثق نسبة له */
+            position: relative;
         }
 
         .toolbar .checkbox-group {
@@ -284,14 +288,16 @@
             display: none;
             font-weight: 700;
         }
-        .error-msg.visible { display: block; }
+        .error-msg.visible {
+            display: block;
+        }
 
         /* ===== لوحة التشكيلة ===== */
         .deck-panel {
             background: linear-gradient(180deg, #1a5c8f 0%, #0f3b5f 100%);
             border: 2px solid #ffd166;
             border-radius: 14px;
-            box-shadow: 0 4px 0 #0a2338, 0 6px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 0 #0a2338, 0 6px 15px rgba(0, 0, 0, 0.4);
             padding: 0.6rem 0.6rem 0.8rem;
             margin-bottom: 0.6rem;
         }
@@ -333,11 +339,37 @@
             padding-top: 0.2rem;
         }
 
+        /* ===== متوسط الإكسير ===== */
+        #avgElixirDisplay {
+            text-align: center;
+            margin-top: 0.6rem;
+            font-size: clamp(0.9rem, 1.1vw, 1rem);
+            color: #ffe27a;
+            font-weight: 800;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 210, 102, 0.3);
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0.2rem 1rem;
+            transition: opacity 0.3s ease;
+        }
+        #avgElixirDisplay.hidden-avg {
+            opacity: 0;
+        }
+
+        .avg-wrapper {
+            text-align: center;
+        }
+
         /* ===== الخانات والبطاقات ===== */
         .card-slot.empty-slot {
             aspect-ratio: 1 / 1.12;
             background:
-                repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 10px, rgba(255,255,255,0) 10px 20px),
+                repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 10px, rgba(255, 255, 255, 0) 10px 20px),
                 linear-gradient(160deg, #226596, #163f63 60%, #0e2c48);
             border: 2px solid rgba(255, 255, 255, 0.18);
             border-radius: 8px;
@@ -357,7 +389,7 @@
             position: absolute;
             bottom: 2px;
             font-size: 0.6rem;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255, 255, 255, 0.4);
             font-weight: 800;
         }
 
@@ -373,7 +405,7 @@
             animation: cardPopIn 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) both;
             direction: rtl;
             border: 2px solid #0a2338;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             will-change: transform, opacity;
             transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -383,12 +415,24 @@
             margin-top: 0.1rem;
         }
 
-        .card-slot.rarity-common { border-color: #b7c1cc; }
-        .card-slot.rarity-rare { border-color: #ff9d2e; }
-        .card-slot.rarity-epic { border-color: #b455e0; }
-        .card-slot.rarity-legendary { border-color: #ffd54a; }
-        .card-slot.rarity-champion { border-color: #ffb300; }
-        .card-slot.rarity-support { border-color: #8fd3ff; }
+        .card-slot.rarity-common {
+            border-color: #b7c1cc;
+        }
+        .card-slot.rarity-rare {
+            border-color: #ff9d2e;
+        }
+        .card-slot.rarity-epic {
+            border-color: #b455e0;
+        }
+        .card-slot.rarity-legendary {
+            border-color: #ffd54a;
+        }
+        .card-slot.rarity-champion {
+            border-color: #ffb300;
+        }
+        .card-slot.rarity-support {
+            border-color: #8fd3ff;
+        }
 
         .card-art {
             width: 100%;
@@ -397,7 +441,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.08), transparent 70%);
+            background: radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.08), transparent 70%);
         }
 
         .card-slot img {
@@ -405,11 +449,10 @@
             height: 100%;
             object-fit: contain;
             display: block;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
             transition: opacity 0.2s ease;
         }
 
-        /* إخفاء الصورة أثناء الحركة */
         .card-slot.animating img {
             display: none !important;
         }
@@ -419,7 +462,7 @@
             font-size: 1.5rem;
             font-weight: 900;
             color: #ffe27a;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
         }
 
         .card-slot.animating .animating-placeholder {
@@ -431,12 +474,10 @@
             animation: pulseQuestion 0.4s ease-in-out infinite alternate;
         }
 
-        /* ===== الأنميشنات الحديثة ===== */
         .card-slot.animating {
             transform: scale(0.96);
         }
 
-        /* أنميشن ظهور البطاقة النهائي */
         .card-slot.reveal-anim {
             animation: cardReveal 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
@@ -456,8 +497,15 @@
         }
 
         @keyframes pulseQuestion {
-            0% { transform: scale(0.85); opacity: 0.6; }
-            100% { transform: scale(1.15); opacity: 1; color: #ffffff; }
+            0% {
+                transform: scale(0.85);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(1.15);
+                opacity: 1;
+                color: #ffffff;
+            }
         }
 
         @keyframes glowPulse {
@@ -482,7 +530,7 @@
             border: 1.5px solid #4a0870;
             border-radius: 50% 50% 50% 0;
             transform: rotate(45deg);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
             z-index: 5;
         }
 
@@ -527,13 +575,13 @@
             align-items: center;
             justify-content: center;
             background: linear-gradient(180deg, #0c2c48, #081b2e);
-            border-top: 1px solid rgba(255,255,255,0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         /* ===== المنبثق (popover) الخاص بالنسخ ===== */
         #copyPopover {
             position: absolute;
-            top: calc(100% + 8px);  /* يظهر أسفل الزر */
+            top: calc(100% + 8px);
             left: 50%;
             transform: translateX(-50%) scale(0.9);
             background: linear-gradient(180deg, #1d5f92, #123a5c);
@@ -542,7 +590,7 @@
             padding: 0.6rem 0.8rem;
             min-width: 180px;
             max-width: 240px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
             opacity: 0;
             visibility: hidden;
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -560,7 +608,6 @@
             transform: translateX(-50%) scale(1);
             pointer-events: auto;
         }
-        /* سهم صغير يشير للزر من الأعلى (لأن المنبثق بالأسفل) */
         #copyPopover::before {
             content: '';
             position: absolute;
@@ -600,12 +647,30 @@
             cursor: pointer;
             font-family: 'Cairo', sans-serif;
             font-size: clamp(0.75rem, 0.9vw, 0.85rem);
-            box-shadow: 0 3px 0 rgba(0,0,0,0.35);
+            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
             transition: 0.15s;
             width: 100%;
             text-align: center;
         }
         #copyPopover .btn-copy-link:active {
+            transform: scale(0.96);
+        }
+        #copyPopover .btn-open-link {
+            background: linear-gradient(180deg, #4ecdc4 0%, #2b9b93 55%, #1e7a73 100%);
+            border: 2px solid #14605a;
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            font-weight: 800;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+            transition: 0.15s;
+            width: 100%;
+            text-align: center;
+        }
+        #copyPopover .btn-open-link:active {
             transform: scale(0.96);
         }
         #copyPopover .qr-wrapper {
@@ -627,6 +692,7 @@
             color: #bfe0ff;
             font-size: 0.65rem;
             text-align: center;
+            line-height: 1.5;
         }
 
         /* ===== الفوتر ===== */
@@ -678,12 +744,27 @@
         }
 
         @media (max-width: 550px) {
-            .deck-grid { gap: 0.3rem; }
-            .card-slot .card-name { font-size: 0.58rem; }
-            .card-slot.support-card { width: 75px; }
-            .toolbar { flex-direction: column; align-items: stretch; gap: 0.4rem; }
-            .toolbar .btn { width: 100%; padding: 0.4rem; }
-            .toolbar .checkbox-group { justify-content: center; }
+            .deck-grid {
+                gap: 0.3rem;
+            }
+            .card-slot .card-name {
+                font-size: 0.58rem;
+            }
+            .card-slot.support-card {
+                width: 75px;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.4rem;
+            }
+            .toolbar .btn {
+                width: 100%;
+                padding: 0.4rem;
+            }
+            .toolbar .checkbox-group {
+                justify-content: center;
+            }
             #copyPopover {
                 min-width: 160px;
                 max-width: 200px;
@@ -695,11 +776,20 @@
                 width: 140px !important;
                 height: 140px !important;
             }
+            #copyPopover .copy-hint {
+                font-size: 0.6rem;
+            }
         }
 
         @keyframes cardPopIn {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
     </style>
 </head>
@@ -737,22 +827,29 @@
                 <input type="checkbox" id="randomIconsCheck" />
                 اختيار بواسل و مطورات عشوائيا
                 <span class="help-icon"
-                      title="عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة"
-                      onclick="alert('عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة')">?</span>
+                title="عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة"
+                onclick="alert('عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة')">?</span>
             </label>
             <label class="checkbox-group">
                 <input type="checkbox" id="forceSpellsCheck" />
                 إجباري التعويذات
                 <span class="help-icon"
-                      title="يضع بشكل إجباري تعويذة واحد أو تعويذتين بشكل عشوائي أو قد لا يضع أي تعويذة"
-                      onclick="alert('يضع بشكل إجباري تعويذة واحد أو تعويذتين بشكل عشوائي أو قد لا يضع أي تعويذة')">?</span>
+                title="سيتم اختيار 1 الى 2 تعويذة في كل تشكيلة"
+                onclick="alert('سيتم اختيار 1 الى 2 تعويذة في كل تشكيلة')">?</span>
             </label>
             <label class="checkbox-group">
                 <input type="checkbox" id="forcePrincessCheck" />
                 إجباري برج الأميرة
                 <span class="help-icon"
-                      title="سيتم اختيار برج الأميرة في كل التشكيلات"
-                      onclick="alert('سيتم اختيار برج الأميرة في كل التشكيلات')">?</span>
+                title="سيتم اختيار برج الأميرة في كل التشكيلات"
+                onclick="alert('سيتم اختيار برج الأميرة في كل التشكيلات')">?</span>
+            </label>
+            <label class="checkbox-group">
+                <input type="checkbox" id="forceAttackCards" />
+                إجباري بطاقات هجومية
+                <span class="help-icon"
+                title="سيتم اختيار بطاقات هجومية واحدة فقط مثل الهوغ رايدر او الغولم الخ... (بطاقات تستهدف البرج فقط) في كل تشكيلة"
+                onclick="alert(' السيتم اختيار بطاقات هجومية واحدة فقط مثل الهوغ رايدر او الغولم الخ... (بطاقات تستهدف البرج فقط) في كل تشكيلة')">?</span>
             </label>
 
             <!-- ===== المنبثق (أسفل الزر) ===== -->
@@ -761,11 +858,16 @@
                     <span style="color:#ffe27a; font-size:0.9rem;">خيارات النسخ</span>
                     <button class="close-btn" id="closePopoverBtn">✕</button>
                 </div>
+                <button class="btn-open-link" id="openLinkBtn">فتح رابط التشكيلة</button>
                 <button class="btn-copy-link" id="copyLinkBtn">نسخ رابط التشكيلة</button>
                 <div class="qr-wrapper">
                     <div id="qrcode-container"></div>
                 </div>
-                <div class="copy-hint">‫امسح الـ QR Code او انسخ الرابط لنسخ التشكيلة.‬</div>
+                <div class="copy-hint">
+                    اضغط على "فتح رابط التشكيلة" لكي تنسخ التشكيلة للعبة مباشرة.<br>
+                    أو يمكنك الضغط على "نسخ رابط التشكيلة" لنسخ رابط التشكيلة.<br>
+                    أو يمكنك مسح الـ QR Code لنسخ رابط التشكيلة.
+                </div>
             </div>
         </div>
 
@@ -774,6 +876,10 @@
         <div class="deck-panel">
             <div class="deck-panel-title">تشكيلة المعركة</div>
             <div id="deckContainer" class="deck-container"></div>
+            <!-- ===== عنصر عرض متوسط الإكسير ===== -->
+            <div class="avg-wrapper">
+                <div id="avgElixirDisplay" class="hidden-avg">متوسط الإكسير: --</div>
+            </div>
         </div>
 
         <div class="footer">
@@ -792,6 +898,7 @@
         (function() {
             "use strict";
 
+            // ===== عناصر DOM =====
             const loadingScreen = document.getElementById('loadingScreen');
             const loadingText = document.getElementById('loadingText');
             const loadingProgress = document.getElementById('loadingProgress');
@@ -803,16 +910,19 @@
             const generateBtn = document.getElementById('generateBtn');
             const copyBtn = document.getElementById('copyBtn');
             const copyLinkBtn = document.getElementById('copyLinkBtn');
+            const openLinkBtn = document.getElementById('openLinkBtn');
             const qrContainer = document.getElementById('qrcode-container');
             const copyPopover = document.getElementById('copyPopover');
             const closePopoverBtn = document.getElementById('closePopoverBtn');
             const randomIconsCheck = document.getElementById('randomIconsCheck');
             const forceSpellsCheck = document.getElementById('forceSpellsCheck');
             const forcePrincessCheck = document.getElementById('forcePrincessCheck');
+            const forceAttackCardsCheck = document.getElementById('forceAttackCards');
             const deckContainer = document.getElementById('deckContainer');
             const errorMsg = document.getElementById('errorMsg');
+            const avgElixirDisplay = document.getElementById('avgElixirDisplay');
 
-            // الثوابت الخاصة بالبطاقة 26000106
+            // ===== ثوابت =====
             const SPECIAL_CARD_ID = 26000106;
             const FALLBACK_IMAGE_URL = 'https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v10-9f6caa5e/ronin.png';
 
@@ -826,14 +936,12 @@
                 "rarity": "common"
             };
 
-            let allCards = [];
-            let supportCards = [];
-            let spells = [];
-            let dataLoaded = false;
-            let isGenerating = false;
-            let lastDeckIds = null;
-            const STORAGE_KEY = 'cardsData';
-            const preloadedImages = new Map();
+            const ATTACK_CARD_IDS = [
+                26000003, 26000006, 26000009, 26000021,
+                26000024, 26000029, 26000051, 26000058,
+                26000059, 26000060, 26000067, 26000085,
+                26000056, 27000008
+            ];
 
             const SPELL_IDS = new Set([
                 28000000, 28000001, 28000002, 28000003, 28000004, 28000005,
@@ -842,8 +950,71 @@
                 28000023, 28000024, 28000026
             ]);
 
-            const CROWN_SVG = '<svg class="crown-icon" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg"><path d="M8 68 L14 28 L34 46 L50 14 L66 46 L86 28 L92 68 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+            const CROWN_SVG =
+                '<svg class="crown-icon" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg"><path d="M8 68 L14 28 L34 46 L50 14 L66 46 L86 28 L92 68 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
 
+            // ===== متغيرات الحالة =====
+            let allCards = [];
+            let supportCards = [];
+            let spells = [];
+            let dataLoaded = false;
+            let isGenerating = false;
+            let lastDeckIds = null; // سيتم حفظه في localStorage
+            const STORAGE_KEY = 'cardsData';
+            const preloadedImages = new Map();
+
+            // ===== دوال مساعدة للتخزين المحلي =====
+            function saveCheckboxes() {
+                const checks = {
+                    randomIcons: randomIconsCheck.checked,
+                    forceSpells: forceSpellsCheck.checked,
+                    forcePrincess: forcePrincessCheck.checked,
+                    forceAttack: forceAttackCardsCheck.checked
+                };
+                localStorage.setItem('deckBuilderChecks', JSON.stringify(checks));
+            }
+
+            function loadCheckboxes() {
+                try {
+                    const stored = localStorage.getItem('deckBuilderChecks');
+                    if (stored) {
+                        const checks = JSON.parse(stored);
+                        randomIconsCheck.checked = !!checks.randomIcons;
+                        forceSpellsCheck.checked = !!checks.forceSpells;
+                        forcePrincessCheck.checked = !!checks.forcePrincess;
+                        forceAttackCardsCheck.checked = !!checks.forceAttack;
+                    }
+                } catch (_) {}
+            }
+
+            // حفظ التشكيلة كاملة (مع البيانات الكاملة لكل خانة)
+            function saveDeckState(deckSlots) {
+                if (!deckSlots || deckSlots.length !== 9) {
+                    localStorage.removeItem('deckBuilderSavedDeck');
+                    return;
+                }
+                // نقوم بتبسيط البيانات للحفظ: لكل خانة نأخذ id البطاقة و الأيقونة المختارة
+                const saved = {
+                    mainCards: deckSlots.slice(0, 8).map(slot => ({
+                        id: slot.cardData.id,
+                        selectedIcon: slot.selectedIcon
+                    })),
+                    supportCardId: deckSlots[8].cardData.id
+                };
+                localStorage.setItem('deckBuilderSavedDeck', JSON.stringify(saved));
+            }
+
+            function loadDeckState() {
+                try {
+                    const stored = localStorage.getItem('deckBuilderSavedDeck');
+                    if (stored) {
+                        return JSON.parse(stored);
+                    }
+                } catch (_) {}
+                return null;
+            }
+
+            // ===== دوال التحميل والعرض =====
             function updateLoadingProgress(loaded, total) {
                 const percent = total === 0 ? 100 : Math.round((loaded / total) * 100);
                 loadingProgress.textContent = percent + '%';
@@ -864,6 +1035,7 @@
             }
 
             function hideLoading() { loadingScreen.classList.add('hidden'); }
+
             function showLoading() {
                 loadingScreen.classList.remove('hidden');
                 loadingProgress.textContent = '0%';
@@ -880,7 +1052,6 @@
                     }
                 });
                 if (TOWER_PRINCESS_CARD.iconUrls.medium) urls.add(TOWER_PRINCESS_CARD.iconUrls.medium);
-                // نضيف الرابط البديل للتحميل المسبق (اختياري)
                 urls.add(FALLBACK_IMAGE_URL);
 
                 const urlArray = Array.from(urls);
@@ -890,13 +1061,18 @@
                 return new Promise((resolve) => {
                     if (total === 0) { updateLoadingProgress(100, 100); resolve(); return; }
                     let resolved = false;
+
                     function checkDone() {
                         if (!resolved && loaded === total) { resolved = true; resolve(); }
                     }
                     urlArray.forEach(url => {
                         const img = new Image();
-                        img.onload = () => { loaded++; updateLoadingProgress(loaded, total); checkDone(); };
-                        img.onerror = () => { loaded++; updateLoadingProgress(loaded, total); checkDone(); };
+                        img.onload = () => { loaded++;
+                            updateLoadingProgress(loaded, total);
+                            checkDone(); };
+                        img.onerror = () => { loaded++;
+                            updateLoadingProgress(loaded, total);
+                            checkDone(); };
                         img.src = url;
                         preloadedImages.set(url, img);
                     });
@@ -936,7 +1112,7 @@
                             Array.isArray(parsed.supportItems) && parsed.supportItems.length > 0) {
                             data = parsed;
                         }
-                    } catch (_) { }
+                    } catch (_) {}
                 }
 
                 if (!data) {
@@ -953,7 +1129,8 @@
                     } catch (err) {
                         console.warn('Fetch error:', err);
                         showLoadingError('تعذر تحميل البيانات. تأكد من اتصالك بالإنترنت وحاول مجدداً.');
-                        loadingRetryBtn.onclick = function() { hideLoadingError(); loadData(); };
+                        loadingRetryBtn.onclick = function() { hideLoadingError();
+                            loadData(); };
                         return;
                     }
                 }
@@ -971,7 +1148,17 @@
 
                 hideLoading();
                 generateBtn.disabled = false;
-                showPlaceholder();
+
+                // تحميل الخيارات المحفوظة
+                loadCheckboxes();
+
+                // محاولة استعادة التشكيلة المحفوظة
+                const savedState = loadDeckState();
+                if (savedState) {
+                    restoreDeck(savedState);
+                } else {
+                    showPlaceholder();
+                }
                 hideError();
             }
 
@@ -1007,9 +1194,13 @@
                 caption.textContent = 'اضغط على زر "إنشاء تشكيلة" لانشاء تشكيلة عشوئية';
                 deckContainer.appendChild(caption);
 
+                avgElixirDisplay.textContent = 'متوسط الإكسير: --';
+                avgElixirDisplay.classList.add('hidden-avg');
+
                 copyBtn.disabled = true;
                 copyPopover.classList.remove('visible');
                 lastDeckIds = null;
+                localStorage.removeItem('deckBuilderSavedDeck');
             }
 
             function shuffleArray(arr) {
@@ -1020,29 +1211,65 @@
                 return arr;
             }
 
-            function pickEightCards() {
+            // ===== دوال اختيار البطاقات وترتيبها =====
+            function pickEightCards(forceAttack) {
                 let pool = allCards.slice();
-                let shuffled = shuffleArray(pool);
-                let selected = shuffled.slice(0, 8);
-                let championCount = selected.filter(c => c.champion).length;
 
-                if (championCount <= 2) return selected;
+                if (forceAttack) {
+                    const attackPool = pool.filter(c => ATTACK_CARD_IDS.includes(c.id));
+                    if (attackPool.length === 0) {
+                        return null;
+                    }
+                    const chosen = attackPool[Math.floor(Math.random() * attackPool.length)];
+                    const idxChosen = pool.indexOf(chosen);
+                    if (idxChosen !== -1) pool.splice(idxChosen, 1);
+                    pool = pool.filter(c => !ATTACK_CARD_IDS.includes(c.id));
 
-                for (let rep = 0; rep < 3; rep++) {
-                    if (championCount <= 2) break;
-                    const champIndices = [];
-                    selected.forEach((c, idx) => { if (c.champion) champIndices.push(idx); });
-                    if (champIndices.length === 0) break;
-                    const idxToReplace = champIndices[Math.floor(Math.random() * champIndices.length)];
-                    const candidates = pool.filter(c => !c.champion && !selected.includes(c));
-                    if (candidates.length === 0) break;
-                    const replacement = candidates[Math.floor(Math.random() * candidates.length)];
-                    selected[idxToReplace] = replacement;
-                    championCount = selected.filter(c => c.champion).length;
+                    shuffleArray(pool);
+                    const rest = pool.slice(0, 7);
+                    let selected = [chosen, ...rest];
+                    shuffleArray(selected);
+
+                    let championCount = selected.filter(c => c.champion).length;
+                    if (championCount > 2) {
+                        let attempts = 0;
+                        while (championCount > 2 && attempts < 20) {
+                            attempts++;
+                            const champIndices = [];
+                            selected.forEach((c, idx) => { if (c.champion) champIndices.push(idx); });
+                            if (champIndices.length === 0) break;
+                            const idxToReplace = champIndices[Math.floor(Math.random() * champIndices.length)];
+                            const candidates = pool.filter(c => !c.champion && !selected.includes(c));
+                            if (candidates.length === 0) break;
+                            const replacement = candidates[Math.floor(Math.random() * candidates.length)];
+                            selected[idxToReplace] = replacement;
+                            championCount = selected.filter(c => c.champion).length;
+                        }
+                        if (championCount > 2) return null;
+                    }
+                    return selected;
+                } else {
+                    shuffleArray(pool);
+                    let selected = pool.slice(0, 8);
+                    let championCount = selected.filter(c => c.champion).length;
+                    if (championCount <= 2) return selected;
+
+                    let attempts = 0;
+                    while (championCount > 2 && attempts < 20) {
+                        attempts++;
+                        const champIndices = [];
+                        selected.forEach((c, idx) => { if (c.champion) champIndices.push(idx); });
+                        if (champIndices.length === 0) break;
+                        const idxToReplace = champIndices[Math.floor(Math.random() * champIndices.length)];
+                        const candidates = pool.filter(c => !c.champion && !selected.includes(c));
+                        if (candidates.length === 0) break;
+                        const replacement = candidates[Math.floor(Math.random() * candidates.length)];
+                        selected[idxToReplace] = replacement;
+                        championCount = selected.filter(c => c.champion).length;
+                    }
+                    if (championCount > 2) return null;
+                    return selected;
                 }
-
-                if (championCount <= 2) return selected;
-                return null;
             }
 
             function orderSlots(initialSelection, supportCard, useRandomIcons) {
@@ -1077,34 +1304,46 @@
                 const deck = [];
 
                 if (!useRandomIcons) {
-                    const champions = [], normal = [], special = [];
+                    const champions = [],
+                        normal = [],
+                        special = [];
                     pool.forEach(item => {
                         if (item.isChampion) champions.push(item);
                         else if (!item.hasHero && !item.hasEvolution) normal.push(item);
                         else special.push(item);
                     });
 
-                    shuffleArray(normal); shuffleArray(special); shuffleArray(champions);
+                    shuffleArray(normal);
+                    shuffleArray(special);
+                    shuffleArray(champions);
 
-                    let slot0 = normal.length > 0 ? normal.splice(0, 1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : champions.splice(0, 1)[0]);
-                    setIcon(slot0, 'medium'); deck.push(slot0);
+                    let slot0 = normal.length > 0 ? normal.splice(0, 1)[0] : (special.length > 0 ? special.splice(0, 1)[
+                        0] : champions.splice(0, 1)[0]);
+                    setIcon(slot0, 'medium');
+                    deck.push(slot0);
 
-                    let slot1 = champions.length > 0 ? champions.splice(0, 1)[0] : (normal.length > 0 ? normal.splice(0, 1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : { ...initialSelection[0] }));
-                    setIcon(slot1, 'medium'); deck.push(slot1);
+                    let slot1 = champions.length > 0 ? champions.splice(0, 1)[0] : (normal.length > 0 ? normal.splice(0,
+                        1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : { ...initialSelection[0] }));
+                    setIcon(slot1, 'medium');
+                    deck.push(slot1);
 
-                    let slot2 = champions.length > 0 ? champions.splice(0, 1)[0] : (normal.length > 0 ? normal.splice(0, 1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : { ...initialSelection[0] }));
-                    setIcon(slot2, 'medium'); deck.push(slot2);
+                    let slot2 = champions.length > 0 ? champions.splice(0, 1)[0] : (normal.length > 0 ? normal.splice(0,
+                        1)[0] : (special.length > 0 ? special.splice(0, 1)[0] : { ...initialSelection[0] }));
+                    setIcon(slot2, 'medium');
+                    deck.push(slot2);
 
                     const remaining = normal.concat(special, champions);
                     shuffleArray(remaining);
                     while (remaining.length > 0) {
                         const item = remaining.splice(0, 1)[0];
-                        setIcon(item, 'medium'); deck.push(item);
+                        setIcon(item, 'medium');
+                        deck.push(item);
                     }
 
                     while (deck.length < 8) {
                         const dummy = { ...initialSelection[0] };
-                        setIcon(dummy, 'medium'); deck.push(dummy);
+                        setIcon(dummy, 'medium');
+                        deck.push(dummy);
                     }
 
                     const supportObj = {
@@ -1114,7 +1353,8 @@
                         isChampion: false,
                         hasHero: false,
                         hasEvolution: false,
-                        currentUrl: (supportCard.iconUrls && supportCard.iconUrls.medium) ? supportCard.iconUrls.medium : ''
+                        currentUrl: (supportCard.iconUrls && supportCard.iconUrls.medium) ? supportCard.iconUrls
+                            .medium : ''
                     };
                     deck.push(supportObj);
 
@@ -1128,26 +1368,36 @@
                     }));
                 }
 
-                let slot0 = extractCard(item => item.currentIcon === 'evolutionMedium', null) || extractCard(item => !item.hasEvolution, 'medium') || extractCard(item => !item.isChampion, 'medium');
+                let slot0 = extractCard(item => item.currentIcon === 'evolutionMedium', null) || extractCard(item => !
+                    item.hasEvolution, 'medium') || extractCard(item => !item.isChampion, 'medium');
                 if (!slot0) return null;
                 deck.push(slot0);
 
-                let slot1 = extractCard(item => item.currentIcon === 'heroMedium', null) || extractCard(item => item.isChampion, 'medium') || extractCard(item => item.currentIcon === 'evolutionMedium', 'medium') || extractCard(() => true, 'medium');
+                let slot1 = extractCard(item => item.currentIcon === 'heroMedium', null) || extractCard(item => item
+                    .isChampion, 'medium') || extractCard(item => item.currentIcon === 'evolutionMedium', 'medium') ||
+                    extractCard(() => true, 'medium');
                 deck.push(slot1);
 
-                let slot2 = extractCard(item => item.currentIcon === 'heroMedium', null) || extractCard(item => item.currentIcon === 'evolutionMedium', null) || extractCard(item => item.isChampion, 'medium') || extractCard(() => true, 'medium');
+                let slot2 = extractCard(item => item.currentIcon === 'heroMedium', null) || extractCard(item => item
+                    .currentIcon === 'evolutionMedium', null) || extractCard(item => item.isChampion, 'medium') ||
+                    extractCard(() => true, 'medium');
                 deck.push(slot2);
 
-                let championInPool = null, championIndex = -1;
+                let championInPool = null,
+                    championIndex = -1;
                 for (let i = 0; i < pool.length; i++) {
-                    if (pool[i].isChampion) { championInPool = pool[i]; championIndex = i; break; }
+                    if (pool[i].isChampion) { championInPool = pool[i];
+                        championIndex = i; break; }
                 }
 
                 if (championInPool) {
                     let targetSlotIndex = -1;
                     for (const idx of [1, 2]) {
                         const slot = deck[idx];
-                        if (!slot.isChampion && !slot.hasHero && !slot.hasEvolution && slot.currentIcon === 'medium') { targetSlotIndex = idx; break; }
+                        if (!slot.isChampion && !slot.hasHero && !slot.hasEvolution && slot.currentIcon === 'medium') {
+                            targetSlotIndex = idx;
+                            break;
+                        }
                     }
                     if (targetSlotIndex === -1) return null;
                     const replacedCard = deck[targetSlotIndex];
@@ -1171,13 +1421,16 @@
                     }
                 }
 
-                let usedHero = 0, usedEvo = 0;
+                let usedHero = 0,
+                    usedEvo = 0;
                 deck.slice(0, 3).forEach(item => {
                     if (item.currentIcon === 'heroMedium') usedHero++;
                     if (item.currentIcon === 'evolutionMedium') usedEvo++;
                 });
 
-                const remainingMedium = [], remainingHero = [], remainingEvo = [];
+                const remainingMedium = [],
+                    remainingHero = [],
+                    remainingEvo = [];
                 while (pool.length > 0) {
                     const item = pool.splice(0, 1)[0];
                     if (item.currentIcon === 'medium') remainingMedium.push(item);
@@ -1185,7 +1438,9 @@
                     else if (item.currentIcon === 'evolutionMedium') remainingEvo.push(item);
                     else remainingMedium.push(item);
                 }
-                shuffleArray(remainingMedium); shuffleArray(remainingHero); shuffleArray(remainingEvo);
+                shuffleArray(remainingMedium);
+                shuffleArray(remainingHero);
+                shuffleArray(remainingEvo);
 
                 for (const item of remainingMedium.concat(remainingHero, remainingEvo)) {
                     if (item.currentIcon === 'heroMedium' && usedHero >= 2) setIcon(item, 'medium');
@@ -1197,7 +1452,8 @@
 
                 while (deck.length < 8) {
                     const dummy = { ...initialSelection[0] };
-                    setIcon(dummy, 'medium'); deck.push(dummy);
+                    setIcon(dummy, 'medium');
+                    deck.push(dummy);
                 }
 
                 const supportObj = {
@@ -1221,12 +1477,13 @@
                 }));
             }
 
-            function tryGenerateOnce(useRandomIcons, forceSpells, forcePrincess) {
-                let eightCards = pickEightCards();
+            function tryGenerateOnce(useRandomIcons, forceSpells, forcePrincess, forceAttack) {
+                let eightCards = pickEightCards(forceAttack);
                 if (!eightCards) return null;
 
                 if (forceSpells && spells.length > 0) {
-                    const numSpells = Math.random() < 0.5 ? 1 : 2;
+                    let numSpells = Math.random() < 0.5 ? 1 : 2;
+                    if (numSpells < 1) numSpells = 1;
                     const shuffledSpells = shuffleArray(spells.slice());
                     const selectedSpells = shuffledSpells.slice(0, numSpells);
                     let candidatesForReplacement = eightCards.map((c, idx) => ({ card: c, index: idx }))
@@ -1238,7 +1495,7 @@
                     const toReplace = candidatesForReplacement.slice(0, numSpells);
                     for (let i = 0; i < toReplace.length; i++) {
                         const idx = toReplace[i].index;
-                        eightCards[idx] = selectedSpells[i];
+                        eightCards[idx] = selectedSpells[i % selectedSpells.length];
                     }
                 }
 
@@ -1252,7 +1509,8 @@
 
                 let initialSelection = [];
                 if (useRandomIcons) {
-                    let success = false, selectedIcons = [];
+                    let success = false,
+                        selectedIcons = [];
                     for (let attempt = 0; attempt < 3; attempt++) {
                         selectedIcons = eightCards.map(c => {
                             const avail = c.availableIcons || ['medium'];
@@ -1278,7 +1536,8 @@
                             isChampion: card.champion || false,
                             hasHero: card.hasHero || false,
                             hasEvolution: card.hasEvolution || false,
-                            iconUrl: (card.iconUrls && card.iconUrls[icon]) ? card.iconUrls[icon] : (card.iconUrls && card.iconUrls.medium ? card.iconUrls.medium : '')
+                            iconUrl: (card.iconUrls && card.iconUrls[icon]) ? card.iconUrls[icon] : (card
+                                .iconUrls && card.iconUrls.medium ? card.iconUrls.medium : '')
                         };
                     });
                 } else {
@@ -1295,7 +1554,7 @@
                 return orderSlots(initialSelection, supportCard, useRandomIcons);
             }
 
-            /* ===== أنميشن الاختيار الجديد ===== */
+            // ===== دوال الأنيميشن والعرض =====
             function animateCardSlot(cardElement, finalSlotData) {
                 return new Promise((resolve) => {
                     const img = cardElement.querySelector('img');
@@ -1317,15 +1576,15 @@
 
                         if (counter >= totalSteps) {
                             clearInterval(intervalId);
-                            
-                            // تعيين مصدر الصورة النهائي
+
                             img.src = finalSlotData.iconUrl || '';
-                            // التأكد من أن معالج الخطأ موجود (تم تعيينه في createCardElement)
-                            // إذا فشل تحميل الصورة، سيعمل المعالج الخاص (الذي يتعامل مع البطاقة 26000106)
-                            
+                            const cardId = finalSlotData.cardData.id;
+                            img.dataset.cardId = cardId;
+
                             nameSpan.textContent = finalSlotData.cardData.name || '---';
-                            if (elixirSpan) elixirSpan.textContent = (finalSlotData.cardData.elixirCost !== undefined) ? finalSlotData.cardData.elixirCost : '?';
-                            
+                            if (elixirSpan) elixirSpan.textContent = (finalSlotData.cardData.elixirCost !==
+                                undefined) ? finalSlotData.cardData.elixirCost : '?';
+
                             cardElement.classList.remove('animating');
                             cardElement.classList.add('reveal-anim');
 
@@ -1338,59 +1597,20 @@
                 });
             }
 
-            function renderDeck(deckSlots) {
-                deckContainer.innerHTML = '';
-                const ids = [];
-                const cardElements = [];
-
-                const gridDiv = document.createElement('div');
-                gridDiv.className = 'deck-grid';
-
-                deckSlots.slice(0, 8).forEach((slot, idx) => {
-                    const div = createCardElement(slot, idx);
-                    gridDiv.appendChild(div);
-                    ids.push(slot.cardData.id);
-                    cardElements.push({ element: div, finalData: slot });
-                });
-
-                deckContainer.appendChild(gridDiv);
-
-                if (deckSlots.length === 9) {
-                    const supportSlot = deckSlots[8];
-                    const supportDiv = createCardElement(supportSlot, 8);
-                    supportDiv.classList.add('support-card');
-                    supportDiv.classList.add('rarity-support');
-                    deckContainer.appendChild(supportDiv);
-                    ids.push(supportSlot.cardData.id);
-                    cardElements.push({ element: supportDiv, finalData: supportSlot });
-                }
-
-                lastDeckIds = ids;
-                copyBtn.disabled = true;
-                copyPopover.classList.remove('visible');
-
-                const promises = cardElements.map((item, index) => {
-                    const delay = index * 50;
-                    return new Promise((resolve) => {
-                        setTimeout(() => {
-                            animateCardSlot(item.element, item.finalData).then(resolve);
-                        }, delay);
-                    });
-                });
-
-                Promise.all(promises).then(() => {
-                    copyBtn.disabled = false;
-                });
-            }
-
             function getRarityClass(rarity) {
                 switch (rarity) {
-                    case 'common': return 'rarity-common';
-                    case 'rare': return 'rarity-rare';
-                    case 'epic': return 'rarity-epic';
-                    case 'legendary': return 'rarity-legendary';
-                    case 'champion': return 'rarity-champion';
-                    default: return 'rarity-common';
+                    case 'common':
+                        return 'rarity-common';
+                    case 'rare':
+                        return 'rarity-rare';
+                    case 'epic':
+                        return 'rarity-epic';
+                    case 'legendary':
+                        return 'rarity-legendary';
+                    case 'champion':
+                        return 'rarity-champion';
+                    default:
+                        return 'rarity-common';
                 }
             }
 
@@ -1420,24 +1640,18 @@
 
                 const img = document.createElement('img');
                 img.loading = 'eager';
-                // تخزين معرف البطاقة في عنصر الصورة للاستخدام في onerror
                 const cardId = slot.cardData.id;
                 img.dataset.cardId = cardId;
 
-                // معالج الخطأ الخاص بالصورة
                 img.onerror = function() {
                     const id = parseInt(this.dataset.cardId);
-                    // إذا كانت البطاقة هي 26000106، نستخدم الرابط البديل
                     if (id === SPECIAL_CARD_ID) {
-                        // تجنب الحلقات اللانهائية: إذا كان المصدر الحالي هو الرابط البديل بالفعل، نخفي الصورة
                         if (this.src === FALLBACK_IMAGE_URL) {
                             this.style.display = 'none';
                             return;
                         }
-                        // تعيين المصدر البديل
                         this.src = FALLBACK_IMAGE_URL;
                     } else {
-                        // البطاقات الأخرى: نخفي الصورة
                         this.style.display = 'none';
                     }
                 };
@@ -1453,6 +1667,161 @@
                 return div;
             }
 
+            // دالة عرض التشكيلة مع إمكانية تخطي الأنميشن
+            function renderDeck(deckSlots, skipAnimation = false) {
+                deckContainer.innerHTML = '';
+                const ids = [];
+                const cardElements = [];
+
+                const gridDiv = document.createElement('div');
+                gridDiv.className = 'deck-grid';
+
+                deckSlots.slice(0, 8).forEach((slot, idx) => {
+                    const div = createCardElement(slot, idx);
+                    gridDiv.appendChild(div);
+                    ids.push(slot.cardData.id);
+                    cardElements.push({ element: div, finalData: slot });
+                });
+
+                deckContainer.appendChild(gridDiv);
+
+                if (deckSlots.length === 9) {
+                    const supportSlot = deckSlots[8];
+                    const supportDiv = createCardElement(supportSlot, 8);
+                    supportDiv.classList.add('support-card');
+                    supportDiv.classList.add('rarity-support');
+                    deckContainer.appendChild(supportDiv);
+                    ids.push(supportSlot.cardData.id);
+                    cardElements.push({ element: supportDiv, finalData: supportSlot });
+                }
+
+                lastDeckIds = ids;
+                // حفظ الحالة الكاملة (بما في ذلك الأيقونات) في localStorage
+                saveDeckState(deckSlots);
+                copyBtn.disabled = true;
+                copyPopover.classList.remove('visible');
+
+                const mainCards = deckSlots.slice(0, 8);
+                let totalElixir = 0;
+                let count = 0;
+                mainCards.forEach(slot => {
+                    if (slot.cardData && typeof slot.cardData.elixirCost === 'number') {
+                        totalElixir += slot.cardData.elixirCost;
+                        count++;
+                    }
+                });
+                const avg = count > 0 ? (totalElixir / count) : 0;
+                const avgText = `متوسط الإكسير: ${avg.toFixed(1)}`;
+
+                if (skipAnimation) {
+                    // عرض مباشر بدون أنميشن
+                    cardElements.forEach(({ element, finalData }) => {
+                        const img = element.querySelector('img');
+                        const nameSpan = element.querySelector('.card-name');
+                        const elixirSpan = element.querySelector('.elixir-badge span');
+                        img.src = finalData.iconUrl || '';
+                        const cardId = finalData.cardData.id;
+                        img.dataset.cardId = cardId;
+                        nameSpan.textContent = finalData.cardData.name || '---';
+                        if (elixirSpan) {
+                            elixirSpan.textContent = (finalData.cardData.elixirCost !== undefined) ? finalData
+                                .cardData.elixirCost : '?';
+                        }
+                        // إضافة تأثير بسيط للظهور
+                        element.style.animation = 'cardPopIn 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) both';
+                    });
+                    avgElixirDisplay.textContent = avgText;
+                    avgElixirDisplay.classList.remove('hidden-avg');
+                    copyBtn.disabled = false;
+                } else {
+                    // أنميشن كامل
+                    avgElixirDisplay.textContent = 'متوسط الإكسير: --';
+                    avgElixirDisplay.classList.add('hidden-avg');
+
+                    const promises = cardElements.map((item, index) => {
+                        const delay = index * 50;
+                        return new Promise((resolve) => {
+                            setTimeout(() => {
+                                animateCardSlot(item.element, item.finalData).then(resolve);
+                            }, delay);
+                        });
+                    });
+
+                    Promise.all(promises).then(() => {
+                        avgElixirDisplay.textContent = avgText;
+                        avgElixirDisplay.classList.remove('hidden-avg');
+                        copyBtn.disabled = false;
+                    });
+                }
+            }
+
+            // ===== استعادة التشكيلة المحفوظة =====
+            function restoreDeck(savedState) {
+                if (!dataLoaded || allCards.length === 0) {
+                    // إذا لم تكن البيانات جاهزة، نعيد المحاولة لاحقاً
+                    setTimeout(() => restoreDeck(savedState), 200);
+                    return;
+                }
+
+                const mainCardIds = savedState.mainCards.map(item => item.id);
+                const supportId = savedState.supportCardId;
+
+                let mainCards = [];
+                let missing = false;
+                mainCardIds.forEach(id => {
+                    const card = allCards.find(c => c.id === id);
+                    if (card) {
+                        mainCards.push(card);
+                    } else {
+                        missing = true;
+                    }
+                });
+
+                let supportCard = supportCards.find(c => c.id === supportId);
+                if (supportId === TOWER_PRINCESS_CARD.id) {
+                    supportCard = { ...TOWER_PRINCESS_CARD };
+                }
+                if (!supportCard) {
+                    supportCard = supportCards[0] || TOWER_PRINCESS_CARD;
+                }
+
+                if (missing || mainCards.length !== 8) {
+                    showPlaceholder();
+                    return;
+                }
+
+                // إعادة بناء deckSlots باستخدام الأيقونات المحفوظة
+                const deckSlots = mainCards.map((card, index) => {
+                    const savedIcon = savedState.mainCards[index].selectedIcon || 'medium';
+                    const iconUrl = (card.iconUrls && card.iconUrls[savedIcon]) ?
+                        card.iconUrls[savedIcon] :
+                        (card.iconUrls && card.iconUrls.medium ? card.iconUrls.medium : '');
+                    return {
+                        cardData: card,
+                        selectedIcon: savedIcon,
+                        isChampion: card.champion || false,
+                        hasHero: card.hasHero || false,
+                        hasEvolution: card.hasEvolution || false,
+                        iconUrl: iconUrl
+                    };
+                });
+
+                // إضافة البطاقة الداعمة
+                const supportSlot = {
+                    cardData: supportCard,
+                    selectedIcon: 'medium',
+                    isChampion: false,
+                    hasHero: false,
+                    hasEvolution: false,
+                    iconUrl: (supportCard.iconUrls && supportCard.iconUrls.medium) ? supportCard.iconUrls.medium : ''
+                };
+                deckSlots.push(supportSlot);
+
+                // عرض التشكيلة مباشرة بدون أنميشن
+                renderDeck(deckSlots, true);
+            }
+
+            // ===== إنشاء تشكيلة جديدة =====
             function generateDeck() {
                 if (!dataLoaded || allCards.length === 0 || supportCards.length === 0) {
                     showError('البيانات غير جاهزة بعد.');
@@ -1468,12 +1837,13 @@
                 const useRandomIcons = randomIconsCheck.checked;
                 const forceSpells = forceSpellsCheck.checked;
                 const forcePrincess = forcePrincessCheck.checked;
+                const forceAttack = forceAttackCardsCheck.checked;
                 let finalDeck = null;
                 let attempts = 0;
 
-                while (attempts < 5) {
+                while (attempts < 30) {
                     attempts++;
-                    const result = tryGenerateOnce(useRandomIcons, forceSpells, forcePrincess);
+                    const result = tryGenerateOnce(useRandomIcons, forceSpells, forcePrincess, forceAttack);
                     if (result) {
                         finalDeck = result;
                         break;
@@ -1481,7 +1851,7 @@
                 }
 
                 if (finalDeck && finalDeck.length === 9) {
-                    renderDeck(finalDeck);
+                    renderDeck(finalDeck, false); // مع أنميشن
                     hideError();
                 } else {
                     showError('حدث خطأ أثناء إنشاء التشكيلة. يرجى المحاولة مرة أخرى.');
@@ -1492,47 +1862,75 @@
                 generateBtn.disabled = false;
             }
 
-            // ===== وظيفة عرض المنبثق (مع QRCode.js) =====
+            // ===== دوال الروابط =====
+            function getDeckUrl() {
+                if (!lastDeckIds || lastDeckIds.length !== 9) return null;
+                const deckIds = lastDeckIds.slice(0, 8).join(';');
+                const supportId = lastDeckIds[8];
+                return `https://link.clashroyale.com/en/?clashroyale://copyDeck?deck=${deckIds}&l=Royals&tt=${supportId}`;
+            }
+
+            function getAppUrl(webUrl) {
+                if (!webUrl) return null;
+                const match = webUrl.match(/clashroyale:\/\/(copyDeck\?[^&]+&[^&]+&[^&]+)/);
+                if (match) {
+                    return `clashroyale://${match[1]}`;
+                }
+                try {
+                    const urlObj = new URL(webUrl);
+                    const params = new URLSearchParams(urlObj.search);
+                    const deepLink = params.get('clashroyale://copyDeck');
+                    if (deepLink) {
+                        return `clashroyale://copyDeck?${deepLink}`;
+                    }
+                } catch (_) {}
+                return null;
+            }
+
             function showPopover() {
-                if (!lastDeckIds || lastDeckIds.length !== 9) {
+                const webUrl = getDeckUrl();
+                if (!webUrl) {
                     alert('لا توجد تشكيلة جاهزة للنسخ. قم بإنشاء تشكيلة أولاً.');
                     return;
                 }
-                const deckIds = lastDeckIds.slice(0, 8).join(';');
-                const supportId = lastDeckIds[8];
-                const url = `https://link.clashroyale.com/en/?clashroyale://copyDeck?deck=${deckIds}&l=Royals&tt=${supportId}`;
 
-                // مسح المحتوى السابق من حاوية QR
                 qrContainer.innerHTML = '';
-
-                // إنشاء رمز QR جديد بحجم 180 بكسل (أكبر قليلاً)
                 try {
                     new QRCode(qrContainer, {
-                        text: url,
+                        text: webUrl,
                         width: 180,
                         height: 180,
                         colorDark: "#000000",
                         colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.H // مستوى تصحيح أخطاء عالي
+                        correctLevel: QRCode.CorrectLevel.H
                     });
                 } catch (e) {
                     console.warn('QR generation error:', e);
                     qrContainer.innerHTML = '<span style="color:#ff8a80;font-size:0.7rem;">تعذر إنشاء QR</span>';
                 }
 
-                // تحديث زر نسخ الرابط
                 copyLinkBtn.onclick = function() {
                     if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText(url).then(() => {
+                        navigator.clipboard.writeText(webUrl).then(() => {
                             copyLinkBtn.textContent = 'تم النسخ!';
                             setTimeout(() => { copyLinkBtn.textContent = 'نسخ رابط التشكيلة'; }, 2000);
-                        }).catch(() => fallbackCopy(url));
+                        }).catch(() => fallbackCopy(webUrl));
                     } else {
-                        fallbackCopy(url);
+                        fallbackCopy(webUrl);
                     }
                 };
 
-                // إظهار المنبثق
+                const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                const appUrl = getAppUrl(webUrl);
+
+                openLinkBtn.onclick = function() {
+                    if (isMobile && appUrl) {
+                        window.location.href = appUrl;
+                    } else {
+                        window.open(webUrl, '_blank');
+                    }
+                };
+
                 copyPopover.classList.add('visible');
             }
 
@@ -1553,7 +1951,6 @@
                 document.body.removeChild(textarea);
             }
 
-            // ===== إغلاق المنبثق =====
             function closePopover() {
                 copyPopover.classList.remove('visible');
             }
@@ -1566,7 +1963,6 @@
 
             copyBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                // إذا كان المنبثق ظاهراً نغلقه، وإلا نظهره
                 if (copyPopover.classList.contains('visible')) {
                     closePopover();
                 } else {
@@ -1574,13 +1970,11 @@
                 }
             });
 
-            // إغلاق عند النقر على X
             closePopoverBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 closePopover();
             });
 
-            // إغلاق عند النقر خارج المنبثق (على أي مكان في الصفحة)
             document.addEventListener('click', function(e) {
                 if (copyPopover.classList.contains('visible')) {
                     const target = e.target;
@@ -1590,9 +1984,13 @@
                 }
             });
 
-            // منع إغلاق المنبثق عند النقر داخله
             copyPopover.addEventListener('click', function(e) {
                 e.stopPropagation();
+            });
+
+            // حفظ الخيارات عند تغييرها
+            [randomIconsCheck, forceSpellsCheck, forcePrincessCheck, forceAttackCardsCheck].forEach(chk => {
+                chk.addEventListener('change', saveCheckboxes);
             });
 
             document.getElementById('secretBtn').addEventListener('click', function() {
