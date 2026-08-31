@@ -1182,28 +1182,28 @@
                     بواسل و مطورات عشوائية
                     <span class="help-icon"
                     title="عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة"
-                    onclick="alert('عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة')">؟</span>
+                    onclick="event.stopPropagation(); event.preventDefault(); alert('عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة')">؟</span>
                 </label>
                 <label class="checkbox-group">
                     <input type="checkbox" id="forceSpellsCheck" />
                     إجباري التعويذات
                     <span class="help-icon"
                     title="سيتم اختيار 1 الى 2 تعويذة في كل تشكيلة"
-                    onclick="alert('سيتم اختيار 1 الى 2 تعويذة في كل تشكيلة')">؟</span>
+                    onclick="event.stopPropagation(); event.preventDefault(); alert('سيتم اختيار 1 الى 2 تعويذة في كل تشكيلة')">؟</span>
                 </label>
                 <label class="checkbox-group">
                     <input type="checkbox" id="forcePrincessCheck" />
                     إجباري برج الأميرة
                     <span class="help-icon"
                     title="سيتم اختيار برج الأميرة في كل التشكيلات"
-                    onclick="alert('سيتم اختيار برج الأميرة في كل التشكيلات')">؟</span>
+                    onclick="event.stopPropagation(); event.preventDefault(); alert('سيتم اختيار برج الأميرة في كل التشكيلات')">؟</span>
                 </label>
                 <label class="checkbox-group">
                     <input type="checkbox" id="forceAttackCards" />
                     إجباري بطاقات هجومية
                     <span class="help-icon"
                     title="سيتم اختيار بطاقات هجومية واحدة فقط مثل الهوغ رايدر او الغولم الخ... (بطاقات تستهدف البرج فقط) في كل تشكيلة"
-                    onclick="alert('سيتم اختيار بطاقات هجومية واحدة فقط مثل الهوغ رايدر او الغولم الخ... (بطاقات تستهدف البرج فقط) في كل تشكيلة')">؟</span>
+                    onclick="event.stopPropagation(); event.preventDefault(); alert('سيتم اختيار بطاقات هجومية واحدة فقط مثل الهوغ رايدر او الغولم الخ... (بطاقات تستهدف البرج فقط) في كل تشكيلة')">؟</span>
                 </label>
             </div>
         </div>
@@ -1526,12 +1526,13 @@
                 const processedSupport = data.supportItems.slice();
                 const allCardsData = [...processedItems, ...processedSupport];
 
-                await loadAllImages(allCardsData);
-
                 allCards = processedItems.filter(c => !c.isSpell);
                 spells = processedItems.filter(c => c.isSpell);
                 supportCards = processedSupport;
                 dataLoaded = true;
+
+                // تحميل الصور في الخلفية بدون حظر الواجهة
+                loadAllImages(allCardsData);
 
                 // تحميل البطاقات المستبعدة
                 loadExcluded();
@@ -1739,9 +1740,14 @@
                     if (idxChosen !== -1) pool.splice(idxChosen, 1);
                     pool = pool.filter(c => !ATTACK_CARD_IDS.includes(c.id));
 
+                    if (pool.length < 7) {
+                        return null;
+                    }
+
                     shuffleArray(pool);
                     const rest = pool.slice(0, 7);
                     let selected = [chosen, ...rest];
+                    if (selected.length !== 8) return null;
                     shuffleArray(selected);
 
                     let championCount = selected.filter(c => c.champion).length;
@@ -1854,11 +1860,9 @@
                         deck.push(item);
                     }
 
-                    while (deck.length < 8) {
-                        const dummy = { ...initialSelection[0] };
-                        setIcon(dummy, 'medium');
-                        deck.push(dummy);
-                    }
+                    if (deck.length !== 8) return null;
+                    const uniqueIds = new Set(deck.map(item => item.cardData.id));
+                    if (uniqueIds.size !== 8) return null;
 
                     const supportObj = {
                         cardData: supportCard,
@@ -1890,11 +1894,13 @@
                 let slot1 = extractCard(item => item.currentIcon === 'heroMedium', null) || extractCard(item => item
                     .isChampion, 'medium') || extractCard(item => item.currentIcon === 'evolutionMedium', 'medium') ||
                     extractCard(() => true, 'medium');
+                if (!slot1) return null;
                 deck.push(slot1);
 
                 let slot2 = extractCard(item => item.currentIcon === 'heroMedium', null) || extractCard(item => item
                     .currentIcon === 'evolutionMedium', null) || extractCard(item => item.isChampion, 'medium') ||
                     extractCard(() => true, 'medium');
+                if (!slot2) return null;
                 deck.push(slot2);
 
                 let championInPool = null,
@@ -1964,11 +1970,9 @@
                     deck.push(item);
                 }
 
-                while (deck.length < 8) {
-                    const dummy = { ...initialSelection[0] };
-                    setIcon(dummy, 'medium');
-                    deck.push(dummy);
-                }
+                if (deck.length !== 8) return null;
+                const uniqueIdsRandom = new Set(deck.map(item => item.cardData.id));
+                if (uniqueIdsRandom.size !== 8) return null;
 
                 const supportObj = {
                     cardData: supportCard,
@@ -2006,9 +2010,13 @@
                     const shuffledSpells = shuffleArray(availableSpells.slice());
                     const selectedSpells = shuffledSpells.slice(0, numSpells);
                     let candidatesForReplacement = eightCards.map((c, idx) => ({ card: c, index: idx }))
-                        .filter(item => !item.card.isChampion && !item.card.hasHero && !item.card.hasEvolution);
+                        .filter(item => {
+                            if (item.card.isChampion || item.card.hasHero || item.card.hasEvolution) return false;
+                            if (forceAttack && ATTACK_CARD_IDS.includes(item.card.id)) return false;
+                            return true;
+                        });
                     if (candidatesForReplacement.length < numSpells) {
-                        candidatesForReplacement = eightCards.map((c, idx) => ({ card: c, index: idx }));
+                        return null;
                     }
                     shuffleArray(candidatesForReplacement);
                     const toReplace = candidatesForReplacement.slice(0, numSpells);
@@ -2288,6 +2296,9 @@
                 let mainCards = [];
                 let missing = false;
                 mainCardIds.forEach(id => {
+                    if (excludedIds.has(id)) {
+                        missing = true;
+                    }
                     const card = allCards.find(c => c.id === id);
                     if (card) {
                         mainCards.push(card);
@@ -2302,6 +2313,10 @@
                 }
                 if (!supportCard) {
                     supportCard = supportCards[0] || TOWER_PRINCESS_CARD;
+                }
+
+                if (excludedIds.has(supportId)) {
+                    missing = true;
                 }
 
                 if (missing || mainCards.length !== 8) {
@@ -2577,6 +2592,7 @@
                 if (confirm('هل أنت متأكد من إلغاء كل الاستبعادات؟')) {
                     excludedIds.clear();
                     saveExcluded();
+                    excludeSearchInput.value = '';
                     renderExcludeModal();
                     updateOptionStates();
                     if (lastDeckIds) {
@@ -2638,25 +2654,22 @@
                 e.stopPropagation();
             });
 
-            // حدث النقر على زر استبعاد البطاقات (checkbox)
-            // نمنع التغيير التلقائي ونتحكم يدوياً في فتح/إغلاق النافذة
-            excludeToggleCheck.addEventListener('click', function(e) {
-                e.preventDefault(); // نمنع التغيير التلقائي لحالة checkbox
+            // حدث النقر على زر استبعاد البطاقات
+            document.getElementById('excludeToggleGroup').addEventListener('click', function(e) {
+                if (e.target === excludeHelpIcon) return;
+                e.preventDefault();
 
-                // نتحقق من حالة النافذة
                 if (excludeModal.classList.contains('visible')) {
-                    // إذا كانت مفتوحة نغلقها
                     closeExcludeModalFunc();
                 } else {
-                    // وإلا نفتحها
                     openExcludeModal();
                 }
-                // نعيد تعيين حالة checkbox بناءً على وجود استبعادات (المؤشر)
                 updateExcludeToggle();
             });
 
             excludeHelpIcon.addEventListener('click', function(e) {
                 e.stopPropagation();
+                e.preventDefault();
                 alert('عند اختيار اي بطاقة من هنا سيتم استبعادها ولن تظهر في اي تشكيلة منشئه.');
             });
 
