@@ -62,13 +62,13 @@
         body {
             font-family: 'Cairo', 'Adobe Arabic', 'Segoe UI', system-ui, sans-serif;
             color: var(--text);
-            padding: 1rem 0.6rem;
+            padding: 0.4rem 0.3rem;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             min-height: 100vh;
-            line-height: 1.4;
-            font-size: clamp(0.85rem, 1.2vw, 1rem);
+            line-height: 1.3;
+            font-size: clamp(0.75rem, 0.9vw, 0.85rem);
             direction: rtl;
             unicode-bidi: embed;
             position: relative;
@@ -105,6 +105,27 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
+        }
+        #skipLoadBtn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--panel);
+            border: 1px solid var(--gold);
+            border-radius: var(--radius-s);
+            color: var(--gold-light);
+            padding: 0.45rem 0.9rem;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: filter 0.15s ease, transform 0.15s ease;
+            z-index: 10000;
+        }
+        #skipLoadBtn:hover {
+            filter: brightness(1.15);
+            transform: scale(1.03);
         }
         #loadingContent {
             text-align: center;
@@ -174,10 +195,31 @@
         #loadingRetryBtn:hover {
             filter: brightness(1.12);
         }
+        #skipLoadBtn {
+            margin-top: 0.8rem;
+            background: linear-gradient(180deg, var(--gold), #d4a017);
+            border: none;
+            color: #2a1800;
+            padding: 0.5rem 1.4rem;
+            cursor: pointer;
+            border-radius: var(--radius-s);
+            font-weight: 900;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            transition: filter 0.15s ease, transform 0.1s ease;
+            letter-spacing: 0.3px;
+        }
+        #skipLoadBtn:hover {
+            filter: brightness(1.12);
+            transform: scale(1.03);
+        }
+        #skipLoadBtn:active {
+            transform: scale(0.97);
+        }
 
         /* ===== الحاوية الرئيسية ===== */
         .container {
-            max-width: 620px;
+            max-width: 480px;
             width: 100%;
             direction: rtl;
             unicode-bidi: embed;
@@ -192,27 +234,27 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 0.15rem;
+            margin-bottom: 0;
         }
 
         .title-banner h1 {
             font-family: 'Lalezar', 'Cairo', sans-serif;
             font-weight: 400;
-            font-size: clamp(1.6rem, 4vw, 2.3rem);
+            font-size: clamp(1.3rem, 3vw, 1.5rem);
             text-align: center;
             background: linear-gradient(180deg, #fff3c4 0%, #ffd54a 45%, #ff9d00 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 0 var(--gold-text-shadow));
-            padding: 0.1rem 0;
-            letter-spacing: 0.5px;
+            filter: drop-shadow(0 1.5px 0 var(--gold-text-shadow));
+            padding: 0;
+            letter-spacing: 0.3px;
         }
 
         .sub {
             color: var(--text-muted);
-            font-size: clamp(0.8rem, 1vw, 0.95rem);
-            margin-bottom: 1rem;
+            font-size: clamp(0.7rem, 1.5vw, 0.78rem);
+            margin-bottom: 0.35rem;
             text-align: center;
             font-weight: 700;
             position: relative;
@@ -222,52 +264,52 @@
         .toolbar {
             display: flex;
             flex-direction: column;
-            gap: 0.7rem;
-            margin-bottom: 0.9rem;
-            padding: 0.9rem;
+            gap: 0.35rem;
+            margin-bottom: 0.35rem;
+            padding: 0.45rem 0.55rem;
             background: linear-gradient(180deg, var(--panel) 0%, var(--panel-dark) 100%);
             border-radius: var(--radius-m);
             border: 1px solid var(--border-dark);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
             position: relative;
         }
 
         .toolbar-actions {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.6rem;
+            gap: 0.35rem;
         }
 
         .toolbar-options {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 0.5rem;
-            padding-top: 0.65rem;
+            gap: 0.25rem 0.35rem;
+            padding-top: 0.35rem;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .toolbar-options-label {
-            font-size: clamp(0.7rem, 0.85vw, 0.78rem);
+            font-size: 0.68rem;
             color: var(--text-muted);
             font-weight: 800;
             white-space: nowrap;
         }
 
         .toolbar .btn {
-            flex: 1 1 160px;
+            flex: 1 1 130px;
             border: none;
             font-family: 'Cairo', sans-serif;
             color: #ffffff;
-            padding: 0.7rem 1rem;
-            font-size: clamp(0.9rem, 1.1vw, 1rem);
+            padding: 0.4rem 0.65rem;
+            font-size: 0.8rem;
             font-weight: 800;
             cursor: pointer;
             border-radius: var(--radius-s);
             transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
             text-align: center;
             outline: none;
-            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
         }
 
         .toolbar .btn:hover:not(:disabled) {
@@ -302,13 +344,13 @@
         .toolbar .checkbox-group {
             display: flex;
             align-items: center;
-            gap: 0.35rem;
-            font-size: clamp(0.72rem, 0.88vw, 0.82rem);
+            gap: 0.25rem;
+            font-size: 0.68rem;
             color: var(--text);
             font-weight: 700;
             cursor: pointer;
             background: var(--panel-darker);
-            padding: 0.4rem 0.65rem;
+            padding: 0.2rem 0.45rem;
             border-radius: 999px;
             border: 1px solid var(--border-dark);
             user-select: none;
@@ -320,8 +362,8 @@
         }
 
         .toolbar .checkbox-group input[type="checkbox"] {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             accent-color: var(--gold);
             cursor: pointer;
         }
@@ -330,13 +372,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 1.1rem;
-            height: 1.1rem;
+            width: 0.95rem;
+            height: 0.95rem;
             border-radius: 50%;
             background: var(--gold);
             border: none;
             color: #3d2600;
-            font-size: 0.68rem;
+            font-size: 0.6rem;
             font-weight: 900;
             cursor: help;
             user-select: none;
@@ -345,9 +387,9 @@
         .error-msg {
             text-align: center;
             color: #ffdcd6;
-            font-size: 0.85rem;
-            margin: 0.2rem 0 0.6rem;
-            padding: 0.55rem;
+            font-size: 0.78rem;
+            margin: 0.15rem 0 0.35rem;
+            padding: 0.4rem;
             background: linear-gradient(180deg, #7a1f1f, #591414);
             border: 1px solid #ff8a80;
             border-radius: var(--radius-s);
@@ -363,19 +405,19 @@
             background: linear-gradient(180deg, var(--panel) 0%, var(--panel-dark) 100%);
             border: 1px solid var(--gold);
             border-radius: var(--radius-l);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.32);
-            padding: 1rem 0.8rem 1.1rem;
-            margin-bottom: 0.8rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.32);
+            padding: 0.45rem 0.5rem 0.55rem;
+            margin-bottom: 0.35rem;
         }
 
         .deck-panel-title {
             font-family: 'Lalezar', 'Cairo', sans-serif;
             text-align: center;
-            font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+            font-size: 1.05rem;
             color: var(--gold-light);
-            text-shadow: 0 2px 0 var(--gold-text-shadow);
-            margin-bottom: 0.7rem;
-            letter-spacing: 0.5px;
+            text-shadow: 0 1.5px 0 var(--gold-text-shadow);
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.3px;
             font-weight: 800;
         }
 
@@ -383,15 +425,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.25rem;
         }
 
         .deck-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0.4rem;
+            gap: 2.5px;
             width: 100%;
-            max-width: 385px;
+            max-width: 330px;
             direction: ltr;
         }
 
@@ -399,16 +441,16 @@
             width: 100%;
             text-align: center;
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            padding-top: 0.2rem;
+            padding-top: 0.1rem;
         }
 
         /* ===== متوسط الإكسير ===== */
         #avgElixirDisplay {
             text-align: center;
-            margin-top: 0.4rem;
-            font-size: clamp(0.9rem, 1.1vw, 1rem);
+            margin-top: 0.25rem;
+            font-size: 0.78rem;
             color: var(--gold-light);
             font-weight: 800;
             background: rgba(0, 0, 0, 0.25);
@@ -418,7 +460,7 @@
             width: auto;
             margin-left: auto;
             margin-right: auto;
-            padding: 0.3rem 1.1rem;
+            padding: 0.2rem 0.8rem;
             transition: opacity 0.3s ease;
         }
         #avgElixirDisplay.hidden-avg {
@@ -433,8 +475,8 @@
         .card-slot.empty-slot {
             aspect-ratio: 1 / 1.12;
             background: linear-gradient(160deg, #24699c, #163f63 60%, #0e2c48);
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: var(--radius-s);
+            border: 1.5px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -449,8 +491,8 @@
 
         .card-slot.empty-slot .slot-num {
             position: absolute;
-            bottom: 3px;
-            font-size: 0.6rem;
+            bottom: 2px;
+            font-size: 0.55rem;
             color: rgba(255, 255, 255, 0.4);
             font-weight: 800;
         }
@@ -461,25 +503,26 @@
             align-items: center;
             position: relative;
             background: linear-gradient(160deg, #1a4a70, #0e2c48 70%);
-            border-radius: var(--radius-s);
+            border-radius: 6px;
             padding: 0;
             overflow: hidden;
             animation: cardPopIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both;
             direction: rtl;
-            border: 2px solid var(--border-dark);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+            border: 1.5px solid var(--border-dark);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
             will-change: transform;
             transition: transform 0.18s ease, box-shadow 0.18s ease;
+            width: 100%;
         }
 
         .card-slot:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
 
         .card-slot.support-card {
-            width: 85px;
-            margin-top: 0.1rem;
+            width: 68px;
+            margin-top: 0;
         }
 
         .card-slot.rarity-common {
@@ -629,15 +672,15 @@
         }
 
         .card-slot .card-name {
-            font-size: 0.65rem;
+            font-size: 0.58rem;
             line-height: 1.1;
             color: #ffe9b3;
             width: 100%;
             word-break: break-word;
             font-weight: 800;
             text-align: center;
-            padding: 0.25rem 2px;
-            min-height: 2em;
+            padding: 1.5px 2px;
+            min-height: 1.7em;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -980,13 +1023,13 @@
 
         /* ===== الفوتر ===== */
         .footer {
-            margin-top: 0.4rem;
-            padding-top: 0.6rem;
+            margin-top: 0.2rem;
+            padding-top: 0.35rem;
             border-top: 1px solid rgba(255, 209, 102, 0.2);
             text-align: center;
-            font-size: 0.75rem;
+            font-size: 0.68rem;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.3;
             direction: rtl;
         }
 
@@ -1000,7 +1043,7 @@
             font-weight: 900;
             color: #fee99e;
             font-family: 'Lalezar', 'Cairo', sans-serif;
-            font-size: 1.0rem;
+            font-size: 0.85rem;
         }
 
         .footer .AI {
@@ -1029,16 +1072,19 @@
 
         @media (max-width: 550px) {
             .deck-grid {
-                gap: 0.32rem;
+                gap: 2px;
+                max-width: 300px;
             }
             .card-slot .card-name {
-                font-size: 0.58rem;
+                font-size: 0.55rem;
             }
             .card-slot.support-card {
-                width: 75px;
+                width: 62px;
             }
             .toolbar .btn {
-                flex: 1 1 100%;
+                flex: 1 1 48%;
+                padding: 0.35rem 0.5rem;
+                font-size: 0.78rem;
             }
             .toolbar-options {
                 justify-content: flex-start;
@@ -1083,6 +1129,122 @@
             }
         }
 
+        @media (min-width: 768px) {
+            .container {
+                max-width: 500px;
+            }
+            .title-banner h1 {
+                font-size: 1.5rem;
+            }
+            .sub {
+                font-size: 0.8rem;
+            }
+            .toolbar .btn {
+                font-size: 0.82rem;
+                padding: 0.45rem 0.8rem;
+            }
+            .toolbar-options-label {
+                font-size: 0.7rem;
+            }
+            .toolbar .checkbox-group {
+                font-size: 0.72rem;
+                padding: 0.22rem 0.5rem;
+            }
+            .deck-grid {
+                max-width: 340px;
+                gap: 2.5px;
+            }
+            .card-slot .card-name {
+                font-size: 0.6rem;
+            }
+            .card-slot.support-card {
+                width: 70px;
+            }
+            .deck-panel-title {
+                font-size: 1.1rem;
+            }
+            .footer .name {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 520px;
+            }
+            .title-banner h1 {
+                font-size: 1.6rem;
+            }
+            .sub {
+                font-size: 0.82rem;
+                margin-bottom: 0.35rem;
+            }
+            .toolbar {
+                padding: 0.5rem 0.7rem;
+                gap: 0.4rem;
+            }
+            .toolbar .btn {
+                font-size: 0.85rem;
+                padding: 0.45rem 0.9rem;
+            }
+            .toolbar .checkbox-group {
+                font-size: 0.74rem;
+                padding: 0.25rem 0.55rem;
+            }
+            .deck-grid {
+                max-width: 350px;
+                gap: 2.5px;
+            }
+            .card-slot .card-name {
+                font-size: 0.62rem;
+            }
+            .card-slot.support-card {
+                width: 72px;
+            }
+            .deck-panel {
+                padding: 0.55rem 0.7rem;
+            }
+            .deck-panel-title {
+                font-size: 1.15rem;
+            }
+            #avgElixirDisplay {
+                font-size: 0.82rem;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 540px;
+            }
+            .title-banner h1 {
+                font-size: 1.7rem;
+            }
+            .sub {
+                font-size: 0.85rem;
+            }
+            .toolbar .btn {
+                font-size: 0.88rem;
+                padding: 0.5rem 1rem;
+            }
+            .toolbar .checkbox-group {
+                font-size: 0.76rem;
+                padding: 0.28rem 0.6rem;
+            }
+            .deck-grid {
+                max-width: 360px;
+                gap: 3px;
+            }
+            .card-slot .card-name {
+                font-size: 0.64rem;
+            }
+            .card-slot.support-card {
+                width: 74px;
+            }
+            .deck-panel-title {
+                font-size: 1.2rem;
+            }
+        }
+
         @keyframes cardPopIn {
             0% {
                 opacity: 0;
@@ -1120,6 +1282,7 @@
 
     <!-- ===== شاشة التحميل ===== -->
     <div id="loadingScreen">
+        <button id="skipLoadBtn">تخطي التحميل</button>
         <div id="loadingContent">
             <div id="loadingText">جاري تحميل البطاقات...</div>
             <div>
@@ -1264,6 +1427,7 @@
             const loadingError = document.getElementById('loadingError');
             const loadingErrorText = document.getElementById('loadingErrorText');
             const loadingRetryBtn = document.getElementById('loadingRetryBtn');
+            const skipLoadBtn = document.getElementById('skipLoadBtn');
 
             const generateBtn = document.getElementById('generateBtn');
             const copyBtn = document.getElementById('copyBtn');
@@ -1427,9 +1591,12 @@
                 loadingScreen.classList.remove('hidden');
                 loadingProgress.textContent = '0%';
                 loadingBarFill.style.width = '0%';
+                skipLoadBtn.style.display = 'inline-block';
                 hideLoadingError();
                 loadingText.textContent = 'جاري تحميل البطاقات...';
             }
+
+            let loadSkipped = false;
 
             function loadAllImages(cards) {
                 const urls = new Set();
@@ -1444,6 +1611,7 @@
                 const urlArray = Array.from(urls);
                 let loaded = 0;
                 const total = urlArray.length;
+                loadSkipped = false;
 
                 return new Promise((resolve) => {
                     if (total === 0) { updateLoadingProgress(100, 100); resolve(); return; }
@@ -1452,14 +1620,38 @@
                     function checkDone() {
                         if (!resolved && loaded === total) { resolved = true; resolve(); }
                     }
+
+                    function trySkip() {
+                        if (!resolved) {
+                            loadSkipped = true;
+                            resolved = true;
+                            resolve();
+                        }
+                    }
+
+                    skipLoadBtn.onclick = trySkip;
+
                     urlArray.forEach(url => {
+                        if (preloadedImages.has(url)) {
+                            loaded++;
+                            updateLoadingProgress(loaded, total);
+                            checkDone();
+                            return;
+                        }
                         const img = new Image();
-                        img.onload = () => { loaded++;
+                        img.onload = () => {
+                            if (loadSkipped) return;
+                            loaded++;
+                            preloadedImages.set(url, img);
                             updateLoadingProgress(loaded, total);
-                            checkDone(); };
-                        img.onerror = () => { loaded++;
+                            checkDone();
+                        };
+                        img.onerror = () => {
+                            if (loadSkipped) return;
+                            loaded++;
                             updateLoadingProgress(loaded, total);
-                            checkDone(); };
+                            checkDone();
+                        };
                         img.src = url;
                         preloadedImages.set(url, img);
                     });
@@ -1531,8 +1723,7 @@
                 supportCards = processedSupport;
                 dataLoaded = true;
 
-                // تحميل الصور في الخلفية بدون حظر الواجهة
-                loadAllImages(allCardsData);
+                await loadAllImages(allCardsData);
 
                 // تحميل البطاقات المستبعدة
                 loadExcluded();
