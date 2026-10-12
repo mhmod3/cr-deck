@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>منشئ التشكيلات · M7mod</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Rubik:wght@400;600;700;800&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:390px;height:844px;overflow:hidden;margin:0}
+body{background:#0a0a0e;color:#fff;font-family:"Rubik",sans-serif;position:relative}
+.head{position:absolute;top:0;left:0;right:0;height:58%;padding:84px 12px 0}
+h1{display:flex;align-items:center;gap:7px;font:700 12px "Rubik"}
+.dot{width:6px;height:6px;border-radius:50%;background:#e03997}
+.g{margin-top:20px;display:grid;grid-template-columns:repeat(4,84px);gap:10px}
+.c{position:relative;width:84px;height:96px;background:#14141a;border:1px solid rgba(255,255,255,.08);overflow:hidden}
+.c::before{content:"";position:absolute;inset:0;background:radial-gradient(130% 90% at 50% -10%,var(--r),transparent 70%);opacity:.16}
+.c::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--r);opacity:.85}
+.common{--r:#b7c1cc}.rare{--r:#ff9d2e}.epic{--r:#b455e0}.legend{--r:#ffd54a}
+.n{position:absolute;top:9px;right:8px;font:600 10px/1.3 "Rubik"}
+.e{position:absolute;bottom:7px;right:6px;width:18px;height:20px;border-radius:50% 50% 50% 0;transform:rotate(45deg);background:radial-gradient(circle at 35% 30%,#ff9cc0,#e03997);display:grid;place-items:center}
+.e b{transform:rotate(-45deg);font:800 9px/1 "Rubik"}
+.scrim{position:absolute;bottom:0;left:0;right:0;height:321px;background:linear-gradient(transparent,#000 60%);display:flex;justify-content:space-between;align-items:flex-end;padding:0 14px 56px}
+.info{display:flex;align-items:flex-end;gap:12px}
+.avg{display:flex;flex-direction:column}
+.avg label{font:400 10px "Rubik";color:#b9bcc4}
+.avg b{font:400 34px/1.1 "Lalezar"}
+.sup{display:flex;align-items:center;gap:8px}
+.sup .c{width:44px;height:44px}
+.sup span{font:600 10px "Rubik";color:#b9bcc4}
+.rail{display:flex;flex-direction:column;gap:14px;align-items:center}
+.b{position:relative;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);display:grid;place-items:center;font-size:19px}
+.b.on{background:#e03997;border-color:transparent}
+.badge{position:absolute;top:-3px;left:-3px;width:16px;height:16px;border-radius:50%;background:#fff;color:#0a0a0e;font:800 10px/16px "Rubik";text-align:center}
+.hint{position:absolute;bottom:0;left:0;right:0;height:44px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2}
+.up{font-size:12px;color:#8b8f98;line-height:1;transform:rotate(180deg)}
+.hint p{font:400 11px "Rubik";color:#8b8f98;margin-top:3px}
+</style>
+</head>
+<body>
+<div class="head">
+<h1><i class="dot"></i>تشكيلة No. 0042</h1>
+<div class="g">
+<div class="c rare"><span class="n">جنت</span><span class="e"><b>5</b></span></div>
+<div class="c common"><span class="n">رايدر الهوغ</span><span class="e"><b>5</b></span></div>
+<div class="c common"><span class="n">زوبين</span><span class="e"><b>2</b></span></div>
+<div class="c rare"><span class="n">قناصة</span><span class="e"><b>3</b></span></div>
+<div class="c legend"><span class="n">غولم</span><span class="e"><b>14</b></span></div>
+<div class="c epic"><span class="n">فيلكي</span><span class="e"><b>4</b></span></div>
+<div class="c common"><span class="n">خنزير</span><span class="e"><b>2</b></span></div>
+<div class="c common"><span class="n">مسدس</span><span class="e"><b>6</b></span></div>
+</div>
+</div>
+<div class="scrim">
+<div class="info">
+<div class="avg"><label>متوسط الإكسير</label><b>6.9</b></div>
+<div class="sup"><i class="c epic"></i><span>برج الأميرة</span></div>
+</div>
+<div class="rail">
+<i class="b on">↻<b class="badge">3</b></i>
+<i class="b">⧉</i>
+<i class="b">▦</i>
+<i class="b">✕</i>
+</div>
+</div>
+<div class="hint"><span class="up">▾</span><p>التشكيلة التالية على بُعد إصبع</p></div>
+</body>
+</html>

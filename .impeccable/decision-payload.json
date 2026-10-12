@@ -1,0 +1,116 @@
+{
+  "title": "اختر العالم البصري لمنشئ التشكيلات",
+  "question": "الرمي أسند «صفحة جامع البطاقات». حافظ عليه، خذ بديلاً، أو ارمِ من جديد.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "صفحة جامع البطاقات",
+      "kicker": "THE ROLL",
+      "lineage": "باندر وغلوف بطاقات المجموعة (ثقافة TCG المادية)",
+      "thesis": "التشكيلة صفحة باندر: ثمانية جيوب بمقياس ثابت على قاعدة واحدة، سحّابات ملونة حسب الندرة، والكشف كشفُ صفحة تُفتح.",
+      "palette": ["#14161c", "#f5f1e6", "#e03997", "#ffd54a"],
+      "materials": ["جلد باندر", "جيب بلاستيكي", "سحّابة مخططة"],
+      "viewport": "صفحة الباندر في المنتصف: عنوان التشكيلة فوق، شبكة 4×2 جيوب بسحّابات ندرة، شريط إكسير أفقي يتقدم مع الكشف، ثم شريط المشاركة (إنشاء + كتلة QR مختومة).",
+      "risk": "قد يقرأ كمتجر بطاقات لا أداة توليد سريعة إن لم يبق زر الإنشاء هو الحدث الوحيد.",
+      "raised": [
+        { "from": "challenger-folio", "raise": "الجيوب الثمانية بمقياس ثابت على قاعدة أساس مشتركة واحدة — صفّ واحد، لا يطفو أحد." },
+        { "from": "variable-font-specimen", "raise": "مُحفّز واحد يعيد رسم الشبكة كلها على حيّ — الكشف المتتابع هو الحركة الموقّعة." },
+        { "from": "challenger-labano", "raise": "تماثل حول محور مركزي: شريط الإحصاءات مقسوم حول برج الوسط." }
+      ],
+      "html": ".impeccable/mocks/decision/assigned.html"
+    },
+    {
+      "id": "model-pick",
+      "label": "طقس فتح الحزمة",
+      "kicker": "IMPECCABLE'S PICK",
+      "lineage": "شاشة فتح الحزم داخل اللعبة (أيقونات رسمية)",
+      "thesis": "الغموض هو المنتج: البطاقات تُفتح كحزمة حول حلقة إكسير وردية، والهالة تمتد لحظة الكشف.",
+      "palette": ["#101014", "#e03997", "#7dff9b", "#f4f4f4"],
+      "materials": ["شاشة لعبة ليلية", "هالوجرافيك", "وهج شفاف"],
+      "viewport": "شاشة داكنة؛ حلقة إكسير وردية في الوسط، البطاقات الثمانية في مدار حولها (6 مكشوفة + 2 ورقية تنتظر)، الإحصاءات وأسفلها الخيارات وزر الإنشاء.",
+      "risk": "الاتجاه الذي تهبط عليه أغلب الجولات في هذا التصنيف: قالب اللعبة الليلية المعروف.",
+      "html": ".impeccable/mocks/decision/model-pick.html"
+    },
+    {
+      "id": "challenger-feed",
+      "label": "رفّ التشكيلات العمودي",
+      "verdict": "competitive",
+      "lineage": "ثقافة ريلز/تيك توك — التغذية العمودية",
+      "thesis": "تشكيلة كاملة تحتل الشاشة كلها؛ إصبعٌ واحدة = تشكيلة جديدة، وأزرار الفعل على الحافة.",
+      "palette": ["#0a0a0e", "#e03997", "#ffffff"],
+      "materials": ["تغذية عمودية", "أسكرام سفلي", "رموز فعل"],
+      "viewport": "ساحة 390×844: شبكة 4×2 تملأ الثلثين العلويين، أسكرام سفلي يحمل متوسط الإكسير وتسمية التشكيلة، عمود رموز فعل على الحافة (إنشاء/نسخ/QR/إغلاق) والـ «التشكيلة التالية» تلمح أسفلها.",
+      "case": "حافظ على المحور الأقوى (تعرّف الجمهور): هذا الجمهور يستهلك المحتوى ألعاباً بالتغذية العمودية؛ خسر هامشاً على وضوح الديسكتوب.",
+      "risk": "على الديسكتوب يقرأ كتطبيق ريلز لا كأداة.",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-vertical-video-feed-surface-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/pop-culture-shelf-vertical-video-feed-surface.webp",
+      "html": ".impeccable/mocks/decision/challenger-feed.html"
+    },
+    {
+      "id": "challenger-pass",
+      "label": "تذكرة التشكيلة",
+      "verdict": "competitive",
+      "lineage": "سندات السفر: تذكرة صعود ولوحة مغادرة",
+      "thesis": "التشكيلة تذكرة مقسمة: خانات مختومة برقم تسلسلي، وكتلة QR هي الكتلة القابلة للمسح، والتغيّر لونٌ واحد محجوز.",
+      "palette": ["#111318", "#f5f1e6", "#e03997", "#3a3f4a"],
+      "materials": ["سند مقسم", "أرقام جدولية", "فتحات ختم"],
+      "viewport": "تذكرة عريضة مقسمة أفقياً بفتحات مثقوبة: يمين = ختم 8 بطاقات 4×2، وسط = متوسط الإكسير والرقم التسلسلي، يسار = كتلة QR كبيرة مع «امسح للاستيراد»؛ خانة واحدة مرفوعة علم «تغيّرت» بلون التنبيه الوردي.",
+      "case": "يُترجم آلية المشاركة نفسها (QR = كتلة مخطومة) إلى لغة السندات، ويبقى كل عنصر لعبة حقيقية.",
+      "risk": "يقرأ تكلّف (ساف) إن لم تُلتزم الأرقام الجداولية والمناطق.",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-boarding-pass-and-gate-board-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/vernacular-ephemera-boarding-pass-and-gate-board.webp",
+      "html": ".impeccable/mocks/decision/challenger-pass.html"
+    },
+    {
+      "id": "challenger-pixel",
+      "label": "بصمة بكسل",
+      "verdict": "competitive",
+      "lineage": "طباعة Emigre ونمط أيقونات الألعاب",
+      "thesis": "العنوان بخط عربي ثقيل فوق أرض بنمط نقاط خفيف؛ الدقة المنخفضة هي الجمال، والأطر متدرجة بكسل خطوةً بخطوة.",
+      "palette": ["#101014", "#f2f2f2", "#e03997", "#3a3f4a"],
+      "materials": ["نمط نقاط", "إطار بكسل متدرّج", "خط عربي ثقيل"],
+      "viewport": "عنوان ضخم ثقيل على أرض بنمط نقاط خفيف، شبكة 4×2 بإطارات بكسل متدرجة، عدّاد كشف أرقاماً بكسلية، زر الإنشاء مربع زواياه متدرجة.",
+      "case": "يحافظ على محور التعرّف (ثقافة الألعاب البكسلية) مع أدوات عمل عادية.",
+      "risk": "بدون خط بكسل عربي حقيقي يتفكك الوجه؛ هنا يعوّضه خط ثقيل + زخرفة بكسل.",
+      "hero": "https://impeccable.style/worlds/cards/emigre-bitmap-specimen-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/emigre-bitmap-specimen.webp",
+      "html": ".impeccable/mocks/decision/challenger-pixel.html"
+    },
+    {
+      "id": "challenger-folio",
+      "label": "فهرس موسمي",
+      "verdict": "declined",
+      "lineage": "فهارس النباتات الموسمية",
+      "thesis": "صفائح بمقياس ثابت على قاعدة واحدة عبر المراحل.",
+      "palette": ["#f3ead8", "#2a2a26", "#3a6b35"],
+      "materials": ["ورق كريم", "خطوط محفورة"],
+      "risk": "يفقد على محوري جمهور الألعاب الليلية.",
+      "case": "دمج فاشل: الجمهور لا يقرأ فهارس نباتية. بقي قانونه «صفائح بمقياس ثابت على قاعدة مشتركة» ترقيةً لعنواننا.",
+      "hero": "https://impeccable.style/worlds/cards/editorial-sequence-montage-botanical-folio-season-hero.webp"
+    },
+    {
+      "id": "challenger-labano",
+      "label": "نوتة حركة",
+      "verdict": "declined",
+      "lineage": "توثيق الرقص (Labanotation)",
+      "thesis": "عمودان متماثلان حول محور مركزي، الزمن يصعد.",
+      "palette": ["#f4f4f4", "#141414"],
+      "materials": ["نوتة عمودية", "تظليل"],
+      "risk": "يفقد على محوري الجمهور والوضوح.",
+      "case": "دمج فاشل. بقي قانونه «التماثل حول محور مركزي» ترقيةً لعنواننا (شريط الإحصاءات حول برج الوسط).",
+      "hero": "https://impeccable.style/worlds/cards/notation-diagram-systems-labanotation-hero.webp"
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "canon": true,
+  "canonCard": {
+    "label": "القالب المعتاد",
+    "thesis": "شبكة بطاقات داكنة بلون تأكيد واحد وزر إنشاء عائم — ما يوصل به كل موقع تصنيف كهذا.",
+    "palette": ["#1a1a1e", "#25252b", "#2185d0"],
+    "materials": ["شبكة نظيفة", "زوايا دائرية"],
+    "viewport": "الترتيب المتوقع تماماً، بالانشاءة الكاملة.",
+    "risk": "لا تميّز عن المنافسين بالضرورة.",
+    "html": ".impeccable/mocks/decision/canon.html"
+  },
+  "steer": true
+}

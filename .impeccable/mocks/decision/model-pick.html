@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>منشئ التشكيلات — M7mod</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Rubik:wght@400;500;700&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden;margin:0}
+body{background:#101014;color:#f4f4f4;font-family:Rubik,Tahoma,sans-serif;position:relative}
+.halo{position:absolute;left:50%;top:430px;width:400px;height:400px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(180,85,224,.10),transparent 70%)}
+.halo::before{content:"";position:absolute;left:50%;top:50%;width:660px;height:660px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(224,57,151,.08),transparent 62%)}
+header{position:absolute;top:32px;left:0;right:0;text-align:center;z-index:2}
+.wm{font:500 11px Rubik;letter-spacing:5px;color:#6a6f7a}
+h1{font:44px Lalezar;margin:6px 0 4px;color:#f4f4f4}
+.sub{font:13px Rubik;color:#8b8f98}
+.stage{position:absolute;left:50%;top:430px;transform:translate(-50%,-50%);width:520px;height:520px;z-index:1}
+.ring{position:absolute;left:50%;top:50%;width:300px;height:300px;transform:translate(-50%,-50%);border:2px solid rgba(224,57,151,.55);border-radius:50%;background:radial-gradient(circle,#2a1426,#101014 72%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.ring b{font:40px Lalezar;font-weight:400;color:#f4f4f4}
+.ring i{font:10px Rubik;font-style:normal;color:#8b8f98}
+.c{position:absolute;width:72px;height:84px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(165deg,var(--rrc),#101014 78%);box-shadow:0 8px 20px rgba(0,0,0,.5)}
+.c::after{content:"";position:absolute;top:0;left:10px;right:10px;height:2px;border-radius:2px;background:var(--rc);opacity:.6}
+.c i{position:absolute;bottom:10px;left:4px;right:4px;text-align:center;font:500 9px Rubik;font-style:normal;color:#e8e8ee;white-space:nowrap}
+.drop{position:absolute;top:8px;left:8px;width:16px;height:16px;background:#e03997;border-radius:0 50% 50% 50%;transform:rotate(45deg);display:flex;align-items:center;justify-content:center}
+.drop b{transform:rotate(-45deg);font:700 9px Rubik;color:#fff}
+.lg{--rc:#ffd54a;--rrc:rgba(255,213,74,.24)}
+.ep{--rc:#b455e0;--rrc:rgba(180,85,224,.26)}
+.rare{--rc:#ff9d2e;--rrc:rgba(255,157,46,.22)}
+.cm{--rc:#b7c1cc;--rrc:rgba(183,193,204,.12)}
+.foil{background:linear-gradient(120deg,transparent 42%,rgba(180,85,224,.35) 50%,transparent 58%),#1a0f26;border:1px solid rgba(180,85,224,.3)}
+.foil::before{content:"؟";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:34px Lalezar;color:#b455e0}
+.stats{position:absolute;top:694px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:18px;z-index:2}
+.avg{text-align:center}
+.avg i{display:block;font:10px Rubik;font-style:normal;color:#8b8f98}
+.avg b{font:30px Lalezar;font-weight:400;color:#f4f4f4}
+.sep{width:1px;height:44px;background:rgba(255,255,255,.08)}
+.support{text-align:center}
+.th{width:44px;height:52px;margin:0 auto 6px;border-radius:6px;border:1px solid rgba(255,213,74,.4);background:linear-gradient(165deg,rgba(255,213,74,.2),#101014 80%)}
+.support i{font:10px Rubik;font-style:normal;color:#8b8f98}
+.chips{position:absolute;top:758px;left:0;right:0;display:flex;justify-content:center;gap:10px;z-index:2}
+.chip{display:flex;align-items:center;gap:8px;padding:8px 16px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.02);font:11px Rubik;color:#9ea3ac}
+.chip i{width:7px;height:7px;border-radius:50%;background:#4a4e58;font-style:normal}
+.chip.on i{background:#e03997}
+.actions{position:absolute;top:800px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:20px;z-index:2}
+.btn{background:#e03997;color:#fff;font:700 15px Rubik;padding:12px 28px;border-radius:4px;opacity:.45;border:0}
+.qr{display:flex;flex-direction:column;align-items:center;gap:5px}
+.qg{width:64px;height:64px;padding:6px;background:#15151c;border:1px solid rgba(255,255,255,.1);border-radius:4px}
+.qg::before{content:"";display:block;width:100%;height:100%;background:conic-gradient(#c9cdd6 25%,transparent 0 50%,#c9cdd6 0 75%,transparent 0);background-size:11px 11px;opacity:.8}
+.qr i{font:9px Rubik;font-style:normal;color:#8b8f98}
+.foot{position:absolute;bottom:8px;left:0;right:0;text-align:center;font:10px Rubik;color:#4c5058}
+</style>
+</head>
+<body>
+<div class="halo"></div>
+<header>
+<p class="wm">M7MOD</p>
+<h1>منشئ التشكيلات</h1>
+<p class="sub">افتح الحزمة · رتّب الإكسير · أنشئ تشكيلتك</p>
+</header>
+<div class="stage">
+<div class="ring"><b>8/8</b><i>بطاقات مكشوفة</i></div>
+<div class="c lg" style="left:224px;top:13px"><span class="drop"><b>5</b></span><i>جنت</i></div>
+<div class="c lg" style="left:369px;top:73px"><span class="drop"><b>5</b></span><i>رايدر الهوغ</i></div>
+<div class="c cm" style="left:429px;top:218px"><span class="drop"><b>2</b></span><i>زوبين</i></div>
+<div class="c rare" style="left:369px;top:363px"><span class="drop"><b>3</b></span><i>قناصة</i></div>
+<div class="c ep" style="left:224px;top:423px"><span class="drop"><b>6</b></span><i>مسدس</i></div>
+<div class="c cm" style="left:79px;top:363px"><span class="drop"><b>2</b></span><i>خنزير</i></div>
+<div class="c foil" style="left:19px;top:218px"></div>
+<div class="c foil" style="left:79px;top:73px"></div>
+</div>
+<div class="stats">
+<div class="avg"><i>متوسط الإكسير</i><b>6.9</b></div>
+<div class="sep"></div>
+<div class="support"><div class="th"></div><i>برج الأميرة</i></div>
+</div>
+<div class="chips">
+<span class="chip on"><i></i>توازن الإكسير</span>
+<span class="chip"><i></i>اتجاه هجومي</span>
+<span class="chip"><i></i>بناوين دفاعية</span>
+<span class="chip"><i></i>نسخة سريعة</span>
+<span class="chip"><i></i>استبعاد بطاقات 0</span>
+</div>
+<div class="actions">
+<button class="btn">إنشاء تشكيلة</button>
+<div class="qr"><div class="qg"></div><i>امسح للاستيراد</i></div>
+</div>
+<p class="foot">M7mod · Discord: _.m6</p>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1440, initial-scale=1" />
+<title>تذكرة التشكيلة — M7mod</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet" />
+<style>
+  html,body{margin:0;width:1440px;height:900px;overflow:hidden;background:#111318}
+  body{font-family:'Rubik',sans-serif;color:#f5f1e6}
+  .wrap{width:960px;margin:0 auto;padding:40px 0 24px;box-sizing:border-box;height:900px;display:flex;flex-direction:column}
+  .mono{font-family:ui-monospace,'Cascadia Mono',Consolas,monospace;font-variant-numeric:tabular-nums}
+  /* ===== تذكرة ===== */
+  .ticket{background:#191c22;border:1px solid #2a2e37;border-radius:6px;overflow:hidden;flex:0 0 auto}
+  .t-strip{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #2a2e37}
+  .t-brand{font-size:10px;letter-spacing:3px;color:#6a6f7a;margin-bottom:2px}
+  .t-title{font-size:16px;font-weight:700;color:#f5f1e6}
+  .t-date{font-size:11px;color:#8b8f98}
+  .t-seq{font-size:13px;color:#f5f1e6;border:1px solid #2a2e37;padding:4px 10px;letter-spacing:1px}
+  .t-body{display:flex}
+  .seg{padding:18px}
+  .seg-right{flex:34%}
+  .seg-mid{flex:30%}
+  .seg-left{flex:30%}
+  .perf{position:relative;width:20px;flex:0 0 20px;border-left:1px dashed #3a3f4a}
+  .perf i{position:absolute;left:50%;width:10px;height:10px;background:#111318;border-radius:50%;transform:translate(-50%,-50%)}
+  .perf i.top{top:0}.perf i.bot{top:auto;bottom:0;transform:translate(-50%,50%)}
+  .seg-label{font-size:10px;letter-spacing:1px;color:#8b8f98;font-weight:700;margin-bottom:10px}
+  /* ختم البطاقات */
+  .stamps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .stamp{position:relative;background:#101216;border:1px solid #23262e;border-radius:3px;padding:6px 4px;height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .stamp .art{width:100%;height:34px;border-radius:2px}
+  .stamp .nm{font-size:9px;color:#cfd2d8;font-weight:500}
+  .stamp .tab{position:absolute;top:3px;right:4px;font-size:8px;color:#6a6f7a}
+  .stamp .drop{width:16px;height:16px;border-radius:50% 50% 50% 0;transform:rotate(45deg);background:radial-gradient(ellipse at 35% 30%,#d17bff,#6b0fa0);display:flex;align-items:center;justify-content:center}
+  .stamp .drop b{transform:rotate(-45deg);color:#fff;font-size:8px;font-weight:700}
+  .stamp.changed{border-color:#e03997}
+  .stamp.changed::before{content:'';position:absolute;top:0;right:0;left:0;height:3px;background:#e03997}
+  .stamp .flag{position:absolute;bottom:3px;left:4px;font-size:8px;font-weight:700;color:#e03997}
+  /* ألوان الندرة */
+  .c .art{background:linear-gradient(160deg,#2a2d33,#15171c)}
+  .r .art{background:linear-gradient(160deg,#3a2a18,#1a1512)}
+  .e .art{background:linear-gradient(160deg,#2e1836,#150f1c)}
+  .l .art{background:linear-gradient(160deg,#3a3218,#1a1710)}
+  /* الإحصاءات */
+  .avg{font-family:'Lalezar',cursive;font-size:52px;line-height:1;color:#f5f1e6}
+  .avg-l{font-size:10px;letter-spacing:1px;color:#8b8f98;margin:4px 0 14px}
+  .drow{display:flex;justify-content:space-between;font-size:12px;color:#cfd2d8;padding:7px 0;border-bottom:1px solid #23262e}
+  .drow:last-child{border-bottom:none}
+  .drow .mono{color:#f5f1e6;font-size:12px}
+  /* الاستيراد */
+  .qrbox{width:120px;height:120px;background:#f5f1e6;padding:8px;margin-bottom:8px}
+  .qrbox .g{display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(7,1fr);gap:1px}
+  .qrbox .g i{background:#111318}
+  .qrbox .g i.o{background:transparent}
+  .qrcap{font-size:11px;color:#8b8f98;text-align:center}
+  .qrl{font-size:10px;color:#4c5058;text-align:center;margin-top:4px}
+  /* الأسفل */
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+  .chip{font-size:11px;font-weight:700;color:#9ea3ac;border:1px solid #2a2e37;border-radius:999px;padding:6px 12px;display:inline-flex;align-items:center;gap:6px}
+  .chip i{width:6px;height:6px;border-radius:50%;background:#4c5058;display:inline-block}
+  .chip.on{border-color:#e03997;color:#f5f1e6}
+  .chip.on i{background:#e03997}
+  .gen{width:960px;margin:14px auto 0;background:#f5f1e6;color:#111318;font-family:'Rubik',sans-serif;font-size:14px;font-weight:700;padding:12px;border:none;border-radius:4px;cursor:pointer}
+  .foot{margin-top:auto;padding-top:14px;text-align:center;font-size:10px;color:#4c5058}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="ticket">
+    <div class="t-strip">
+      <div>
+        <div class="t-brand">M7MOD</div>
+        <div class="t-title">منشئ التشكيلات</div>
+      </div>
+      <div class="t-date">تشكيلة · 07/2025</div>
+      <div class="t-seq mono">No. 0042</div>
+    </div>
+    <div class="t-body">
+      <div class="seg seg-right">
+        <div class="seg-label">البطاقات</div>
+        <div class="stamps">
+          <div class="stamp c"><span class="tab mono">01</span><div class="art"></div><div class="nm">جنت</div><div class="drop"><b>5</b></div></div>
+          <div class="stamp l"><span class="tab mono">02</span><div class="art"></div><div class="nm">رايدر الهوغ</div><div class="drop"><b>5</b></div></div>
+          <div class="stamp c"><span class="tab mono">03</span><div class="art"></div><div class="nm">زوبين</div><div class="drop"><b>2</b></div></div>
+          <div class="stamp c"><span class="tab mono">04</span><div class="art"></div><div class="nm">قناصة</div><div class="drop"><b>3</b></div></div>
+          <div class="stamp e"><span class="tab mono">05</span><div class="art"></div><div class="nm">غولم</div><div class="drop"><b>14</b></div></div>
+          <div class="stamp r"><span class="tab mono">06</span><div class="art"></div><div class="nm">فيلكي</div><div class="drop"><b>4</b></div></div>
+          <div class="stamp r changed"><span class="tab mono">07</span><div class="art"></div><div class="nm">خنزير</div><div class="drop"><b>2</b></div><span class="flag">تغيّرت</span></div>
+          <div class="stamp e"><span class="tab mono">08</span><div class="art"></div><div class="nm">مسدس</div><div class="drop"><b>6</b></div></div>
+        </div>
+      </div>
+      <div class="perf"><i class="top"></i><i class="bot"></i></div>
+      <div class="seg seg-mid">
+        <div class="seg-label">إحصاءات</div>
+        <div class="avg">6.9</div>
+        <div class="avg-l">متوسط الإكسير</div>
+        <div class="drow"><span>بطاقة داعمة</span><span class="mono">برج الأميرة</span></div>
+        <div class="drow"><span>بطاقات هجومية</span><span class="mono">2</span></div>
+      </div>
+      <div class="perf"><i class="top"></i><i class="bot"></i></div>
+      <div class="seg seg-left">
+        <div class="seg-label">للاستيراد</div>
+        <div class="qrbox"><div class="g">
+          <i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i>
+          <i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i>
+          <i></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i>
+          <i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i>
+          <i class="o"></i><i></i><i class="o"></i><i class="o"></i><i></i><i></i><i class="o"></i>
+          <i></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i>
+          <i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i>
+        </div></div>
+        <div class="qrcap">امسح للاستيراد</div>
+        <div class="qrl mono">link.clashroyale.com/…</div>
+      </div>
+    </div>
+  </div>
+  <div class="chips">
+    <span class="chip on"><i></i>بواسل ومطوريات عشوائية</span>
+    <span class="chip"><i></i>إجباري التعويذات</span>
+    <span class="chip"><i></i>إجباري برج الأميرة</span>
+    <span class="chip"><i></i>إجباري بطاقات هجومية</span>
+    <span class="chip"><i></i>استبعاد بطاقات 0</span>
+  </div>
+  <button class="gen">إنشاء تشكيلة</button>
+  <div class="foot">M7mod · Discord: _.m6</div>
+</div>
+</body>
+</html>

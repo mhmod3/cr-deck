@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-10T18:26:45+03:00",
+  "name": "صفحة جامع البطاقات — M7mod",
+  "mode": "operate",
+  "title": "Design System: صفحة جامع البطاقات (M7mod)",
+  "colors": {
+    "bg": "#14161c",
+    "panel": "#191c22",
+    "panel-2": "#101216",
+    "border": "#2a2e37",
+    "border-2": "#3a3f4a",
+    "hairline-deep": "#23262e",
+    "text": "#cfd2d8",
+    "text-strong": "#f5f1e6",
+    "text-muted": "#98a0ab",
+    "text-faint": "#8f98a5",
+    "white": "#ffffff",
+    "accent": "#d32f8f",
+    "accent-soft": "rgba(211, 47, 143, .12)",
+    "red": "#b0392a",
+    "error-ink": "#ffb4a8",
+    "crown": "#333845",
+    "scrim": "rgba(8, 9, 12, .82)",
+    "rarity-common": "#b7c1cc",
+    "rarity-rare": "#ff9d2e",
+    "rarity-epic": "#b455e0",
+    "rarity-legendary": "#ffd54a",
+    "rarity-champion": "#ffb300",
+    "rarity-support": "#7a8089"
+  },
+  "typography": {
+    "typeRamp": [10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 26, 30, 34, 44],
+    "display": {
+      "family": "Lalezar",
+      "fallbacks": "Rubik, sans-serif",
+      "weights": [400],
+      "keySizes": {
+        "h1": "44px/1.1 (34px on mobile)",
+        "section-title": "20px",
+        "modal-header": "22px",
+        "stat-value": "30px/1 (26px on mobile)",
+        "button": "20px (letter-spacing .02em)",
+        "placeholder-question": "30px (pulses via questionPulse .7s)"
+      }
+    },
+    "ui": {
+      "family": "Rubik",
+      "fallbacks": "Cairo, system-ui, sans-serif",
+      "weights": [400, 500, 700],
+      "keySizes": {
+        "base": "14px/1.45 weight 400",
+        "label": "12-13px weight 500"
+      }
+    },
+    "numeral": {
+      "family": "ui-monospace, Cascadia Mono, Consolas, monospace",
+      "figures": "tabular",
+      "keySizes": {
+        "wordmark": "11px letter-spacing .18em",
+        "pocket-counter": "10px letter-spacing .08em",
+        "loading-progress": "12px",
+        "exclude-count-badge": "11px weight 700"
+      }
+    }
+  },
+  "signature_move": "Staggered card cascade: 8 fixed-scale pockets (aspect 1/1.14, which holds pocket size while the art is hidden) on one shared 4x2 baseline. Each pocket first holds a neutral-sleeve question-mark flicker (rarity sleeve held at the hairline color, no rarity chroma while the card is unknown) with the ? pulsing (questionPulse .7s: opacity .35 to .8, scale 1 to 1.12); at the end of its 45ms x 8 stagger window the pocket plays cardReveal (.34s cubic-bezier(.2,.8,.2,1), scale .9 to 1.02 overshoot to 1, opacity .35 to 1), a one-shot paper inkFlash (radial #f5f1e6 at 22% alpha, .55s), and stamps on the rarity sleeve. The elixir meter (fill width driven by --avg) settles exactly when the average lands. Symmetric about the center axis.",
+  "states": [
+    "empty",
+    "animating",
+    "revealed",
+    "error",
+    "disabled",
+    "excluded",
+    "checked"
+  ],
+  "extensions": {
+    "colorMeta": {
+      "bg": { "role": "neutral", "displayName": "Tournament-Table Midnight", "canonical": "#14161c" },
+      "panel": { "role": "neutral", "displayName": "Cardstock", "canonical": "#191c22" },
+      "panel-2": { "role": "neutral", "displayName": "Pocket Interior", "canonical": "#101216" },
+      "border": { "role": "neutral", "displayName": "Hairline", "canonical": "#2a2e37" },
+      "border-2": { "role": "neutral", "displayName": "Emphasis Hairline", "canonical": "#3a3f4a" },
+      "text": { "role": "neutral", "displayName": "Ink", "canonical": "#cfd2d8" },
+      "text-strong": { "role": "neutral", "displayName": "Pocket Paper", "canonical": "#f5f1e6" },
+      "text-muted": { "role": "neutral", "displayName": "Muted Ink", "canonical": "#98a0ab" },
+      "text-faint": { "role": "neutral", "displayName": "Faint Ink", "canonical": "#8f98a5" },
+      "accent": { "role": "primary", "displayName": "Elixir Pink", "canonical": "#d32f8f", "tonalRamp": ["#2a0a1f", "#52103a", "#7c1755", "#a61e71", "#d32f8f", "#e05aa4", "#ea8bc0", "#f5bfe0"] },
+      "accent-soft": { "role": "primary", "displayName": "Elixir Pink Bed", "canonical": "rgba(211, 47, 143, .12)" },
+      "red": { "role": "signal", "displayName": "Error Rust", "canonical": "#b0392a" },
+      "rarity-common": { "role": "data", "displayName": "Slate Common", "canonical": "#b7c1cc" },
+      "rarity-rare": { "role": "data", "displayName": "Orange Rare", "canonical": "#ff9d2e" },
+      "rarity-epic": { "role": "data", "displayName": "Purple Epic", "canonical": "#b455e0" },
+      "rarity-legendary": { "role": "data", "displayName": "Gold Legendary", "canonical": "#ffd54a" },
+      "rarity-champion": { "role": "data", "displayName": "Amber Champion", "canonical": "#ffb300" },
+      "rarity-support": { "role": "data", "displayName": "Steel Support", "canonical": "#7a8089" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Lalezar Display", "purpose": "Arabic poster face from the subject's world: gaming posters and YouTube thumbnails. h1, section titles, stat values, the generate button, 'مستبعدة' overlay." },
+      "ui": { "displayName": "Rubik UI", "purpose": "Geometric workhorse for all Arabic UI text; 400 base, 500 labels and hints." },
+      "numeral": { "displayName": "Mono Stamps", "purpose": "Tabular figures for pocket counters, loading percentages, the M7mod wordmark, and the exclude-count badge." }
+    },
+    "shadows": [
+      { "name": "button-lift", "value": "0 6px 20px rgba(0, 0, 0, .45)", "purpose": "Generate button at rest; hover deepens to 0 10px 28px rgba(0,0,0,.55) with a -1px lift." },
+      { "name": "tower-drop", "value": "drop-shadow(0 2px 8px rgba(0, 0, 0, .55))", "purpose": "The support tower image, the only element that floats off the page." },
+      { "name": "popover-lift", "value": "0 18px 44px rgba(0, 0, 0, .55)", "purpose": "The stamped QR copy popover." },
+      { "name": "modal-float", "value": "0 24px 60px rgba(0, 0, 0, .6)", "purpose": "Exclusion modal over a rgba(8, 9, 12, .82) scrim." }
+    ],
+    "motion": [
+      { "name": "card-reveal", "value": ".34s cubic-bezier(.2, .8, .2, 1) (scale .9 to 1.02 overshoot to 1, opacity .35 to 1)", "purpose": "Pocket landing at the end of its 45ms flicker window in the 45ms x 8 stagger." },
+      { "name": "question-pulse", "value": ".7s ease-in-out infinite (opacity .35 to .8, scale 1 to 1.12)", "purpose": "The neutral-sleeve ? held during each pocket's mystery window; no rarity color leaks while the card is unknown." },
+      { "name": "ink-flash", "value": ".55s ease (radial #f5f1e6 at 22% alpha, opacity 0 to 1 to 0)", "purpose": "One-shot paper flash on the pocket the moment the card lands and the sleeve stamps on." },
+      { "name": "meter-settle", "value": "width .5s cubic-bezier(.2, .8, .2, 1)", "purpose": "Elixir meter fill, driven by --avg; settles exactly when the average lands." },
+      { "name": "popover-in", "value": ".18s ease (opacity 0 to 1, scale .96 to 1)", "purpose": "Stamped QR popover opening." },
+      { "name": "reveal-stagger", "value": "45ms x 8 pockets", "purpose": "The signature cascade; each pocket holds a neutral question-mark flicker during its window." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "550px", "purpose": "Scale-only adjustments (h1 44 to 34, button 240 to 200 min-width, grid gap 8 to 6, stat value 30 to 26, chips 2-per-row, popover 240 to 216, exclusion grid minmax 74 to 62, modal footer stacks). Structure and 4x2 baseline are unchanged." }
+    ],
+    "texture": {
+      "name": "halftone-ground",
+      "value": "radial-gradient(rgba(245, 241, 230, .018) 1px, transparent 1px), 22px x 22px on #14161c",
+      "purpose": "Faint print/cardstock dot grid on the ground; 1.8% alpha, visible only on close inspection."
+    },
+    "browserSurfaces": {
+      "colorScheme": "dark",
+      "selection": "background rgba(211, 47, 143, .4), text #ffffff",
+      "scrollbarColor": "#3a3f4a on #14161c",
+      "caretColor": "#d32f8f",
+      "focusRings": "2px solid #f5f1e6 offset 3px on dark surfaces; accent ring on controls"
+    }
+  },
+  "components": [
+    {
+      "name": "Generate Button (Primary)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single saturated action on the page: accent-filled, Lalezar label, neutral lift shadow; reserved for the generate/confirm moment.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">إنشاء تشكيلة</button>",
+      "css": ".ds-btn-primary { min-width: 240px; background: var(--accent, #d32f8f); border: 1px solid var(--accent, #d32f8f); color: #ffffff; font-family: 'Lalezar', 'Rubik', sans-serif; font-size: 20px; letter-spacing: .02em; padding: 9px 26px 7px; border-radius: 4px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,.45); transition: filter .15s ease, box-shadow .15s ease, transform .15s ease; } .ds-btn-primary:hover:not(:disabled) { filter: brightness(1.08); box-shadow: 0 10px 28px rgba(0,0,0,.55); transform: translateY(-1px); } .ds-btn-primary:focus-visible { outline: 2px solid var(--text-strong, #f5f1e6); outline-offset: 3px; } .ds-btn-primary:disabled { opacity: .38; cursor: not-allowed; box-shadow: none; filter: none; }"
+    },
+    {
+      "name": "Option Chip",
+      "kind": "chip",
+      "refersTo": "option-chip",
+      "description": "Checkbox on the cardstock: pocket-interior bed, hairline border; checked state takes the accent border and its soft tint bed.",
+      "html": "<label class=\"ds-option-chip\"><input class=\"ds-option-chip-input\" type=\"checkbox\" />إجباري التعويذات</label>",
+      "css": ".ds-option-chip { display: inline-flex; align-items: center; gap: 7px; background: var(--panel-2, #101216); border: 1px solid var(--border, #2a2e37); color: var(--text, #cfd2d8); font-family: 'Rubik', 'Cairo', system-ui, sans-serif; font-size: 12px; font-weight: 500; padding: 7px 12px; border-radius: 6px; cursor: pointer; user-select: none; transition: border-color .15s ease, background .15s ease; } .ds-option-chip:hover { border-color: var(--border-2, #3a3f4a); } .ds-option-chip:has(.ds-option-chip-input:checked) { border-color: var(--accent, #d32f8f); background: var(--accent-soft, rgba(211, 47, 143, .12)); color: var(--text-strong, #f5f1e6); } .ds-option-chip-input { width: 13px; height: 13px; accent-color: var(--accent, #d32f8f); cursor: pointer; }"
+    },
+    {
+      "name": "Pocket Slot (Revealed, Legendary)",
+      "kind": "card",
+      "refersTo": "pocket-slot",
+      "description": "The signature plate: 2px corners, fixed aspect 1/1.14 so the pocket holds its size while the art is hidden, 3px top sleeve strip in the rarity color (held neutral at the hairline color during the ? flicker), mono counter label pinned bottom-center. The sleeve is a background strip, never a border.",
+      "html": "<div class=\"ds-pocket ds-pocket-legendary\"><span class=\"ds-pocket-label\">02 · أسطورية</span></div>",
+      "css": ".ds-pocket { position: relative; width: 88px; aspect-ratio: 1 / 1.14; background: linear-gradient(var(--sleeve, var(--border, #2a2e37)), var(--sleeve, var(--border, #2a2e37))) no-repeat top / 100% 3px, var(--panel-2, #101216); border: 1px solid #23262e; border-radius: 2px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; } .ds-pocket-legendary { --sleeve: var(--rarity-legendary, #ffd54a); } .ds-pocket-label { position: absolute; bottom: 3px; left: 0; right: 0; text-align: center; font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace; font-size: 10px; letter-spacing: .08em; color: var(--text-faint, #8f98a5); }"
+    },
+    {
+      "name": "Elixir Meter",
+      "kind": "custom",
+      "refersTo": "meter",
+      "description": "The settling measure: 4px track on #23262e, accent fill anchored right; width is driven by --avg so the fill lands exactly when the average settles.",
+      "html": "<div class=\"ds-elixir-meter\" style=\"--avg: 3.6\"><i></i></div>",
+      "css": ".ds-elixir-meter { position: relative; width: 100%; height: 4px; background: #23262e; } .ds-elixir-meter i { position: absolute; top: 0; bottom: 0; right: 0; width: min(calc(var(--avg, 0) * 7%), 100%); background: var(--accent, #d32f8f); transition: width .5s cubic-bezier(.2, .8, .2, 1); }"
+    },
+    {
+      "name": "Copy Round Action",
+      "kind": "button",
+      "refersTo": "round-action",
+      "description": "The second real action, accent-filled round button: white icon on elixir pink, neutral hairline, paper-white focus ring.",
+      "html": "<button class=\"ds-round-action\" type=\"button\" title=\"نسخ التشكيلة\"><svg viewBox=\"0 0 24 24\" width=\"15\" height=\"15\" fill=\"currentColor\"><path d=\"M14 3h7v7h-2V6.41l-9.3 9.3-1.4-1.42L17.58 5H14V3zM5 5h6v2H6v12h12v-5h2v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z\"></path></svg></button>",
+      "css": ".ds-round-action { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--accent, #d32f8f); background: var(--accent, #d32f8f); color: #ffffff; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; transition: filter .15s ease; } .ds-round-action:hover:not(:disabled) { filter: brightness(1.08); } .ds-round-action:focus-visible { outline: 2px solid var(--text-strong, #f5f1e6); outline-offset: 3px; } .ds-round-action:disabled { opacity: .35; cursor: not-allowed; }"
+    },
+    {
+      "name": "QR Stamp",
+      "kind": "custom",
+      "refersTo": "qr-stamp",
+      "description": "The import stamp inside the copy popover: the code sits on a pocket-paper bed under a dashed hairline — the one place paper-white becomes a surface.",
+      "html": "<div class=\"ds-stamp\"><div class=\"ds-stamp-qr\"></div></div>",
+      "css": ".ds-stamp { display: flex; justify-content: center; background: var(--text-strong, #f5f1e6); padding: 6px; border: 1px dashed var(--border-2, #3a3f4a); border-radius: 2px; width: 100%; } .ds-stamp-qr { width: 120px; height: 120px; background: #ffffff; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "صفحة جامع البطاقات — The Collector's Binder Page",
+    "overview": "The world is a binder page that gets opened, not a results panel that gets printed. Its physical scene: a Clash Royale player at the tournament table in midnight — dark is forced by the scene, because players open the tool on a phone right before queuing a battle. The ground is a tinted midnight (#14161c) with a cardstock panel language (#191c22 over #101216 pocket interiors), and the 8-card deck reads as a collector's page with fixed-scale plates on one shared baseline, not a SaaS card grid.\n\nMode is Operate: a task surface, not a marketing page. Compact single-column density (660px centered column), every step of the flow (generate, reveal, tune, import via QR or deep-link) within one or two viewports on mobile, full parity between mobile and desktop (the 550px breakpoint adjusts scale, never structure). The mystery is the product: the staggered reveal is the moment of the experience and is never shortened or skipped. Confirmed rejections: no dark-SaaS-with-one-floating-blue-button default, no colored glows, no framework, no second accent.\n\nThe world lends exactly four things to any new surface: the type pairing, the committed-dark palette with its reserved accent, Operate-grade density, and the one signature move (cascade plus settling meter). Layout and standard controls stay standard.",
+    "keyCharacteristics": [
+      "Committed-dark: tinted midnight ground, tonal layering for depth, neutral black shadows only.",
+      "One saturated accent (elixir pink #d32f8f) reserved for generate/confirm moments and the settle meter; the only other chroma is the six rarity sleeves and one error red.",
+      "Lalezar poster display + Rubik UI workhorse + tabular mono stamps; Arabic letter-spacing stays at 0.",
+      "4x2 pockets on one shared baseline, symmetric about the center axis, each wearing a 3px rarity sleeve strip.",
+      "Faint 22px halftone dot print texture on the ground — print/cardstock family, 1.8% alpha."
+    ],
+    "rules": [
+      { "name": "The Elixir-Pink Reservation Rule", "body": "Accent pink appears only in generation/confirmation moments (generate button, copy action, open-link) and on control states (checked chips, active exclude, loading fill, meter fill, caret). If the accent is on a surface that isn't an action or a settled measurement, delete it.", "section": "colors" },
+      { "name": "The Rarity-Only Chroma Rule", "body": "The only other saturated colors in the system are the six rarity sleeves and the one error red, and both appear only in data roles (sleeve strip, sleeve label, error state). No new hues; no rarity color drifting into UI chrome.", "section": "colors" },
+      { "name": "The Zero-Tracking Rule", "body": "Arabic letter-spacing is 0 — no tracking on any Arabic body or UI text. The only tracked faces are the Latin/mono stamps (wordmark .18em, pocket counters .08em, options label 0) and the .02em poster tracking on the Lalezar generate button.", "section": "typography" },
+      { "name": "The Shared-Baseline Rule", "body": "All eight pockets share one row geometry — fixed aspect (1/1.14, set on the slot so it holds size while the art is hidden), one card image scale, one 3px sleeve plane. No pocket may scale, float, or break the grid; symmetry about the center axis is load-bearing.", "section": "layout" },
+      { "name": "The Neutral-Shadow Rule", "body": "Every shadow is neutral black with offset plus blur. No accent glow, no rarity glow, no ambient colored light — the accent's rarity is its restraint.", "section": "elevation" },
+      { "name": "The 2px Pocket Rule", "body": "Pockets stay angular at 2px corners; the sleeve is a 3px top strip rendered in the background, never a thick border on rounded corners. A pocket with a visible border-width greater than 1px or a large radius is out of the world.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do keep Arabic letter-spacing at 0 — tracking applies only to Latin/mono stamps (wordmark .18em, counters .08em) and the .02em on the Lalezar generate button.",
+      "Do reserve the accent pink for generation/confirmation moments (generate, copy, open-link), control-activation states (checked chips, active exclude, loading/meter fill, caret), and the settle meter — nothing else.",
+      "Do keep pockets at 2px angular corners with the rarity sleeve as a 3px top strip; keep all eight pockets on the shared 4x2 baseline, symmetric about the center axis.",
+      "Do use neutral black offset+blur shadows only, and keep the 22px 1.8%-alpha halftone dot texture on the ground.",
+      "Do use Lalezar exclusively for display/section titles/values, Rubik for all UI text, and the mono stack for every numeral, counter, and stamp.",
+      "Do preserve the JS class hooks, the Arabic copy, and the footer verbatim — new screens join the world, they don't rewrite it."
+    ],
+    "donts": [
+      "Don't let the accent become decoration: no pink on hairlines, glows, hover washes, backgrounds, or a second accent anywhere.",
+      "Don't add colored glows or colored drop-shadows — the world is neutral-shadow only.",
+      "Don't round or thicken pockets (no large radii, no border greater than 1px); the sleeve is a strip, never a border.",
+      "Don't track Arabic text or introduce a second display face.",
+      "Don't drift the layout off the shared baseline, break center-axis symmetry, or let standard controls (checkbox, input, button) grow custom shapes — the world lends type, palette, density, and one signature move; layout and standard controls stay standard.",
+      "Don't add a framework or build step; this is a static RTL site."
+    ]
+  }
+}

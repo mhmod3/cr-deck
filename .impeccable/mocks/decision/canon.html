@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>منشئ التشكيلات</title>
+<style>
+  html, body {
+    margin: 0;
+    width: 1440px;
+    height: 900px;
+    overflow: hidden;
+  }
+  body {
+    background: #1a1a1e;
+    font-family: system-ui, "Segoe UI", sans-serif;
+    color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .col {
+    width: 640px;
+    padding-top: 48px;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #f0f0f0;
+    margin: 0 0 4px;
+    text-align: center;
+  }
+  .sub {
+    font-size: 12px;
+    color: #9a9aa0;
+    text-align: center;
+    margin: 0 0 28px;
+  }
+  .btn {
+    display: block;
+    width: 100%;
+    background: #2185d0;
+    color: #fff;
+    font-family: system-ui, "Segoe UI", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .panel {
+    background: #25252b;
+    border: 1px solid #3a3a42;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .tile {
+    background: linear-gradient(160deg, #2c2c34, #232328);
+    border-radius: 8px;
+    padding: 12px;
+    position: relative;
+    min-height: 74px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .tile .name {
+    font-size: 11px;
+    color: #f0f0f0;
+  }
+  .tile .badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #232328;
+    color: #9a9aa0;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .stat {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #9a9aa0;
+  }
+  .stat b {
+    font-size: 14px;
+    color: #f0f0f0;
+    font-weight: 700;
+    margin-inline-start: 6px;
+  }
+  .pills {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .pill {
+    border: 1px solid #3a3a42;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    color: #9a9aa0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding: 0 2px;
+  }
+  .copy {
+    width: 36px;
+    height: 36px;
+    background: #25252b;
+    border: 1px solid #3a3a42;
+    border-radius: 8px;
+    color: #9a9aa0;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .foot {
+    font-size: 10px;
+    color: #6a6a72;
+  }
+</style>
+</head>
+<body>
+  <div class="col">
+    <h1>منشئ التشكيلات</h1>
+    <p class="sub">أنشئ تشكيلة عشوائية من البطاقات</p>
+
+    <button class="btn">إنشاء تشكيلة</button>
+
+    <div class="panel">
+      <div class="grid">
+        <div class="tile"><span class="badge">5</span><span class="name">جنت</span></div>
+        <div class="tile"><span class="badge">5</span><span class="name">رايدر الهوغ</span></div>
+        <div class="tile"><span class="badge">2</span><span class="name">زوبين</span></div>
+        <div class="tile"><span class="badge">3</span><span class="name">قناصة</span></div>
+        <div class="tile"><span class="badge">14</span><span class="name">غولم</span></div>
+        <div class="tile"><span class="badge">4</span><span class="name">فيلكي</span></div>
+        <div class="tile"><span class="badge">2</span><span class="name">خنزير</span></div>
+        <div class="tile"><span class="badge">6</span><span class="name">مسدس</span></div>
+      </div>
+      <div class="stat">متوسط الإكسير — <b>6.9</b></div>
+    </div>
+
+    <div class="pills">
+      <button class="pill">أقل تكلفة</button>
+      <button class="pill">دعم</button>
+      <button class="pill">سيطرة على البرج</button>
+      <button class="pill">توزيع</button>
+      <button class="pill">استبعاد بطاقات 0</button>
+    </div>
+
+    <div class="bottom">
+      <button class="copy">نسخ</button>
+      <span class="foot">M7mod · Discord: _.m6</span>
+    </div>
+  </div>
+</body>
+</html>

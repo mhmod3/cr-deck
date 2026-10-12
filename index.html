@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>منشئ التشكيلات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ===== شاشة التحميل ===== -->
+    <div id="loadingScreen">
+        <div id="loadingContent">
+            <div id="loadingText">جاري تحميل البطاقات...</div>
+            <div id="loadingBar">
+                <div id="loadingBarFill" style="width:0%"></div>
+            </div>
+            <div id="loadingProgress">0%</div>
+            <div id="loadingError">
+                <span id="loadingErrorText"></span>
+                <button id="loadingRetryBtn">إعادة المحاولة</button>
+            </div>
+            <button id="skipLoadBtn">تخطي التحميل</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="title-banner">
+            <h1>منشئ التشكيلات</h1>
+            <div class="wordmark">M7mod</div>
+        </div>
+        <div class="sub">
+            <span>أنشئ تشكيلة عشوائية من البطاقات</span>
+        </div>
+
+        <!-- ===== زر الإنشاء — يبقى في مكانه (فوق الشبكة) ===== -->
+        <div id="errorMsg" class="error-msg"></div>
+        <div class="toolbar">
+            <button class="btn" id="generateBtn" disabled>إنشاء تشكيلة</button>
+        </div>
+
+        <div class="deck-panel">
+            <div class="button_group deck-copy-group">
+                <button class="round_btn blue" id="copyBtn" title="نسخ التشكيلة" type="button" disabled>
+                    <svg viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.41l-9.3 9.3-1.4-1.42L17.58 5H14V3zM5 5h6v2H6v12h12v-5h2v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"></path></svg>
+                </button>
+
+                <!-- ===== المنبثق ===== -->
+                <div id="copyPopover">
+                    <div class="popover-header">
+                        <span>خيارات النسخ</span>
+                        <button class="close-btn" id="closePopoverBtn" type="button">✕</button>
+                    </div>
+                    <button class="btn-open-link" id="openLinkBtn">فتح رابط التشكيلة</button>
+                    <button class="btn-copy-link" id="copyLinkBtn">نسخ رابط التشكيلة</button>
+                    <div class="qr-wrapper">
+                        <div id="qrcode-container"></div>
+                    </div>
+                    <div class="copy-hint">
+                        اضغط على "فتح رابط التشكيلة" لكي تنسخ التشكيلة للعبة مباشرة.
+                        أو يمكنك الضغط على "نسخ رابط التشكيلة" لنسخ رابط التشكيلة.
+                        أو يمكنك مسح الـ QR Code لنسخ رابط التشكيلة.
+                    </div>
+                </div>
+            </div>
+
+            <div class="deck-panel-title">تشكيلة المعركة</div>
+            <div id="deckContainer" class="deck-container"></div>
+
+            <!-- ===== شريط الإحصائيات (مثل example) ===== -->
+            <div class="battle_stats">
+                <div class="item tower_item">
+                    <img id="supportStatsImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAlAAAAAAAAACUdzn5YAAA=" alt="" width="44" height="53" />
+                </div>
+                <div class="item">
+                    <span class="label">متوسط الإكسير</span>
+                    <span class="value" id="avgElixirDisplay">—</span>
+                </div>
+                <div class="meter"><i></i></div>
+            </div>
+        </div>
+
+        <!-- ===== الخيارات ===== -->
+        <div class="options-panel">
+            <span class="toolbar-options-label">خيارات</span>
+
+            <label class="checkbox-group">
+                <input type="checkbox" id="randomIconsCheck" />
+                بواسل و مطورات عشوائية
+                <span class="help-icon"
+                title="عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة"
+                onclick="event.stopPropagation(); event.preventDefault(); alert('عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة')">؟</span>
+            </label>
+
+            <label class="checkbox-group">
+                <input type="checkbox" id="forceSpellsCheck" />
+                إجباري التعويذات
+                <span class="help-icon"
+                title="سيتم اختيار 1 الى 2 تعويذة في كل تشكيلة"
+                onclick="event.stopPropagation(); event.preventDefault(); alert('سيتم اختيار 1 الى 2 تعويذة في كل تشكيلة')">؟</span>
+            </label>
+
+            <label class="checkbox-group">
+                <input type="checkbox" id="forcePrincessCheck" />
+                إجباري برج الأميرة
+                <span class="help-icon"
+                title="سيتم اختيار برج الأميرة في كل التشكيلات"
+                onclick="event.stopPropagation(); event.preventDefault(); alert('سيتم اختيار برج الأميرة في كل التشكيلات')">؟</span>
+            </label>
+
+            <label class="checkbox-group">
+                <input type="checkbox" id="forceAttackCards" />
+                إجباري بطاقات هجومية
+                <span class="help-icon"
+                title="سيتم اختيار بطاقات هجومية واحدة فقط مثل الهوغ رايدر او الغولم الخ... (بطاقات تستهدف البرج فقط) في كل تشكيلة"
+                onclick="event.stopPropagation(); event.preventDefault(); alert('سيتم اختيار بطاقات هجومية واحدة فقط مثل الهوغ رايدر او الغولم الخ... (بطاقات تستهدف البرج فقط) في كل تشكيلة')">؟</span>
+            </label>
+
+            <button class="exclude-btn" id="excludeBtn" type="button">
+                <svg viewBox="0 0 24 24"><path d="M15 3h6v2h-2.07l-5.9 11.95a3 3 0 1 1-1.65-1.05L14.86 12H8V10h6.22L15 3zM7 18a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path></svg>
+                <span>استبعاد بطاقات</span>
+                <span class="exclude-count" id="excludeBtnCount">0</span>
+            </button>
+        </div>
+
+        <div class="footer">
+            <div class="name">M7mod</div>
+            <div class="discord">Discord: _.m6</div>
+            <div class="github-link">
+                <a href="https://github.com/mhmod3" target="_blank">https://github.com/mhmod3</a>
+            </div>
+            <div class="AI">*للشفافية: تم إنشاء هذا الموقع بشكل كامل مع Ai</div>
+        </div>
+    </div>
+
+    <!-- ===== نافذة استبعاد البطاقات ===== -->
+    <div id="excludeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>استبعاد بطاقات</h2>
+                <button class="close-modal-btn" id="closeExcludeModal" type="button">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="search-wrapper">
+                    <input type="text" id="excludeSearchInput" placeholder="ابحث عن بطاقة بالاسم..." />
+                    <span class="search-icon">بحث</span>
+                </div>
+                <div class="cards-grid" id="excludeCardsGrid"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="exclude-count">عدد البطاقات المستبعدة: <span id="excludeCount">0</span></div>
+                <button class="btn-reset-exclude" id="resetExcludeBtn" type="button">إلغاء كل الاستبعادات</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script/constants.js"></script>
+    <script src="script/state.js"></script>
+    <script src="script/dom.js"></script>
+    <script src="script/storage.js"></script>
+    <script src="script/loading.js"></script>
+    <script src="script/ui.js"></script>
+    <script src="script/generator.js"></script>
+    <script src="script/exclusions.js"></script>
+    <script src="script/links.js"></script>
+    <script src="script/app.js"></script>
+</body>
+</html>

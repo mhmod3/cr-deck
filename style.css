@@ -1,0 +1,1102 @@
+/* ============================================================
+   مَوسُم التصميم — عالم «صفحة جامع البطاقات»
+   أرض ميدان بطولات في منتصف الليل: جلد، جِيب، سحّابة، كشف.
+   ============================================================ */
+:root {
+    /* الأرض والجلد */
+    --bg: #14161c;            /* ميدان البطولات — منتصف الليل */
+    --panel: #191c22;        /* جلد صفحة الباندر */
+    --panel-2: #101216;      /* داخل الجيب */
+    --border: #2a2e37;       /* خيط رفيع (hairline) */
+    --border-2: #3a3f4a;
+
+    /* الحبر */
+    --text: #cfd2d8;
+    --text-strong: #f5f1e6;  /* لون ورق الجيب */
+    --text-muted: #98a0ab;
+    --text-faint: #8f98a5;
+
+    /* العطر الوردي — محجوز لحظات الإنشاء والتأكيد فقط */
+    --accent: #d32f8f;
+    --accent-soft: rgba(211, 47, 143, .12);
+
+    /* التنبيه (تغيّر / خطأ) */
+    --red: #b0392a;
+
+    /* سحّابات الندرة */
+    --rarity-common: #b7c1cc;
+    --rarity-rare: #ff9d2e;
+    --rarity-epic: #b455e0;
+    --rarity-legendary: #ffd54a;
+    --rarity-champion: #ffb300;
+    --rarity-support: #7a8089;
+
+    --font-display: 'Lalezar', 'Rubik', sans-serif;
+    --font-ui: 'Rubik', 'Cairo', system-ui, sans-serif;
+    --font-num: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+}
+
+/* ===== إعادة ضبط ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    color-scheme: dark;
+    scrollbar-color: var(--border-2) var(--bg);
+}
+
+::selection {
+    background: rgba(211, 47, 143, .4);
+    color: #fff;
+}
+
+body {
+    background: var(--bg);
+    /* نسيج طاولة البطولات: نقاط طباعة خافتة جدًا */
+    background-image: radial-gradient(rgba(245, 241, 230, .018) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.45;
+    direction: rtl;
+    min-height: 100vh;
+    padding: 24px 20px 40px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ===== الحاوية ===== */
+.container {
+    max-width: 660px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ===== الترويسة ===== */
+.title-banner {
+    text-align: center;
+    margin-bottom: 2px;
+}
+
+.wordmark {
+    font-family: var(--font-num);
+    font-size: 11px;
+    letter-spacing: .18em;
+    color: var(--text-faint);
+    margin-top: 6px;
+}
+
+.title-banner h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.1;
+    color: var(--text-strong);
+}
+
+.sub {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/* ===== شريط الزر العلوي (إنشاء التشكيلة) ===== */
+.toolbar {
+    display: flex;
+    justify-content: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+}
+
+.toolbar .btn {
+    min-width: 240px;
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 20px;
+    letter-spacing: .02em;
+    padding: 9px 26px 7px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .45);
+    transition: filter .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+
+.toolbar .btn:hover:not(:disabled) {
+    filter: brightness(1.08);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .55);
+    transform: translateY(-1px);
+}
+
+.toolbar .btn:focus-visible {
+    outline: 2px solid var(--text-strong);
+    outline-offset: 3px;
+}
+
+.toolbar .btn:disabled {
+    opacity: .38;
+    cursor: not-allowed;
+    box-shadow: none;
+    filter: none;
+}
+
+/* ===== صفحة الباندر (لوحة التشكيلة) ===== */
+.deck-panel {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    width: 100%;
+}
+
+.deck-copy-group {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    z-index: 50;
+}
+
+.deck-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--text-strong);
+    margin-bottom: 14px;
+    padding-inline: 44px;
+}
+
+.deck-panel-title::before,
+.deck-panel-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+/* ===== شبكة البطاقات — الجيوب ===== */
+.deck-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.deck-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    direction: ltr;
+}
+
+.card-slot {
+    --sleeve: var(--border);
+    position: relative;
+    aspect-ratio: 1 / 1.14;
+    background: linear-gradient(var(--sleeve), var(--sleeve)) no-repeat top / 100% 3px, var(--panel-2);
+    border: 1px solid #23262e;
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* تسميات الجيوب حسب الندرة */
+.card-slot.rarity-common { --sleeve: var(--rarity-common); }
+.card-slot.rarity-rare { --sleeve: var(--rarity-rare); }
+.card-slot.rarity-epic { --sleeve: var(--rarity-epic); }
+.card-slot.rarity-legendary { --sleeve: var(--rarity-legendary); }
+.card-slot.rarity-champion { --sleeve: var(--rarity-champion); }
+.card-slot.rarity-support { --sleeve: var(--rarity-support); }
+
+/* خانة فارغة — جيب بانتظار بطاقته */
+.card-slot.empty-slot {
+    --sleeve: var(--border);
+    border: 1px dashed var(--border-2);
+    background: var(--panel-2);
+    align-items: center;
+    justify-content: center;
+}
+
+.card-slot.empty-slot .crown-icon {
+    width: 34%;
+    height: 34%;
+    color: #333845;
+}
+
+/* صورة البطاقة داخل الجيب */
+.card-slot img {
+    width: 120%;
+    height: 109%;
+    display: block;
+    object-fit: contain;
+    background: var(--panel-2);
+    padding: 0;
+}
+
+.card-art {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* حالة الأنيميشن عند الكشف */
+.card-slot .animating-placeholder {
+    display: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 30px;
+    color: var(--text-faint);
+}
+
+/* أثناء الوامض: السحّابة محايدة — لون الندرة لا يُختم إلا لحظة الكشف */
+.card-slot.animating {
+    --sleeve: var(--border);
+}
+
+.card-slot.animating img {
+    display: none;
+}
+
+.card-slot.animating .animating-placeholder {
+    display: flex;
+    animation: questionPulse .7s ease-in-out infinite;
+}
+
+@keyframes questionPulse {
+    0%, 100% { opacity: .35; transform: scale(1); }
+    50%      { opacity: .8;  transform: scale(1.12); }
+}
+
+.card-slot.reveal-anim {
+    animation: cardReveal .34s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+/* وميض ورق لحظة الكشف */
+.card-slot.reveal-anim::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 38%, rgba(245, 241, 230, .22), transparent 68%);
+    animation: inkFlash .55s ease both;
+    pointer-events: none;
+}
+
+@keyframes inkFlash {
+    0%   { opacity: 0; }
+    25%  { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes cardReveal {
+    0%   { transform: scale(.9);   opacity: .35; }
+    60%  { transform: scale(1.02); opacity: 1; }
+    100% { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes cardPopIn {
+    0%   { opacity: 0; transform: scale(.96); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ===== شريط الإكسير — متماثل حول البرج ===== */
+.battle_stats {
+    margin-top: 14px;
+    padding-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.battle_stats .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.battle_stats .label {
+    font-size: 12px;
+    letter-spacing: .04em;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.battle_stats .value {
+    font-family: var(--font-display);
+    font-size: 30px;
+    line-height: 1;
+    color: var(--text-strong);
+}
+
+.battle_stats .value.empty-value {
+    color: var(--text-faint);
+}
+
+.battle_stats .tower_item img {
+    display: block;
+    width: 44px;
+    height: 53px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .55));
+}
+
+/* مقياس الإكسير — يتقدم لحظة استقرار المتوسط */
+.battle_stats .meter {
+    flex: 1 1 100%;
+    position: relative;
+    height: 4px;
+    background: #23262e;
+    margin-top: 10px;
+}
+
+.battle_stats .meter i {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: min(calc(var(--avg, 0) * 7%), 100%);
+    background: var(--accent);
+    transition: width .5s cubic-bezier(.2, .8, .2, 1);
+}
+
+/* شرح فارغ تحت الشبكة */
+.placeholder-caption {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+    padding-top: 2px;
+}
+
+/* ===== خيارات — حبات على الجلد ===== */
+.options-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.options-panel .toolbar-options-label {
+    width: 100%;
+    font-family: var(--font-num);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    color: var(--text-faint);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.options-panel .checkbox-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color .15s ease, background .15s ease;
+}
+
+.options-panel .checkbox-group:hover {
+    border-color: var(--border-2);
+}
+
+.options-panel .checkbox-group:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--text-strong);
+}
+
+.options-panel .checkbox-group input[type="checkbox"] {
+    width: 13px;
+    height: 13px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.options-panel .checkbox-group .help-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid var(--border-2);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 700;
+    cursor: help;
+}
+
+.options-panel .checkbox-group:hover .help-icon {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* زر الاستبعاد — حبة بنفس شكل أزرار الخيارات */
+.options-panel .exclude-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+
+.options-panel .exclude-btn svg {
+    width: 13px;
+    height: 13px;
+    fill: currentColor;
+}
+
+.options-panel .exclude-btn:hover {
+    border-color: var(--border-2);
+}
+
+.options-panel .exclude-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.options-panel .exclude-btn .exclude-count {
+    display: none;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-num);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.options-panel .exclude-btn.active {
+    border-color: var(--accent);
+    color: var(--text-strong);
+}
+
+.options-panel .exclude-btn.active .exclude-count {
+    display: inline-flex;
+}
+
+/* ===== زر نسخ التشكيلة والمنبثق ===== */
+.button_group {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.round_btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border-2);
+    background: var(--panel-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: border-color .15s ease, color .15s ease;
+}
+
+.round_btn svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+}
+
+/* الأزرق القديم صار عطرًا ورديًا */
+.round_btn.blue {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.round_btn:hover:not(:disabled) {
+    color: var(--text-strong);
+    border-color: var(--border-2);
+}
+
+.round_btn:focus-visible {
+    outline: 2px solid var(--text-strong);
+    outline-offset: 3px;
+}
+
+.round_btn:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
+/* ===== المنبثق — شقّ مدموغ ===== */
+#copyPopover {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    transform: scale(.96);
+    transform-origin: top left;
+    background: var(--panel);
+    border: 1px solid var(--border-2);
+    border-radius: 10px;
+    padding: 14px;
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+    z-index: 100;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, .55);
+}
+
+#copyPopover.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+#copyPopover::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 18px;
+    transform: translateX(-50%);
+    border: 7px solid transparent;
+    border-bottom-color: var(--border-2);
+}
+
+#copyPopover .popover-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#copyPopover .popover-header span {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--text-strong);
+}
+
+#copyPopover .close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 15px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+#copyPopover .close-btn:hover {
+    color: #fff;
+}
+
+#copyPopover .btn-open-link,
+#copyPopover .btn-copy-link {
+    width: 100%;
+    border: 1px solid var(--border-2);
+    background: var(--panel-2);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 10px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: filter .15s ease;
+}
+
+#copyPopover .btn-open-link:hover,
+#copyPopover .btn-copy-link:hover {
+    filter: brightness(1.15);
+}
+
+#copyPopover .btn-open-link {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+#copyPopover .qr-wrapper {
+    display: flex;
+    justify-content: center;
+    background: #f5f1e6;
+    padding: 6px;
+    border: 1px dashed var(--border-2);
+    border-radius: 2px;
+    width: 100%;
+}
+
+#copyPopover .copy-hint {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* ===== رسائل الخطأ ===== */
+.error-msg {
+    background: rgba(176, 57, 42, .14);
+    border: 1px solid var(--red);
+    color: #ffb4a8;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    display: none;
+}
+
+.error-msg.visible {
+    display: block;
+}
+
+/* ===== شاشة التحميل ===== */
+#loadingScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity .25s ease, visibility .25s ease;
+}
+
+#loadingScreen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#loadingContent {
+    width: 280px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+#loadingText {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--text-strong);
+}
+
+#loadingProgress {
+    font-family: var(--font-num);
+    font-size: 12px;
+    color: var(--text-muted);
+    direction: ltr;
+}
+
+#loadingBar {
+    height: 4px;
+    background: var(--panel-2);
+    overflow: hidden;
+}
+
+#loadingBarFill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+}
+
+#skipLoadBtn {
+    align-self: center;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 10px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+#skipLoadBtn:hover {
+    color: var(--text);
+}
+
+#loadingError {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+#loadingError.visible {
+    display: flex;
+}
+
+#loadingErrorText {
+    font-size: 12px;
+    color: #ffb4a8;
+}
+
+#loadingRetryBtn {
+    background: transparent;
+    border: 1px solid var(--red);
+    color: #ffb4a8;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#loadingRetryBtn:hover {
+    background: rgba(176, 57, 42, .18);
+}
+
+/* ===== نافذة استبعاد البطاقات — صفحة باندر مفتوحة ===== */
+#excludeModal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(8, 9, 12, .82);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+#excludeModal.visible {
+    display: flex;
+}
+
+#excludeModal .modal-content {
+    width: 100%;
+    max-width: 640px;
+    max-height: 90vh;
+    background: var(--panel);
+    border: 1px solid var(--border-2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .6);
+}
+
+#excludeModal .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+}
+
+#excludeModal .modal-header h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--text-strong);
+}
+
+#excludeModal .close-modal-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+#excludeModal .close-modal-btn:hover {
+    color: #fff;
+}
+
+#excludeModal .modal-body {
+    padding: 16px 18px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+#excludeModal .search-wrapper {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+#excludeModal .search-wrapper input {
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    padding: 10px 12px 10px 74px;
+    outline: none;
+    transition: border-color .15s ease;
+    caret-color: var(--accent);
+}
+
+#excludeModal .search-wrapper input:focus {
+    border-color: var(--accent);
+}
+
+#excludeModal .search-wrapper input::placeholder {
+    color: var(--text-faint);
+}
+
+#excludeModal .search-wrapper .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-faint);
+    font-size: 11px;
+    pointer-events: none;
+}
+
+#excludeModal .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
+    gap: 7px;
+}
+
+#excludeModal .cards-grid .exclude-card {
+    --sleeve: var(--border);
+    position: relative;
+    background: linear-gradient(var(--sleeve), var(--sleeve)) no-repeat top / 100% 3px, var(--panel-2);
+    border: 1px solid #23262e;
+    border-radius: 2px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s ease;
+}
+
+#excludeModal .cards-grid .exclude-card:hover {
+    border-color: var(--border-2);
+}
+
+#excludeModal .cards-grid .exclude-card .card-img {
+    width: 100%;
+    aspect-ratio: 1 / 1.02;
+    object-fit: contain;
+    border-radius: 3px;
+}
+
+#excludeModal .cards-grid .exclude-card .card-name-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 5px;
+    line-height: 1.3;
+    word-break: break-word;
+    width: 100%;
+}
+
+#excludeModal .cards-grid .exclude-card .exclude-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    background: rgba(176, 57, 42, .5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#excludeModal .cards-grid .exclude-card .exclude-overlay .exclude-label {
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: #fff;
+}
+
+#excludeModal .cards-grid .exclude-card.excluded {
+    --sleeve: var(--red);
+    border-color: var(--red);
+}
+
+#excludeModal .cards-grid .exclude-card.excluded .exclude-overlay {
+    display: flex;
+}
+
+#excludeModal .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+
+#excludeModal .exclude-count {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+#excludeModal .exclude-count span {
+    font-family: var(--font-num);
+    color: var(--text-strong);
+    font-weight: 700;
+}
+
+#excludeModal .btn-reset-exclude {
+    background: transparent;
+    border: 1px solid var(--red);
+    color: #ffb4a8;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#excludeModal .btn-reset-exclude:hover {
+    background: rgba(176, 57, 42, .18);
+}
+
+#excludeModal .modal-body::-webkit-scrollbar,
+#excludeModal .cards-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+#excludeModal .modal-body::-webkit-scrollbar-track,
+#excludeModal .cards-grid::-webkit-scrollbar-track {
+    background: var(--panel-2);
+}
+
+#excludeModal .modal-body::-webkit-scrollbar-thumb,
+#excludeModal .cards-grid::-webkit-scrollbar-thumb {
+    background: var(--border-2);
+    border-radius: 3px;
+}
+
+/* ===== الفوتر ===== */
+.footer {
+    text-align: center;
+    padding: 14px 0 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    border-top: 1px solid var(--border);
+}
+
+.footer .name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--text-strong);
+}
+
+.footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+    text-underline-offset: 3px;
+}
+
+.footer a:hover {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+.footer .AI {
+    font-size: 12px;
+    color: var(--text-faint);
+}
+
+/* ===== استجابة الجوال ===== */
+@media (max-width: 550px) {
+    body {
+        padding: 14px 12px 28px;
+    }
+    .title-banner h1 {
+        font-size: 34px;
+    }
+    .toolbar .btn {
+        min-width: 200px;
+        font-size: 18px;
+    }
+    .deck-panel-title {
+        font-size: 17px;
+        padding-inline: 36px;
+    }
+    .deck-copy-group {
+        top: 8px;
+        left: 10px;
+    }
+    .deck-grid {
+        gap: 6px;
+    }
+    .battle_stats {
+        gap: 8px;
+    }
+    .battle_stats .value {
+        font-size: 26px;
+    }
+    .options-panel .checkbox-group {
+        flex: 1 1 46%;
+    }
+    #copyPopover {
+        width: 216px;
+    }
+    #excludeModal .cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+    }
+    #excludeModal .modal-footer {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+}
