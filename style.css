@@ -162,8 +162,8 @@ body {
 
 .deck-copy-group {
     position: absolute;
-    top: 13px;
-    left: 16px;
+    top: 8px;
+    left: 10px;
     z-index: 50;
 }
 
@@ -196,17 +196,20 @@ body {
 .deck-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 10px;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
     direction: ltr;
 }
 
 .card-slot {
     --sleeve: var(--border);
     position: relative;
-    aspect-ratio: 1 / 1.14;
-    background: linear-gradient(var(--sleeve), var(--sleeve)) no-repeat top / 100% 3px, var(--panel-2);
+    aspect-ratio: 1 / 1.18;
+    background: var(--panel-2);
     border: 1px solid #23262e;
-    border-radius: 2px;
+    border-radius: 4px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -247,8 +250,8 @@ body {
 
 .card-art {
     position: relative;
-    width: 86%;
-    height: 86%;
+    width: 94%;
+    height: 94%;
     margin: auto;
     display: flex;
     align-items: center;
@@ -1074,8 +1077,8 @@ body {
         padding-inline: 36px;
     }
     .deck-copy-group {
-        top: 8px;
-        left: 10px;
+        top: 6px;
+        left: 8px;
     }
     .deck-grid {
         gap: 6px;
