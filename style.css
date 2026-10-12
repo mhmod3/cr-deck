@@ -580,6 +580,7 @@ body {
     position: absolute;
     top: calc(100% + 10px);
     left: 0;
+    right: auto;
     transform: scale(.96);
     transform-origin: top left;
     background: var(--panel);

@@ -25,6 +25,12 @@ dom.closePopoverBtn.addEventListener('click', function(e) {
     CR.closePopover();
 });
 
+window.addEventListener('resize', function() {
+    if (dom.copyPopover.classList.contains('visible') && typeof CR.adjustPopoverPosition === 'function') {
+        CR.adjustPopoverPosition();
+    }
+});
+
 document.addEventListener('click', function(e) {
     if (dom.copyPopover.classList.contains('visible')) {
         const target = e.target;

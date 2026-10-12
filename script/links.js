@@ -74,6 +74,31 @@ CR.showPopover = function showPopover() {
     };
 
     dom.copyPopover.classList.add('visible');
+    CR.adjustPopoverPosition();
+};
+
+CR.adjustPopoverPosition = function adjustPopoverPosition() {
+    if (!dom.copyPopover || !dom.copyBtn) return;
+    // إعادة ضبط الحسابات التلقائية
+    dom.copyPopover.style.left = '0px';
+    dom.copyPopover.style.right = 'auto';
+
+    const popoverRect = dom.copyPopover.getBoundingClientRect();
+    const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+    const padding = 12;
+
+    // إذا تجاوز الجانب الأيمن شاشة العرض
+    if (popoverRect.right > viewportWidth - padding) {
+        const overflowX = popoverRect.right - (viewportWidth - padding);
+        dom.copyPopover.style.left = `-${overflowX}px`;
+    }
+
+    // التحقق من الجانب الأيسر
+    const updatedRect = dom.copyPopover.getBoundingClientRect();
+    if (updatedRect.left < padding) {
+        const currentLeft = parseFloat(dom.copyPopover.style.left) || 0;
+        dom.copyPopover.style.left = `${currentLeft + (padding - updatedRect.left)}px`;
+    }
 };
 
 CR.fallbackCopy = function fallbackCopy(text) {
