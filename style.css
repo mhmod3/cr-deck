@@ -162,8 +162,8 @@ body {
 
 .deck-copy-group {
     position: absolute;
-    top: 10px;
-    left: 14px;
+    top: 13px;
+    left: 16px;
     z-index: 50;
 }
 
@@ -237,18 +237,19 @@ body {
 
 /* صورة البطاقة داخل الجيب */
 .card-slot img {
-    width: 120%;
-    height: 109%;
+    width: 100%;
+    height: 100%;
     display: block;
     object-fit: contain;
-    background: var(--panel-2);
+    background: transparent;
     padding: 0;
 }
 
 .card-art {
     position: relative;
-    flex: 1;
-    min-height: 0;
+    width: 86%;
+    height: 86%;
+    margin: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -483,9 +484,9 @@ body {
 }
 
 .options-panel .exclude-btn svg {
-    width: 13px;
-    height: 13px;
-    fill: currentColor;
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
 }
 
 .options-panel .exclude-btn:hover {
