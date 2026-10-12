@@ -997,6 +997,7 @@ body {
 }
 
 #excludeModal .btn-reset-exclude {
+    display: none;
     background: transparent;
     border: 1px solid var(--red);
     color: #ffb4a8;
@@ -1026,6 +1027,108 @@ body {
 #excludeModal .cards-grid::-webkit-scrollbar-thumb {
     background: var(--border-2);
     border-radius: 3px;
+}
+
+/* ===== نوافذ الموقع المخصصة (توضيح وتأكيد) ===== */
+.site-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    background: rgba(8, 9, 12, .82);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.site-modal-overlay.visible {
+    display: flex;
+}
+
+.site-modal-box {
+    width: 100%;
+    max-width: 360px;
+    background: var(--panel);
+    border: 1px solid var(--border-2);
+    border-radius: 10px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .6);
+    overflow: hidden;
+    animation: cardPopIn .18s ease both;
+}
+
+.site-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.site-modal-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    color: var(--text-strong);
+}
+
+.site-modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+.site-modal-close:hover {
+    color: #fff;
+}
+
+.site-modal-body {
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+    text-align: right;
+}
+
+.site-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    background: var(--panel-2);
+}
+
+.site-modal-btn {
+    padding: 7px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    border: 1px solid transparent;
+}
+
+.site-modal-btn.danger {
+    background: var(--red);
+    color: #fff;
+}
+
+.site-modal-btn.danger:hover {
+    filter: brightness(1.1);
+}
+
+.site-modal-btn.cancel {
+    background: transparent;
+    border-color: var(--border-2);
+    color: var(--text-muted);
+}
+
+.site-modal-btn.cancel:hover {
+    color: var(--text-strong);
+    border-color: var(--text-muted);
 }
 
 /* ===== الفوتر ===== */
@@ -1069,7 +1172,8 @@ body {
         font-size: 34px;
     }
     .toolbar .btn {
-        min-width: 200px;
+        width: 100%;
+        min-width: 0;
         font-size: 18px;
     }
     .deck-panel-title {
@@ -1089,11 +1193,33 @@ body {
     .battle_stats .value {
         font-size: 26px;
     }
+    .options-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
     .options-panel .checkbox-group {
-        flex: 1 1 46%;
+        width: 100%;
+        flex: 1 1 auto;
+        justify-content: flex-start;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+    .options-panel .checkbox-group .help-icon {
+        margin-right: auto;
+    }
+    .options-panel .exclude-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 14px;
+        font-size: 13px;
     }
     #copyPopover {
-        width: 216px;
+        width: min(260px, calc(100vw - 32px));
+        max-width: calc(100vw - 32px);
+        left: 0;
+        right: auto;
     }
     #excludeModal .cards-grid {
         grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));

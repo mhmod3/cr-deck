@@ -93,7 +93,7 @@
                 بواسل و مطورات عشوائية
                 <span class="help-icon"
                 title="عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة"
-                onclick="event.stopPropagation(); event.preventDefault(); alert('عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة')">؟</span>
+                data-help="عند التفعيل يقوم باختيار بواسل و مطورات بشكل عشوائي ويضعها في التشكيلة">؟</span>
             </label>
 
             <label class="checkbox-group">
@@ -101,7 +101,7 @@
                 إجباري التعويذات
                 <span class="help-icon"
                 title="سيتم اختيار 1 الى 2 تعويذة في كل تشكيلة"
-                onclick="event.stopPropagation(); event.preventDefault(); alert('سيتم اختيار 1 الى 2 تعويذة في كل تشكيلة')">؟</span>
+                data-help="سيتم اختيار 1 الى 2 تعويذة في كل تشكيلة">؟</span>
             </label>
 
             <label class="checkbox-group">
@@ -109,7 +109,7 @@
                 إجباري برج الأميرة
                 <span class="help-icon"
                 title="سيتم اختيار برج الأميرة في كل التشكيلات"
-                onclick="event.stopPropagation(); event.preventDefault(); alert('سيتم اختيار برج الأميرة في كل التشكيلات')">؟</span>
+                data-help="سيتم اختيار برج الأميرة في كل التشكيلات">؟</span>
             </label>
 
             <label class="checkbox-group">
@@ -117,7 +117,7 @@
                 إجباري بطاقات هجومية
                 <span class="help-icon"
                 title="سيتم اختيار بطاقات هجومية واحدة فقط مثل الهوغ رايدر او الغولم الخ... (بطاقات تستهدف البرج فقط) في كل تشكيلة"
-                onclick="event.stopPropagation(); event.preventDefault(); alert('سيتم اختيار بطاقات هجومية واحدة فقط مثل الهوغ رايدر او الغولم الخ... (بطاقات تستهدف البرج فقط) في كل تشكيلة')">؟</span>
+                data-help="سيتم اختيار بطاقات هجومية واحدة فقط مثل الهوغ رايدر او الغولم الخ... (بطاقات تستهدف البرج فقط) في كل تشكيلة">؟</span>
             </label>
 
             <button class="exclude-btn" id="excludeBtn" type="button">
@@ -137,6 +137,32 @@
                 <a href="https://github.com/mhmod3" target="_blank">https://github.com/mhmod3</a>
             </div>
             <div class="AI">*للشفافية: تم إنشاء هذا الموقع بشكل كامل مع Ai</div>
+        </div>
+    </div>
+
+    <!-- ===== منبثق التوضيح (Help Modal) ===== -->
+    <div id="siteHelpModal" class="site-modal-overlay">
+        <div class="site-modal-box">
+            <div class="site-modal-header">
+                <span class="site-modal-title">توضيح</span>
+                <button class="site-modal-close" id="closeSiteHelpBtn" type="button">✕</button>
+            </div>
+            <div class="site-modal-body" id="siteHelpText"></div>
+        </div>
+    </div>
+
+    <!-- ===== منبثق التأكيد (Confirm Modal) ===== -->
+    <div id="siteConfirmModal" class="site-modal-overlay">
+        <div class="site-modal-box">
+            <div class="site-modal-header">
+                <span class="site-modal-title">تأكيد</span>
+                <button class="site-modal-close" id="closeSiteConfirmBtn" type="button">✕</button>
+            </div>
+            <div class="site-modal-body" id="siteConfirmText">هل أنت متأكد من إلغاء كل الاستبعادات؟</div>
+            <div class="site-modal-actions">
+                <button class="site-modal-btn danger" id="siteConfirmYesBtn" type="button">نعم</button>
+                <button class="site-modal-btn cancel" id="siteConfirmNoBtn" type="button">لا</button>
+            </div>
         </div>
     </div>
 

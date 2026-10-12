@@ -37,5 +37,15 @@ CR.dom = {
     excludeSearchInput: document.getElementById('excludeSearchInput'),
     excludeCardsGrid: document.getElementById('excludeCardsGrid'),
     excludeCountSpan: document.getElementById('excludeCount'),
-    resetExcludeBtn: document.getElementById('resetExcludeBtn')
+    resetExcludeBtn: document.getElementById('resetExcludeBtn'),
+
+    siteHelpModal: document.getElementById('siteHelpModal'),
+    siteHelpText: document.getElementById('siteHelpText'),
+    closeSiteHelpBtn: document.getElementById('closeSiteHelpBtn'),
+
+    siteConfirmModal: document.getElementById('siteConfirmModal'),
+    siteConfirmText: document.getElementById('siteConfirmText'),
+    closeSiteConfirmBtn: document.getElementById('closeSiteConfirmBtn'),
+    siteConfirmYesBtn: document.getElementById('siteConfirmYesBtn'),
+    siteConfirmNoBtn: document.getElementById('siteConfirmNoBtn')
 };

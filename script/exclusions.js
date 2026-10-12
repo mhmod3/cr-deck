@@ -210,20 +210,27 @@ CR.toggleExclude = function toggleExclude(cardId) {
 
 CR.updateExcludeCount = function updateExcludeCount() {
     dom.excludeCountSpan.textContent = CR.excludedIds.size;
+    if (dom.resetExcludeBtn) {
+        dom.resetExcludeBtn.style.display = CR.excludedIds.size > 0 ? 'inline-block' : 'none';
+    }
+};
+
+CR.executeResetExcluded = function executeResetExcluded() {
+    CR.excludedIds.clear();
+    CR.saveExcluded();
+    dom.excludeSearchInput.value = '';
+    CR.renderExcludeModal();
+    CR.updateOptionStates();
+    if (CR.lastDeckIds) {
+        CR.generateDeck();
+    }
 };
 
 CR.resetExcluded = function resetExcluded() {
     if (CR.excludedIds.size === 0) return;
-    if (confirm('هل أنت متأكد من إلغاء كل الاستبعادات؟')) {
-        CR.excludedIds.clear();
-        CR.saveExcluded();
-        dom.excludeSearchInput.value = '';
-        CR.renderExcludeModal();
-        CR.updateOptionStates();
-        if (CR.lastDeckIds) {
-            CR.generateDeck();
-        }
-    }
+    CR.openSiteConfirm('هل أنت متأكد من إلغاء كل الاستبعادات؟', function() {
+        CR.executeResetExcluded();
+    });
 };
 
 CR.openExcludeModal = function openExcludeModal() {
