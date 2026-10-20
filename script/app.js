@@ -83,7 +83,9 @@ document.addEventListener('keydown', function(e) {
         scope = dom.excludeModal;
     }
     if (!scope) return;
-    const focusables = scope.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
+    const isVisible = el => el.checkVisibility ? el.checkVisibility() : el.offsetParent !== null;
+    const focusables = Array.from(scope.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])'))
+        .filter(isVisible);
     if (focusables.length === 0) return;
     const first = focusables[0];
     const last = focusables[focusables.length - 1];
