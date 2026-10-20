@@ -130,6 +130,9 @@ CR.animateCardSlot = function animateCardSlot(cardElement, finalSlotData) {
 
 // 8 بطاقات في الشبكة + البطاقة الداعمة في شريط الإحصائيات
 CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
+    CR.renderSeq = (CR.renderSeq || 0) + 1;
+    const seq = CR.renderSeq;
+
     dom.deckContainer.innerHTML = '';
     const ids = [];
     const cardElements = [];
@@ -149,9 +152,15 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
     // البطاقة الداعمة (التاسعة) في شريط الإحصائيات
     if (deckSlots.length === 9) {
         const supportSlot = deckSlots[8];
-        dom.supportStatsImg.src = supportSlot.iconUrl || '';
-        dom.supportStatsImg.alt = supportSlot.cardData.name || 'Tower';
-        dom.supportStatsImg.style.visibility = 'visible';
+        const supportUrl = supportSlot.iconUrl || '';
+        if (supportUrl) {
+            dom.supportStatsImg.src = supportUrl;
+            dom.supportStatsImg.alt = supportSlot.cardData.name || 'Tower';
+            dom.supportStatsImg.style.visibility = 'visible';
+        } else {
+            dom.supportStatsImg.removeAttribute('src');
+            dom.supportStatsImg.style.visibility = 'hidden';
+        }
         ids.push(supportSlot.cardData.id);
     }
 
@@ -197,6 +206,7 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
         });
 
         Promise.all(promises).then(() => {
+            if (seq !== CR.renderSeq) return;
             dom.avgElixirDisplay.textContent = avg.toFixed(1);
             dom.avgElixirDisplay.classList.remove('empty-value');
             dom.avgElixirDisplay.closest('.battle_stats').style.setProperty('--avg', avg);
@@ -206,9 +216,21 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
 };
 
 // استعادة التشكيلة المحفوظة
-CR.restoreDeck = function restoreDeck(savedState) {
+CR.restoreDeck = function restoreDeck(savedState, retries) {
+    retries = retries || 0;
     if (!CR.dataLoaded || CR.allCards.length === 0) {
-        setTimeout(() => CR.restoreDeck(savedState), 200);
+        if (retries >= 5) {
+            CR.showPlaceholder();
+            return;
+        }
+        setTimeout(() => CR.restoreDeck(savedState, retries + 1), 200);
+        return;
+    }
+
+    if (!savedState || !Array.isArray(savedState.mainCards) ||
+        savedState.mainCards.length !== 8 ||
+        !savedState.mainCards.every(m => m && Number.isInteger(m.id))) {
+        CR.showPlaceholder();
         return;
     }
 
