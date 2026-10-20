@@ -54,6 +54,7 @@ CR.showPopover = function showPopover() {
     let copyResetTimer = null;
     function markCopied() {
         dom.copyLinkBtn.textContent = 'تم النسخ!';
+        CR.blinkElement(dom.copyLinkBtn, 'copy-pop');
         clearTimeout(copyResetTimer);
         copyResetTimer = setTimeout(() => { dom.copyLinkBtn.textContent = 'نسخ رابط التشكيلة'; }, 2000);
     }
@@ -123,6 +124,7 @@ CR.fallbackCopy = function fallbackCopy(text) {
     document.body.removeChild(textarea);
     if (copied) {
         dom.copyLinkBtn.textContent = 'تم النسخ!';
+        CR.blinkElement(dom.copyLinkBtn, 'copy-pop');
         setTimeout(() => { dom.copyLinkBtn.textContent = 'نسخ رابط التشكيلة'; }, 2000);
     } else {
         CR.openSiteHelp('تعذر النسخ تلقائياً. انسخ الرابط يدوياً:\n' + text);
