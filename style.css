@@ -1369,9 +1369,6 @@ body {
         animation: none;
         opacity: .8;
     }
-    .card-slot.reveal-anim {
-        animation: cardLandFlat .3s ease both;
-    }
     .card-slot.reveal-anim::before {
         animation: none;
         opacity: 0;
@@ -1381,6 +1378,10 @@ body {
     }
     .deck-grid .card-slot {
         animation: none !important;
+    }
+    /* ظهور ناعم بدون حركة مكانة للكشف — بعد القاعدة أعلاه ليسبقها */
+    .deck-grid .card-slot.reveal-anim {
+        animation: cardLandFlat .3s ease both !important;
     }
     .battle_stats .meter i {
         transition: none;
