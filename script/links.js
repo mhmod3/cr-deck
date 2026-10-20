@@ -48,7 +48,7 @@ CR.showPopover = function showPopover() {
         });
     } catch (e) {
         console.warn('QR generation error:', e);
-        dom.qrContainer.innerHTML = '<span style="color:#ff8a80;font-size:0.7rem;">تعذر إنشاء QR. استخدم زر النسخ أعلاه.</span>';
+        dom.qrContainer.innerHTML = '<span style="color:#b0392a;font-size:11px;font-weight:700;">تعذر إنشاء QR. استخدم زر النسخ أعلاه.</span>';
     }
 
     let copyResetTimer = null;
