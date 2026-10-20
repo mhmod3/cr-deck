@@ -225,6 +225,17 @@ Themed from the palette: `color-scheme: dark`; `::selection` accent-soft (rgba(2
 
 Eight fixed-scale pockets (aspect 1/1.14, so they hold size while the art is hidden) on one shared baseline reveal in a 45ms × 8 stagger. Each pocket first holds a neutral-sleeve "؟" flicker with a gently pulsing question mark (`questionPulse` .7s: opacity .35→.8, scale 1→1.12) — no rarity color leaks while the card is still unknown. When its window lands, the pocket plays `cardReveal` (.34s cubic-bezier(.2,.8,.2,1): scale .9 → 1.02 overshoot → 1, opacity .35 → 1), a one-shot paper `inkFlash` (radial #f5f1e6 at 22% alpha, .55s), and the rarity sleeve is stamped on. The elixir meter then advances and settles exactly when the average lands. Symmetric about the center axis; with content removed the page still reads as a binder page.
 
+### Supporting micro-motion
+
+Fast, one-shot, transform/opacity-only touches that carry state rather than decorate (80–300ms; no new loops; the cascade stays the only authored sequence):
+
+- **Overlay rise:** the exclusion modal and site modals open with a 140ms scrim fade + 180ms panel `riseIn` (6px, deceleration .2/.8/.2/1); error messages and re-rendered exclusion grids fade in (150–180ms); the loading card settles in the same move; the page container settles once (`ready`, 220ms) when the loading screen hides.
+- **Press states:** `:active` on every control — chips/exclude button .985, round copy .9, exclusion cards .96, generate button sinks 1px — 80–100ms, transform only.
+- **Settle:** the elixir average pops once (`valueSettle`, 300ms) the instant the meter settles; the support tower image fades in on each swap (`towerIn`, 300ms).
+- **Restored decks:** pop in with a 40ms × 8 `cardPopIn` stagger; the loading bar width is smoothed with a 180ms transition.
+- **Copy success:** the copy button pulses once (`copyPop`, 250ms) when "تم النسخ!" lands.
+- **Reduced motion:** every move above collapses to an instant state change — feedback stays legible, spatial movement goes.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -235,6 +246,7 @@ Eight fixed-scale pockets (aspect 1/1.14, so they hold size while the art is hid
 - **Do** use neutral black offset+blur shadows only, and keep the 22px 1.8%-alpha halftone dot texture on the ground.
 - **Do** use Lalezar exclusively for display/section titles/values, Rubik for all UI text, and the mono stack for every numeral, counter, and stamp.
 - **Do** preserve the JS class hooks, the Arabic copy, and the footer verbatim — new screens join the world, they don't rewrite it.
+- **Do** keep micro-motion one-shot and transform/opacity only (80–300ms); every new surface opens with the fast fade + rise vocabulary, and every control answers a press.
 
 ### Don't:
 
@@ -244,3 +256,4 @@ Eight fixed-scale pockets (aspect 1/1.14, so they hold size while the art is hid
 - **Don't** track Arabic text or introduce a second display face.
 - **Don't** drift the layout off the shared baseline, break center-axis symmetry, or let standard controls (checkbox, input, button) grow custom shapes — the world lends type, palette, density, and one signature move; layout and standard controls stay standard.
 - **Don't** add a framework or build step; this is a static RTL site.
+- **Don't** introduce a new looping or decorative animation; the only bounded loop is `questionPulse` during the reveal window. Everything else is one-shot and state-carrying.
