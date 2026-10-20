@@ -25,7 +25,10 @@ CR.hideLoadingError = function hideLoadingError() {
     dom.loadingText.textContent = 'جاري تحميل البطاقات...';
 };
 
-CR.hideLoading = function hideLoading() { dom.loadingScreen.classList.add('hidden'); };
+CR.hideLoading = function hideLoading() {
+    dom.loadingScreen.classList.add('hidden');
+    if (dom.mainContainer) dom.mainContainer.classList.add('ready');
+};
 
 CR.showLoading = function showLoading() {
     dom.loadingScreen.classList.remove('hidden');
