@@ -390,11 +390,17 @@ CR.generateDeck = function generateDeck() {
     dom.copyPopover.classList.remove('visible');
     CR.hideError();
 
+    // فشل المسار: يحرر الأزرار ويعيد زر النسخ إلى حالة التشكيلة المعروضة — لا يُترك معطلاً فوق حالة سليمة
+    function abortGenerate() {
+        CR.isGenerating = false;
+        dom.generateBtn.disabled = false;
+        dom.copyBtn.disabled = !CR.lastDeckIds;
+    }
+
     const availableCount = CR.allCards.filter(c => !CR.excludedIds.has(c.id)).length;
     if (availableCount < 8) {
         CR.showError('عدد البطاقات المتاحة أقل من 8. يرجى إلغاء استبعاد بعض البطاقات.');
-        CR.isGenerating = false;
-        dom.generateBtn.disabled = false;
+        abortGenerate();
         return;
     }
 
@@ -406,20 +412,17 @@ CR.generateDeck = function generateDeck() {
     const isAvail = c => !CR.excludedIds.has(c.id);
     if (forceAttack && !CR.allCards.some(c => isAvail(c) && CR.ATTACK_CARD_IDS.includes(c.id))) {
         CR.showError('لا توجد بطاقات هجومية متاحة بعد الاستبعاد. أزل استبعادها أو عطّل خيار «إجباري بطاقات هجومية».');
-        CR.isGenerating = false;
-        dom.generateBtn.disabled = false;
+        abortGenerate();
         return;
     }
     if (forceSpells && CR.spells.length > 0 && !CR.spells.some(isAvail)) {
         CR.showError('لا توجد تعويذات متاحة بعد الاستبعاد. أزل استبعادها أو عطّل خيار «إجباري التعويذات».');
-        CR.isGenerating = false;
-        dom.generateBtn.disabled = false;
+        abortGenerate();
         return;
     }
     if (useRandomIcons && ![...CR.allCards, ...CR.spells].some(c => isAvail(c) && (c.hasHero || c.hasEvolution))) {
         CR.showError('لا توجد بواسل أو مطورات متاحة بعد الاستبعاد. أزل استبعادها أو عطّل خيار «بواسل و مطورات عشوائية».');
-        CR.isGenerating = false;
-        dom.generateBtn.disabled = false;
+        abortGenerate();
         return;
     }
 
@@ -441,6 +444,8 @@ CR.generateDeck = function generateDeck() {
     } else {
         // التشكيلة المعروضة تبقى كما هي — الخطأ لا يهدم الحالة الموجودة
         CR.showError('تعذر إيجاد تشكيلة صالحة بهذه الخيارات. عدّل الخيارات أو أعد المحاولة.');
+        abortGenerate();
+        return;
     }
 
     CR.isGenerating = false;
