@@ -402,6 +402,27 @@ CR.generateDeck = function generateDeck() {
     const forceSpells = dom.forceSpellsCheck.checked && !dom.forceSpellsCheck.disabled;
     const forcePrincess = dom.forcePrincessCheck.checked;
     const forceAttack = dom.forceAttackCardsCheck.checked && !dom.forceAttackCardsCheck.disabled;
+
+    const isAvail = c => !CR.excludedIds.has(c.id);
+    if (forceAttack && !CR.allCards.some(c => isAvail(c) && CR.ATTACK_CARD_IDS.includes(c.id))) {
+        CR.showError('لا توجد بطاقات هجومية متاحة بعد الاستبعاد. أزل استبعادها أو عطّل خيار «إجباري بطاقات هجومية».');
+        CR.isGenerating = false;
+        dom.generateBtn.disabled = false;
+        return;
+    }
+    if (forceSpells && CR.spells.length > 0 && !CR.spells.some(isAvail)) {
+        CR.showError('لا توجد تعويذات متاحة بعد الاستبعاد. أزل استبعادها أو عطّل خيار «إجباري التعويذات».');
+        CR.isGenerating = false;
+        dom.generateBtn.disabled = false;
+        return;
+    }
+    if (useRandomIcons && ![...CR.allCards, ...CR.spells].some(c => isAvail(c) && (c.hasHero || c.hasEvolution))) {
+        CR.showError('لا توجد بواسل أو مطورات متاحة بعد الاستبعاد. أزل استبعادها أو عطّل خيار «بواسل و مطورات عشوائية».');
+        CR.isGenerating = false;
+        dom.generateBtn.disabled = false;
+        return;
+    }
+
     let finalDeck = null;
     let attempts = 0;
 
@@ -418,8 +439,8 @@ CR.generateDeck = function generateDeck() {
         CR.renderDeck(finalDeck, false);
         CR.hideError();
     } else {
-        CR.showError('حدث خطأ أثناء إنشاء التشكيلة. يرجى المحاولة مرة أخرى.');
-        CR.showPlaceholder();
+        // التشكيلة المعروضة تبقى كما هي — الخطأ لا يهدم الحالة الموجودة
+        CR.showError('تعذر إيجاد تشكيلة صالحة بهذه الخيارات. عدّل الخيارات أو أعد المحاولة.');
     }
 
     CR.isGenerating = false;
