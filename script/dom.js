@@ -26,6 +26,7 @@ CR.dom = {
     forceAttackCardsCheck: document.getElementById('forceAttackCards'),
 
     deckContainer: document.getElementById('deckContainer'),
+    mainContainer: document.querySelector('.container'),
     errorMsg: document.getElementById('errorMsg'),
     avgElixirDisplay: document.getElementById('avgElixirDisplay'),
     supportStatsImg: document.getElementById('supportStatsImg'),
