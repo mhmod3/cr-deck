@@ -306,7 +306,7 @@ body {
 }
 
 .card-slot.reveal-anim {
-    animation: cardReveal .34s cubic-bezier(.2, .8, .2, 1) both;
+    animation: cardLand .42s cubic-bezier(.2, .8, .2, 1) both;
 }
 
 /* وميض ورق لحظة الكشف */
@@ -315,20 +315,43 @@ body {
     position: absolute;
     inset: 0;
     background: radial-gradient(circle at 50% 38%, rgba(245, 241, 230, .22), transparent 68%);
-    animation: inkFlash .55s ease both;
+    animation: inkFlash .45s ease both;
     pointer-events: none;
 }
 
 @keyframes inkFlash {
     0%   { opacity: 0; }
-    25%  { opacity: 1; }
+    35%  { opacity: 1; }
     100% { opacity: 0; }
 }
 
-@keyframes cardReveal {
-    0%   { transform: scale(.9);   opacity: .35; }
-    60%  { transform: scale(1.02); opacity: 1; }
-    100% { transform: scale(1);    opacity: 1; }
+/* وضع البطاقة على صفحة الباندر: ميلان rotateX خفيف، كسوة واحدة، وظل محايد مؤقت يذهب عند الاستقرار */
+@keyframes cardLand {
+    0% {
+        opacity: .3;
+        transform: perspective(640px) translate3d(0, -14px, 0) rotateX(10deg);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0);
+    }
+    45% {
+        opacity: 1;
+        transform: perspective(640px) translate3d(0, 2px, 0) rotateX(0deg);
+        box-shadow: 0 14px 24px rgba(0, 0, 0, .42);
+    }
+    75% {
+        transform: perspective(640px) translate3d(0, -1px, 0) rotateX(0deg);
+        box-shadow: 0 6px 14px rgba(0, 0, 0, .22);
+    }
+    100% {
+        opacity: 1;
+        transform: perspective(640px) translate3d(0, 0, 0) rotateX(0deg);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+/* بديل تقليل الحركة: ظهور بلا حركة مكانية */
+@keyframes cardLandFlat {
+    0%   { opacity: .3; }
+    100% { opacity: 1; }
 }
 
 @keyframes cardPopIn {
@@ -1347,7 +1370,7 @@ body {
         opacity: .8;
     }
     .card-slot.reveal-anim {
-        animation: none;
+        animation: cardLandFlat .3s ease both;
     }
     .card-slot.reveal-anim::before {
         animation: none;
