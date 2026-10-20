@@ -42,6 +42,8 @@ CR.showPlaceholder = function showPlaceholder() {
 
     dom.supportStatsImg.removeAttribute('src');
     dom.supportStatsImg.style.visibility = 'hidden';
+    dom.supportStatsImg.style.opacity = '';
+    dom.supportStatsImg.classList.remove('tower-in');
     dom.avgElixirDisplay.textContent = '—';
     dom.avgElixirDisplay.classList.add('empty-value');
     dom.avgElixirDisplay.closest('.battle_stats').style.setProperty('--avg', 0);
@@ -165,7 +167,11 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
             dom.supportStatsImg.src = supportUrl;
             dom.supportStatsImg.alt = supportSlot.cardData.name || 'Tower';
             dom.supportStatsImg.style.visibility = 'visible';
-            CR.blinkElement(dom.supportStatsImg, 'tower-in');
+            if (!skipAnimation) {
+                // أثناء التسلسل: البرج يوضع مع سكون الشريط، لا عند بدايته
+                dom.supportStatsImg.classList.remove('tower-in');
+                dom.supportStatsImg.style.opacity = '0';
+            }
         } else {
             dom.supportStatsImg.removeAttribute('src');
             dom.supportStatsImg.style.visibility = 'hidden';
@@ -199,6 +205,8 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
         dom.avgElixirDisplay.textContent = avg.toFixed(1);
         dom.avgElixirDisplay.classList.remove('empty-value');
         dom.avgElixirDisplay.closest('.battle_stats').style.setProperty('--avg', avg);
+        dom.supportStatsImg.style.opacity = '';
+        CR.blinkElement(dom.supportStatsImg, 'tower-in');
         CR.blinkElement(dom.avgElixirDisplay, 'settle-in');
         dom.copyBtn.disabled = false;
     } else {
@@ -220,6 +228,9 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
             dom.avgElixirDisplay.textContent = avg.toFixed(1);
             dom.avgElixirDisplay.classList.remove('empty-value');
             dom.avgElixirDisplay.closest('.battle_stats').style.setProperty('--avg', avg);
+            // سكون الشريط: البرج يُوضع مع هبوط المتوسط
+            dom.supportStatsImg.style.opacity = '';
+            CR.blinkElement(dom.supportStatsImg, 'tower-in');
             CR.blinkElement(dom.avgElixirDisplay, 'settle-in');
             dom.copyBtn.disabled = false;
         });
