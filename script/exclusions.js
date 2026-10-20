@@ -12,6 +12,8 @@ CR.updateExcludeToggle = function updateExcludeToggle() {
 };
 
 CR.updateOptionStates = function updateOptionStates() {
+    const notices = [];
+
     // التحقق من استبعاد كل البواسل والمطورات (hasHero أو hasEvolution)
     const allMainCards = [...CR.allCards, ...CR.spells];
     const availableHeroEvo = allMainCards.filter(c =>
@@ -22,7 +24,7 @@ CR.updateOptionStates = function updateOptionStates() {
     if (!hasHeroEvo && dom.randomIconsCheck.checked) {
         dom.randomIconsCheck.checked = false;
         CR.saveCheckboxes();
-        alert('لا يمكن تفعيل "اختيار بواسل و مطورات عشوائيا" لأنك استبعدت كل البطاقات التي تحوي بواسل أو مطورات.');
+        notices.push('أُطفئ «بواسل و مطورات عشوائية» لأنك استبعدت كل البطاقات التي تحوي بواسل أو مطورات.');
     }
     dom.randomIconsCheck.disabled = !hasHeroEvo;
     if (!hasHeroEvo) {
@@ -40,7 +42,7 @@ CR.updateOptionStates = function updateOptionStates() {
     if (!hasSpells && dom.forceSpellsCheck.checked) {
         dom.forceSpellsCheck.checked = false;
         CR.saveCheckboxes();
-        alert('لا يمكن تفعيل "إجباري التعويذات" لأنك استبعدت كل التعويذات.');
+        notices.push('أُطفئ «إجباري التعويذات» لأنك استبعدت كل التعويذات.');
     }
     dom.forceSpellsCheck.disabled = !hasSpells;
     if (!hasSpells) {
@@ -60,7 +62,7 @@ CR.updateOptionStates = function updateOptionStates() {
     if (!hasAttack && dom.forceAttackCardsCheck.checked) {
         dom.forceAttackCardsCheck.checked = false;
         CR.saveCheckboxes();
-        alert('لا يمكن تفعيل "إجباري بطاقات هجومية" لأنك استبعدت كل البطاقات الهجومية.');
+        notices.push('أُطفئ «إجباري بطاقات هجومية» لأنك استبعدت كل البطاقات الهجومية.');
     }
     dom.forceAttackCardsCheck.disabled = !hasAttack;
     if (!hasAttack) {
@@ -69,6 +71,10 @@ CR.updateOptionStates = function updateOptionStates() {
     } else {
         dom.forceAttackCardsCheck.parentElement.style.opacity = '1';
         dom.forceAttackCardsCheck.parentElement.style.cursor = 'pointer';
+    }
+
+    if (notices.length > 0) {
+        CR.openSiteHelp(notices.join('\n'));
     }
 
     // تحديث حالة checkbox الاستبعاد (كمؤشر)
@@ -132,57 +138,80 @@ CR.renderExcludeModal = function renderExcludeModal() {
         );
     }
 
-    filteredCards.sort((a, b) => {
+    // فرز غير متغيّر — لا نخرب ترتيب المجمع الأصلي
+    filteredCards = filteredCards.slice().sort((a, b) => {
         const aExcluded = CR.excludedIds.has(a.id) ? 1 : 0;
         const bExcluded = CR.excludedIds.has(b.id) ? 1 : 0;
         return aExcluded - bExcluded;
     });
 
     dom.excludeCardsGrid.innerHTML = '';
-    filteredCards.forEach(card => {
-        const div = document.createElement('div');
-        div.className = 'exclude-card';
-        if (CR.excludedIds.has(card.id)) {
-            div.classList.add('excluded');
-        }
 
-        const img = document.createElement('img');
-        img.className = 'card-img';
-        const iconUrl = (card.iconUrls && card.iconUrls.medium) ? card.iconUrls.medium :
-            (card.iconUrls && card.iconUrls.evolutionMedium) ? card.iconUrls.evolutionMedium :
-            (card.iconUrls && card.iconUrls.heroMedium) ? card.iconUrls.heroMedium :
-            CR.FALLBACK_IMAGE_URL;
-        img.src = iconUrl;
-        img.alt = card.name || 'بطاقة';
-        img.loading = 'lazy';
-        img.onerror = function() {
-            if (this.src !== CR.FALLBACK_IMAGE_URL) {
-                this.src = CR.FALLBACK_IMAGE_URL;
-            } else {
-                this.style.display = 'none';
+    if (filteredCards.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'grid-empty';
+        empty.textContent = searchTerm
+            ? 'لا توجد بطاقات مطابقة لبحثك'
+            : 'لا توجد بطاقات';
+        dom.excludeCardsGrid.appendChild(empty);
+    } else {
+        filteredCards.forEach(card => {
+            const div = document.createElement('div');
+            div.className = 'exclude-card';
+            div.setAttribute('tabindex', '0');
+            div.setAttribute('role', 'button');
+            if (CR.excludedIds.has(card.id)) {
+                div.classList.add('excluded');
             }
-        };
-        div.appendChild(img);
+            div.setAttribute('aria-pressed', CR.excludedIds.has(card.id) ? 'true' : 'false');
+            div.setAttribute('aria-label', (card.name || 'بطاقة') + (CR.excludedIds.has(card.id) ? ' — مستبعدة' : ''));
 
-        const nameLabel = document.createElement('span');
-        nameLabel.className = 'card-name-label';
-        nameLabel.textContent = card.name || '---';
-        div.appendChild(nameLabel);
+            const img = document.createElement('img');
+            img.className = 'card-img';
+            const iconUrl = (card.iconUrls && card.iconUrls.medium) ? card.iconUrls.medium :
+                (card.iconUrls && card.iconUrls.evolutionMedium) ? card.iconUrls.evolutionMedium :
+                (card.iconUrls && card.iconUrls.heroMedium) ? card.iconUrls.heroMedium :
+                CR.FALLBACK_IMAGE_URL;
+            img.src = iconUrl;
+            img.alt = card.name || 'بطاقة';
+            img.loading = 'lazy';
+            img.onerror = function() {
+                if (this.src !== CR.FALLBACK_IMAGE_URL) {
+                    this.src = CR.FALLBACK_IMAGE_URL;
+                } else {
+                    this.style.display = 'none';
+                }
+            };
+            div.appendChild(img);
 
-        const overlay = document.createElement('div');
-        overlay.className = 'exclude-overlay';
-        overlay.innerHTML = `
-            <span class="exclude-label">مستبعدة</span>
-        `;
-        div.appendChild(overlay);
+            const nameLabel = document.createElement('span');
+            nameLabel.className = 'card-name-label';
+            nameLabel.textContent = card.name || '---';
+            div.appendChild(nameLabel);
 
-        div.addEventListener('click', function(e) {
-            e.stopPropagation();
-            CR.toggleExclude(card.id);
+            const overlay = document.createElement('div');
+            overlay.className = 'exclude-overlay';
+            overlay.innerHTML = `
+                <span class="exclude-label">مستبعدة</span>
+            `;
+            div.appendChild(overlay);
+
+            div.addEventListener('click', function(e) {
+                e.stopPropagation();
+                CR.toggleExclude(card.id);
+            });
+
+            // وصولية لوحة المفاتيح
+            div.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    CR.toggleExclude(card.id);
+                }
+            });
+
+            dom.excludeCardsGrid.appendChild(div);
         });
-
-        dom.excludeCardsGrid.appendChild(div);
-    });
+    }
 
     CR.updateExcludeCount();
 };
@@ -191,7 +220,7 @@ CR.toggleExclude = function toggleExclude(cardId) {
     // التحقق من صحة الاستبعاد
     const result = CR.canExcludeCard(cardId);
     if (!result.allowed) {
-        alert(result.msg);
+        CR.openSiteHelp(result.msg);
         return;
     }
 
@@ -235,7 +264,7 @@ CR.resetExcluded = function resetExcluded() {
 
 CR.openExcludeModal = function openExcludeModal() {
     if (!CR.dataLoaded) {
-        alert('البيانات لا تزال قيد التحميل. يرجى الانتظار.');
+        CR.openSiteHelp('البيانات لا تزال قيد التحميل. يرجى الانتظار.');
         return;
     }
     CR.renderExcludeModal();
@@ -244,6 +273,7 @@ CR.openExcludeModal = function openExcludeModal() {
     dom.excludeSearchInput.value = '';
     // إعادة عرض البطاقات بعد مسح البحث
     setTimeout(() => CR.renderExcludeModal(), 50);
+    dom.excludeSearchInput.focus();
 };
 
 CR.closeExcludeModalFunc = function closeExcludeModalFunc() {
@@ -251,5 +281,6 @@ CR.closeExcludeModalFunc = function closeExcludeModalFunc() {
     document.body.style.overflow = '';
     // تحديث حالة checkbox بعد الإغلاق (كمؤشر على الاستبعادات)
     CR.updateExcludeToggle();
+    dom.excludeBtn.focus();
 };
 })();
