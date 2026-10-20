@@ -23,6 +23,10 @@
     /* التنبيه (تغيّر / خطأ) */
     --red: #b0392a;
 
+    /* خيوط داخلية ورمز التاج */
+    --hairline-deep: #23262e;
+    --crown: #333845;
+
     /* سحّابات الندرة */
     --rarity-common: #b7c1cc;
     --rarity-rare: #ff9d2e;
@@ -75,6 +79,19 @@ body {
     display: flex;
     flex-direction: column;
     gap: 14px;
+}
+
+/* نص للقارئات فقط */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* سكون الصفحة: تظهر الحاوية مرة واحدة عند إخفاء شاشة التحميل */
@@ -223,7 +240,7 @@ body {
     position: relative;
     aspect-ratio: 1 / 1.18;
     background: var(--panel-2);
-    border: 1px solid #23262e;
+    border: 1px solid var(--hairline-deep);
     border-radius: 4px;
     overflow: hidden;
     display: flex;
@@ -250,7 +267,7 @@ body {
 .card-slot.empty-slot .crown-icon {
     width: 34%;
     height: 34%;
-    color: #333845;
+    color: var(--crown);
 }
 
 /* صورة البطاقة داخل الجيب */
@@ -444,7 +461,7 @@ body {
     flex: 1 1 100%;
     position: relative;
     height: 4px;
-    background: #23262e;
+    background: var(--hairline-deep);
     margin-top: 10px;
 }
 
@@ -540,6 +557,14 @@ body {
     font-size: 10px;
     font-weight: 700;
     cursor: help;
+    position: relative;
+}
+
+/* توسيع منطقة اللمس إلى ~25px دون تغيير الحجم المرئي */
+.options-panel .checkbox-group .help-icon::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
 }
 
 .options-panel .checkbox-group:hover .help-icon {
@@ -722,13 +747,22 @@ body {
     color: var(--text-muted);
     font-size: 15px;
     cursor: pointer;
-    padding: 0 4px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1;
     transition: color .12s ease;
 }
 
 #copyPopover .close-btn:hover {
     color: #fff;
+}
+
+#copyPopover .close-btn:focus-visible {
+    outline: 2px solid var(--text-strong);
+    outline-offset: 2px;
 }
 
 #copyPopover .btn-open-link,
@@ -769,7 +803,7 @@ body {
 #copyPopover .qr-wrapper {
     display: flex;
     justify-content: center;
-    background: #f5f1e6;
+    background: var(--text-strong);
     padding: 6px;
     border: 1px dashed var(--border-2);
     border-radius: 2px;
@@ -867,13 +901,18 @@ body {
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
-    padding: 4px 10px;
+    padding: 6px 12px;
     text-decoration: underline;
     text-underline-offset: 3px;
 }
 
 #skipLoadBtn:hover {
     color: var(--text);
+}
+
+#skipLoadBtn:focus-visible {
+    outline: 2px solid var(--text-strong);
+    outline-offset: 2px;
 }
 
 #loadingError {
@@ -960,12 +999,21 @@ body {
     color: var(--text-muted);
     font-size: 18px;
     cursor: pointer;
-    padding: 0 4px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1;
 }
 
 #excludeModal .close-modal-btn:hover {
     color: #fff;
+}
+
+#excludeModal .close-modal-btn:focus-visible {
+    outline: 2px solid var(--text-strong);
+    outline-offset: 2px;
 }
 
 #excludeModal .modal-body {
@@ -1022,7 +1070,7 @@ body {
     --sleeve: var(--border);
     position: relative;
     background: linear-gradient(var(--sleeve), var(--sleeve)) no-repeat top / 100% 3px, var(--panel-2);
-    border: 1px solid #23262e;
+    border: 1px solid var(--hairline-deep);
     border-radius: 2px;
     padding: 6px;
     display: flex;
@@ -1039,6 +1087,11 @@ body {
 
 #excludeModal .cards-grid .exclude-card:active {
     transform: scale(.96);
+}
+
+#excludeModal .cards-grid .exclude-card:focus-visible {
+    outline: 2px solid var(--text-strong);
+    outline-offset: 2px;
 }
 
 #excludeModal .cards-grid.grid-in {
@@ -1192,7 +1245,7 @@ body {
 
 .site-modal-title {
     font-family: var(--font-display);
-    font-size: 17px;
+    font-size: 18px;
     color: var(--text-strong);
 }
 
@@ -1202,9 +1255,18 @@ body {
     color: var(--text-muted);
     font-size: 16px;
     cursor: pointer;
-    padding: 0 4px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1;
     transition: color .12s ease;
+}
+
+.site-modal-close:focus-visible {
+    outline: 2px solid var(--text-strong);
+    outline-offset: 2px;
 }
 
 .site-modal-close:hover {
@@ -1292,6 +1354,11 @@ body {
     text-decoration: underline;
 }
 
+.footer a:focus-visible {
+    outline: 2px solid var(--text-strong);
+    outline-offset: 2px;
+}
+
 .footer .AI {
     font-size: 12px;
     color: var(--text-faint);
@@ -1311,7 +1378,7 @@ body {
         font-size: 18px;
     }
     .deck-panel-title {
-        font-size: 17px;
+        font-size: 18px;
         padding-inline: 36px;
     }
     .deck-copy-group {
