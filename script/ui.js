@@ -22,6 +22,11 @@ CR.hideError = function hideError() {
     dom.errorMsg.classList.remove('visible');
 };
 
+// إعلان للقارئات: لحظة سكون التشكيلة فقط — لا حشو أثناء التسلسل
+CR.announceDeck = function announceDeck(msg) {
+    if (dom.deckAnnounce) dom.deckAnnounce.textContent = msg;
+};
+
 CR.showPlaceholder = function showPlaceholder() {
     dom.deckContainer.innerHTML = '';
 
@@ -51,7 +56,10 @@ CR.showPlaceholder = function showPlaceholder() {
     dom.copyBtn.disabled = true;
     dom.copyPopover.classList.remove('visible');
     CR.lastDeckIds = null;
-    localStorage.removeItem('deckBuilderSavedDeck');
+    try {
+        localStorage.removeItem('deckBuilderSavedDeck');
+    } catch (_) {}
+    if (dom.deckAnnounce) dom.deckAnnounce.textContent = 'لا توجد تشكيلة حالية. اضغط «إنشاء تشكيلة» للبدء.';
 };
 
 CR.getRarityClass = function getRarityClass(rarity) {
@@ -86,6 +94,7 @@ CR.createCardElement = function createCardElement(slot) {
 
     const img = document.createElement('img');
     img.loading = 'eager';
+    img.alt = slot.cardData.name || 'بطاقة';
     img.dataset.cardId = slot.cardData.id;
 
     img.onerror = function() {
@@ -209,6 +218,7 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
         CR.blinkElement(dom.supportStatsImg, 'tower-in');
         CR.blinkElement(dom.avgElixirDisplay, 'settle-in');
         dom.copyBtn.disabled = false;
+        CR.announceDeck('تم استعادة التشكيلة المحفوظة. متوسط الإكسير ' + avg.toFixed(1));
     } else {
         dom.avgElixirDisplay.textContent = '—';
         dom.avgElixirDisplay.classList.add('empty-value');
@@ -233,6 +243,7 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
             CR.blinkElement(dom.supportStatsImg, 'tower-in');
             CR.blinkElement(dom.avgElixirDisplay, 'settle-in');
             dom.copyBtn.disabled = false;
+            CR.announceDeck('تم إنشاء تشكيلة جديدة. متوسط الإكسير ' + avg.toFixed(1));
         });
     }
 };
