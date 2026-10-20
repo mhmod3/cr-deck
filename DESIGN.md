@@ -223,7 +223,7 @@ Themed from the palette: `color-scheme: dark`; `::selection` accent-soft (rgba(2
 
 ### Signature move: the staggered cascade
 
-Eight fixed-scale pockets (aspect 1/1.14, so they hold size while the art is hidden) on one shared baseline reveal in a 45ms × 8 stagger. Each pocket first holds a neutral-sleeve "؟" flicker with a gently pulsing question mark (`questionPulse` .7s: opacity .35→.8, scale 1→1.12) — no rarity color leaks while the card is still unknown. When its window lands, the pocket plays `cardReveal` (.34s cubic-bezier(.2,.8,.2,1): scale .9 → 1.02 overshoot → 1, opacity .35 → 1), a one-shot paper `inkFlash` (radial #f5f1e6 at 22% alpha, .55s), and the rarity sleeve is stamped on. The elixir meter then advances and settles exactly when the average lands. Symmetric about the center axis; with content removed the page still reads as a binder page.
+Eight fixed-scale pockets (aspect 1/1.14, so they hold size while the art is hidden) on one shared baseline reveal in a 45ms × 8 stagger. Each pocket first holds a neutral-sleeve "؟" flicker with a gently pulsing question mark (`questionPulse` .7s: opacity .35→.8, scale 1→1.12) — no rarity color leaks while the card is still unknown. When its window lands, the card is **placed onto the binder page from the dealer's hand** — `cardLand` (.42s cubic-bezier(.2,.8,.2,1)): a mild `rotateX(10°)` under a 640px per-element perspective, a -14px→+2px settle with a single -1px micro-settle (no spring), a transient neutral-black drop shadow that peaks mid-descent and is gone at rest (the pocket is a flat plate again), plus the one-shot paper `inkFlash` (radial #f5f1e6 at 22% alpha, .45s). The elixir meter then advances and settles exactly when the average lands. The depth is restrained by design — one 10° tilt and one moment of shadow, never a flip, wobble, or float. Symmetric about the center axis; with content removed the page still reads as a binder page.
 
 ### Supporting micro-motion
 
@@ -232,9 +232,9 @@ Fast, one-shot, transform/opacity-only touches that carry state rather than deco
 - **Overlay rise:** the exclusion modal and site modals open with a 140ms scrim fade + 180ms panel `riseIn` (6px, deceleration .2/.8/.2/1); error messages and re-rendered exclusion grids fade in (150–180ms); the loading card settles in the same move; the page container settles once (`ready`, 220ms) when the loading screen hides.
 - **Press states:** `:active` on every control — chips/exclude button .985, round copy .9, exclusion cards .96, generate button sinks 1px — 80–100ms, transform only.
 - **Settle:** the elixir average pops once (`valueSettle`, 300ms) the instant the meter settles; the support tower image fades in on each swap (`towerIn`, 300ms).
-- **Restored decks:** pop in with a 40ms × 8 `cardPopIn` stagger; the loading bar width is smoothed with a 180ms transition.
+- **Restored decks:** land with the same `cardLand` beat on a 40ms × 8 stagger; the loading bar width is smoothed with a 180ms transition.
 - **Copy success:** the copy button pulses once (`copyPop`, 250ms) when "تم النسخ!" lands.
-- **Reduced motion:** every move above collapses to an instant state change — feedback stays legible, spatial movement goes.
+- **Reduced motion:** the reveal falls back to `cardLandFlat` (opacity only, no tilt/shadow) and every move above collapses to an instant state change — feedback stays legible, spatial movement goes.
 
 ## Do's and Don'ts
 
@@ -242,7 +242,7 @@ Fast, one-shot, transform/opacity-only touches that carry state rather than deco
 
 - **Do** keep Arabic letter-spacing at 0 — tracking applies only to Latin/mono stamps (wordmark .18em, counters .08em) and the .02em on the Lalezar generate button.
 - **Do** reserve the accent pink for generation/confirmation moments (generate, copy, open-link), control-activation states (checked chips, active exclude, loading/meter fill, caret), and the settle meter — nothing else.
-- **Do** keep pockets at 2px angular corners with the rarity sleeve as a 3px top strip; keep all eight pockets on the shared 4×2 baseline, symmetric about the center axis.
+- **Do** keep pockets at 2px angular corners; the rarity sleeve survives as a 3px top strip on the exclusion grid cells; keep all eight pockets on the shared 4×2 baseline, symmetric about the center axis.
 - **Do** use neutral black offset+blur shadows only, and keep the 22px 1.8%-alpha halftone dot texture on the ground.
 - **Do** use Lalezar exclusively for display/section titles/values, Rubik for all UI text, and the mono stack for every numeral, counter, and stamp.
 - **Do** preserve the JS class hooks, the Arabic copy, and the footer verbatim — new screens join the world, they don't rewrite it.
