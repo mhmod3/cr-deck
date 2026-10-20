@@ -11,3 +11,4 @@ CR.lastDeckIds = null;
 CR.preloadedImages = new Map();
 CR.excludedIds = new Set();
 CR.loadSkipped = false;
+CR.renderSeq = 0;
