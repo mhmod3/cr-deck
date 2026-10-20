@@ -15,6 +15,7 @@ CR.showLoadingError = function showLoadingError(msg) {
     dom.loadingErrorText.textContent = msg;
     dom.loadingError.classList.add('visible');
     dom.loadingRetryBtn.classList.add('visible');
+    dom.skipLoadBtn.style.display = 'none';
     dom.loadingText.textContent = 'حدث خطأ';
 };
 
@@ -30,7 +31,7 @@ CR.showLoading = function showLoading() {
     dom.loadingScreen.classList.remove('hidden');
     dom.loadingProgress.textContent = '0%';
     dom.loadingBarFill.style.width = '0%';
-    dom.skipLoadBtn.style.display = 'inline-block';
+    dom.skipLoadBtn.style.display = 'none';
     CR.hideLoadingError();
     dom.loadingText.textContent = 'جاري تحميل البطاقات...';
 };
@@ -66,6 +67,7 @@ CR.loadAllImages = function loadAllImages(cards) {
             }
         }
 
+        dom.skipLoadBtn.style.display = 'inline-block';
         dom.skipLoadBtn.onclick = trySkip;
 
         urlArray.forEach(url => {
@@ -119,7 +121,13 @@ CR.loadData = async function loadData() {
     dom.copyBtn.disabled = true;
     dom.copyPopover.classList.remove('visible');
 
-    const stored = localStorage.getItem(CR.STORAGE_KEY);
+    const stored = (() => {
+        try {
+            return localStorage.getItem(CR.STORAGE_KEY);
+        } catch (_) {
+            return null;
+        }
+    })();
     let data = null;
 
     if (stored) {
@@ -135,23 +143,34 @@ CR.loadData = async function loadData() {
     if (!data) {
         try {
             const apiUrl = 'https://raw.githubusercontent.com/mhmod3/cr-deck/refs/heads/main/data.json';
-            const response = await fetch(apiUrl);
+            const ctrl = new AbortController();
+            const timeoutId = setTimeout(() => ctrl.abort(), 25000);
+            let response;
+            try {
+                response = await fetch(apiUrl, { signal: ctrl.signal });
+            } finally {
+                clearTimeout(timeoutId);
+            }
             if (!response.ok) throw new Error('Network response not ok');
             data = await response.json();
             if (!data || !Array.isArray(data.items) || data.items.length === 0 ||
                 !Array.isArray(data.supportItems) || data.supportItems.length === 0) {
                 throw new Error('Invalid data structure');
             }
-            localStorage.setItem(CR.STORAGE_KEY, JSON.stringify(data));
         } catch (err) {
             console.warn('Fetch error:', err);
-            CR.showLoadingError('تعذر تحميل البيانات. تأكد من اتصالك بالإنترنت وحاول مجدداً.');
+            CR.showLoadingError(err && err.name === 'AbortError'
+                ? 'انتهت مهلة التحميل. تحقق من اتصالك بالإنترنت وحاول مجدداً.'
+                : 'تعذر تحميل البيانات. تأكد من اتصالك بالإنترنت وحاول مجدداً.');
             dom.loadingRetryBtn.onclick = function() {
                 CR.hideLoadingError();
                 CR.loadData();
             };
             return;
         }
+        try {
+            localStorage.setItem(CR.STORAGE_KEY, JSON.stringify(data));
+        } catch (_) {}
     }
 
     const processedItems = data.items.map(c => CR.processCard(c));
