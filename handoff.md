@@ -55,7 +55,7 @@
 
 ### 5.1 لقطة وضع البطاقات (cardLand)
 
-- استُبدلت `cardReveal` (scale) بلقطة `cardLand` في `.card-slot.reveal-anim`: ميلان `rotateX(10°)` تحت `perspective(640px)`، هبوط -14px→+2px بكسوة واحدة (لا نابض)، وظل محايد مؤقت (يقوى في منتصف الهبوط ويصفر عند الاستقرار — الجيب يبقى صفيحة بلا ظل). المدة .42s cubic-bezier(.2,.8,.2,1). مسار الاستعادة يستخدم `cardLand .3s` بـ stagger 40ms بدل `cardPopIn`.
-- تقليل الحركة: القاعدة العامة `.deck-grid .card-slot { animation: none !important }` تُلغي المسار السريع (inline)، وقاعدة لاحقة أعلى تحديدًا `.deck-grid .card-slot.reveal-anim { cardLandFlat !important }` تُبقي تلاشٍ شفافية ناعمًا للكشف.
+- استُبدلت `cardReveal` (scale على الجيب) بلقطة `cardLand` على إطار `.card-art` داخل الجيب الثابت (قاعدة الخط المشترك محظورة على الجيوب — «لا جيب يطفو»): ميلان `rotateX(10°)` تحت `perspective(640px)`، هبوط -14px→+2px بكسوة واحدة (لا نابض)، وظل محايد مؤقت (يقوى في منتصف الهبوط ويصفر عند الاستقرار). المدة .42s cubic-bezier(.2,.8,.2,1). مسار الاستعادة: `cardLand .3s` بـ stagger 40ms على `.card-art`.
+- تقليل الحركة: القاعدة العامة `.deck-grid .card-slot { animation: none !important }` تُلغي المسار السريع (inline)، وقاعدة لاحقة أعلى تحديدًا `.deck-grid .card-slot.reveal-anim .card-art { cardLandFlat !important }` تُبقي تلاشٍ شفافية ناعمًا للكشف.
 - توثيق: فقرة الحركة المميزة في DESIGN.md عُدّلت (cardLand + إزالة عبارة ختم السحّابة غير المنفَّذة + مصير شريط الندرة).
 - تحقق: `.impeccable/animate-verify.py` — لقطة منتصف الوضع (`matrix3d` مؤكد)، الحالات النهائية، وتقليل الحركة. صفر أخطاء JS.

@@ -305,7 +305,8 @@ body {
     50%      { opacity: .8;  transform: scale(1.12); }
 }
 
-.card-slot.reveal-anim {
+/* الجيب ثابت على خط الأساس؛ البطاقة (اللوحة) هي التي تُوضع فيه */
+.card-slot.reveal-anim .card-art {
     animation: cardLand .42s cubic-bezier(.2, .8, .2, 1) both;
 }
 
@@ -1379,8 +1380,8 @@ body {
     .deck-grid .card-slot {
         animation: none !important;
     }
-    /* ظهور ناعم بدون حركة مكانة للكشف — بعد القاعدة أعلاه ليسبقها */
-    .deck-grid .card-slot.reveal-anim {
+    /* ظهور ناعم بدون حركة مكانة للكشف — بعد قاعدة الإلغاء العامة ليسبقها */
+    .deck-grid .card-slot.reveal-anim .card-art {
         animation: cardLandFlat .3s ease both !important;
     }
     .battle_stats .meter i {

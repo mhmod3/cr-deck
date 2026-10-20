@@ -69,11 +69,15 @@ with sync_playwright() as p:
     results["desktop_loaded"] = state(pg)
 
     pg.click("#generateBtn")
-    pg.wait_for_timeout(400)
-    results["desktop_mid_cascade"] = {
-        "animating": pg.evaluate("document.querySelectorAll('.card-slot.animating').length"),
-    }
-    pg.wait_for_timeout(3500)  # cascade + settle complete
+    pg.wait_for_timeout(520)  # البطاقات 0-2 في منتصف الوضع، 3-7 تومض
+    results["desktop_mid_landing"] = pg.evaluate("""() => ({
+        animating: document.querySelectorAll('.card-slot.animating').length,
+        landing: document.querySelectorAll('.card-slot.reveal-anim').length,
+        t3d: getComputedStyle(document.querySelector('.card-slot.reveal-anim .card-art') || document.body).transform,
+        slotT: getComputedStyle(document.querySelector('.card-slot.reveal-anim') || document.body).transform,
+    })""")
+    pg.screenshot(path=OUT + "\\animate-midlanding-desktop.png")
+    pg.wait_for_timeout(3400)  # اكتمال التسلسل والسكون
     results["desktop_revealed"] = state(pg)
     pg.screenshot(path=OUT + "\\animate-desktop.png")
 
@@ -116,7 +120,15 @@ with sync_playwright() as p:
     rp.goto(URL, wait_until="domcontentloaded")
     rp.wait_for_timeout(1500)
     rp.click("#generateBtn")
-    rp.wait_for_timeout(4000)
+    rp.wait_for_timeout(520)
+    results["reduced_mid_landing"] = rp.evaluate("""() => {
+        const el = document.querySelector('.card-slot.reveal-anim .card-art');
+        return el ? {
+            anim: getComputedStyle(el).animationName,
+            t: getComputedStyle(el).transform,
+        } : null;
+    }""")
+    rp.wait_for_timeout(3500)
     results["reduced_revealed"] = state(rp)
     results["reduced_motions"] = rp.evaluate("""() => ({
         modalBoxAnim: getComputedStyle(document.querySelector('.site-modal-box')).animationName,

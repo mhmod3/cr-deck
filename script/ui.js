@@ -194,7 +194,7 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
             const img = element.querySelector('img');
             img.src = finalData.iconUrl || '';
             img.dataset.cardId = finalData.cardData.id;
-            element.style.animation = 'cardLand .3s cubic-bezier(.2,.8,.2,1) ' + (index * 40) + 'ms both';
+            element.querySelector('.card-art').style.animation = 'cardLand .3s cubic-bezier(.2,.8,.2,1) ' + (index * 40) + 'ms both';
         });
         dom.avgElixirDisplay.textContent = avg.toFixed(1);
         dom.avgElixirDisplay.classList.remove('empty-value');
