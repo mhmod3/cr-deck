@@ -32,7 +32,7 @@ CR.getAppUrl = function getAppUrl(webUrl) {
 CR.showPopover = function showPopover() {
     const webUrl = CR.getDeckUrl();
     if (!webUrl) {
-        alert('لا توجد تشكيلة جاهزة للنسخ. قم بإنشاء تشكيلة أولا');
+        CR.openSiteHelp('لا توجد تشكيلة جاهزة للنسخ. قم بإنشاء تشكيلة أولا.');
         return;
     }
 
@@ -48,14 +48,20 @@ CR.showPopover = function showPopover() {
         });
     } catch (e) {
         console.warn('QR generation error:', e);
-        dom.qrContainer.innerHTML = '<span style="color:#ff8a80;font-size:0.7rem;">تعذر إنشاء QR</span>';
+        dom.qrContainer.innerHTML = '<span style="color:#ff8a80;font-size:0.7rem;">تعذر إنشاء QR. استخدم زر النسخ أعلاه.</span>';
+    }
+
+    let copyResetTimer = null;
+    function markCopied() {
+        dom.copyLinkBtn.textContent = 'تم النسخ!';
+        clearTimeout(copyResetTimer);
+        copyResetTimer = setTimeout(() => { dom.copyLinkBtn.textContent = 'نسخ رابط التشكيلة'; }, 2000);
     }
 
     dom.copyLinkBtn.onclick = function() {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(webUrl).then(() => {
-                dom.copyLinkBtn.textContent = 'تم النسخ!';
-                setTimeout(() => { dom.copyLinkBtn.textContent = 'نسخ رابط التشكيلة'; }, 2000);
+                markCopied();
             }).catch(() => CR.fallbackCopy(webUrl));
         } else {
             CR.fallbackCopy(webUrl);
@@ -108,14 +114,19 @@ CR.fallbackCopy = function fallbackCopy(text) {
     textarea.style.opacity = '0';
     document.body.appendChild(textarea);
     textarea.select();
+    let copied = false;
     try {
-        document.execCommand('copy');
-        dom.copyLinkBtn.textContent = 'تم النسخ!';
-        setTimeout(() => { dom.copyLinkBtn.textContent = 'نسخ رابط التشكيلة'; }, 2000);
+        copied = document.execCommand('copy');
     } catch (e) {
-        alert('تعذر نسخ الرابط. يمكنك نسخه يدويا\n' + text);
+        copied = false;
     }
     document.body.removeChild(textarea);
+    if (copied) {
+        dom.copyLinkBtn.textContent = 'تم النسخ!';
+        setTimeout(() => { dom.copyLinkBtn.textContent = 'نسخ رابط التشكيلة'; }, 2000);
+    } else {
+        CR.openSiteHelp('تعذر النسخ تلقائياً. انسخ الرابط يدوياً:\n' + text);
+    }
 };
 
 CR.closePopover = function closePopover() {
