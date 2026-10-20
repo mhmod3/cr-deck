@@ -119,6 +119,17 @@ CR.processCard = function processCard(card) {
 };
 
 CR.loadData = async function loadData() {
+    // حارس الموازاة: ضغطة مزدوجة على «إعادة المحاولة» لا تطلق تحميلين متوازيين
+    if (CR.loadingInFlight) return;
+    CR.loadingInFlight = true;
+    try {
+        await CR.loadOnce();
+    } finally {
+        CR.loadingInFlight = false;
+    }
+};
+
+CR.loadOnce = async function loadOnce() {
     CR.showLoading();
     dom.generateBtn.disabled = true;
     dom.copyBtn.disabled = true;
