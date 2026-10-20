@@ -231,7 +231,7 @@ Fast, one-shot, transform/opacity-only touches that carry state rather than deco
 
 - **Overlay rise:** the exclusion modal and site modals open with a 140ms scrim fade + 180ms panel `riseIn` (6px, deceleration .2/.8/.2/1); error messages and re-rendered exclusion grids fade in (150–180ms); the loading card settles in the same move; the page container settles once (`ready`, 220ms) when the loading screen hides.
 - **Press states:** `:active` on every control — chips/exclude button .985, round copy .9, exclusion cards .96, generate button sinks 1px — 80–100ms, transform only.
-- **Settle:** the elixir average pops once (`valueSettle`, 300ms) the instant the meter settles; the support tower image fades in on each swap (`towerIn`, 300ms).
+- **Settle:** the elixir average pops once (`valueSettle`, 300ms) the instant the meter settles; the support tower is held out of the band during the cascade and is **placed into it at the same settle moment** (`towerIn`, .35s: 8px drop + fade, deceleration .2/.8/.2/1) — the whole band settles as one beat. On the fast (restore) path the tower lands with its cards immediately.
 - **Restored decks:** land with the same `cardLand` beat on a 40ms × 8 stagger; the loading bar width is smoothed with a 180ms transition.
 - **Copy success:** the copy button pulses once (`copyPop`, 250ms) when "تم النسخ!" lands.
 - **Reduced motion:** the reveal falls back to `cardLandFlat` (opacity only, no tilt/shadow) and every move above collapses to an instant state change — feedback stays legible, spatial movement goes.
