@@ -75,8 +75,17 @@ CR.showPopover = function showPopover() {
     dom.openLinkBtn.onclick = function() {
         if (isMobile && appUrl) {
             window.location.href = appUrl;
+            // إن لم تفتح اللعبة (غير مثبتة / بدون معالج) يبقى الجهاز مركّزا — عندئذ نرشد المستخدم
+            setTimeout(function() {
+                if (!document.hidden && document.hasFocus()) {
+                    CR.openSiteHelp('لم يتم فتح اللعبة على جهازك.\nانسخ رابط التشكيلة أو امسح رمز QR لنقلها إلى اللعبة.');
+                }
+            }, 800);
         } else {
-            window.open(webUrl, '_blank');
+            const win = window.open(webUrl, '_blank');
+            if (!win) {
+                CR.openSiteHelp('تم حظر النافذة الجديدة.\nانسخ رابط التشكيلة أو امسح رمز QR لنقلها إلى اللعبة.');
+            }
         }
     };
 
@@ -132,6 +141,11 @@ CR.fallbackCopy = function fallbackCopy(text) {
 };
 
 CR.closePopover = function closePopover() {
+    const active = document.activeElement;
     dom.copyPopover.classList.remove('visible');
+    // مستخدم لوحة المفاتيح: العودة إلى الزر الذي فتح المنبثق
+    if (active && dom.copyPopover.contains(active)) {
+        dom.copyBtn.focus();
+    }
 };
 })();
