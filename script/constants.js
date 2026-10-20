@@ -30,7 +30,7 @@ CR.SPELL_IDS = new Set([
 ]);
 
 CR.CROWN_SVG =
-    '<svg class="crown-icon" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg"><path d="M8 68 L14 28 L34 46 L50 14 L66 46 L86 28 L92 68 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+    '<svg class="crown-icon" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg"><path d="M12 68 L15.5 34 Q16.5 24 19.5 32 L31 44 Q34 47 37 44 L46 26 Q50 10 54 26 L63 44 Q66 47 69 44 L80.5 32 Q83.5 24 84.5 34 L88 68 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
 
 CR.STORAGE_KEY = 'cardsData';
 CR.EXCLUDE_KEY = 'deckBuilderExcluded';
