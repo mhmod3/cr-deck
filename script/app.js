@@ -71,6 +71,32 @@ dom.excludeSearchInput.addEventListener('input', function() {
 });
 
 // إغلاق النوافذ بمفتاح Escape — الأعلى طابقاً أولًا
+// قفزة التركيز: Tab يدور داخل أعلى نافذة مفتوحة ولا يفلت إلى الخلفية
+document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Tab') return;
+    let scope = null;
+    if (dom.siteHelpModal.classList.contains('visible')) {
+        scope = dom.siteHelpModal;
+    } else if (dom.siteConfirmModal.classList.contains('visible')) {
+        scope = dom.siteConfirmModal;
+    } else if (dom.excludeModal.classList.contains('visible')) {
+        scope = dom.excludeModal;
+    }
+    if (!scope) return;
+    const focusables = scope.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement;
+    if (e.shiftKey && (active === first || !scope.contains(active))) {
+        e.preventDefault();
+        last.focus();
+    } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+    }
+});
+
 document.addEventListener('keydown', function(e) {
     if (e.key !== 'Escape') return;
     if (dom.siteHelpModal.classList.contains('visible')) {
