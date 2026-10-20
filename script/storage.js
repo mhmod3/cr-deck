@@ -5,8 +5,16 @@ window.CR = window.CR || {};
 const CR = window.CR;
 const dom = CR.dom;
 
+function safeSetItem(key, value) {
+    try {
+        localStorage.setItem(key, value);
+    } catch (_) {
+        // وضع خاص أو امتلاء حصة التخزين — يستمر التطبيق بالعمل دون حفظ دائم
+    }
+}
+
 CR.saveExcluded = function saveExcluded() {
-    localStorage.setItem(CR.EXCLUDE_KEY, JSON.stringify(Array.from(CR.excludedIds)));
+    safeSetItem(CR.EXCLUDE_KEY, JSON.stringify(Array.from(CR.excludedIds)));
 };
 
 CR.loadExcluded = function loadExcluded() {
@@ -15,7 +23,7 @@ CR.loadExcluded = function loadExcluded() {
         if (stored) {
             const arr = JSON.parse(stored);
             if (Array.isArray(arr)) {
-                CR.excludedIds = new Set(arr);
+                CR.excludedIds = new Set(arr.filter(x => Number.isInteger(x)));
                 return;
             }
         }
@@ -30,7 +38,7 @@ CR.saveCheckboxes = function saveCheckboxes() {
         forcePrincess: dom.forcePrincessCheck.checked,
         forceAttack: dom.forceAttackCardsCheck.checked
     };
-    localStorage.setItem('deckBuilderChecks', JSON.stringify(checks));
+    safeSetItem('deckBuilderChecks', JSON.stringify(checks));
 };
 
 CR.loadCheckboxes = function loadCheckboxes() {
@@ -48,7 +56,9 @@ CR.loadCheckboxes = function loadCheckboxes() {
 
 CR.saveDeckState = function saveDeckState(deckSlots) {
     if (!deckSlots || deckSlots.length !== 9) {
-        localStorage.removeItem('deckBuilderSavedDeck');
+        try {
+            localStorage.removeItem('deckBuilderSavedDeck');
+        } catch (_) {}
         return;
     }
     const saved = {
@@ -58,14 +68,21 @@ CR.saveDeckState = function saveDeckState(deckSlots) {
         })),
         supportCardId: deckSlots[8].cardData.id
     };
-    localStorage.setItem('deckBuilderSavedDeck', JSON.stringify(saved));
+    safeSetItem('deckBuilderSavedDeck', JSON.stringify(saved));
 };
 
 CR.loadDeckState = function loadDeckState() {
     try {
         const stored = localStorage.getItem('deckBuilderSavedDeck');
         if (stored) {
-            return JSON.parse(stored);
+            const parsed = JSON.parse(stored);
+            if (parsed &&
+                Array.isArray(parsed.mainCards) &&
+                parsed.mainCards.length === 8 &&
+                parsed.mainCards.every(m => m && Number.isInteger(m.id)) &&
+                Number.isInteger(parsed.supportCardId)) {
+                return parsed;
+            }
         }
     } catch (_) {}
     return null;
