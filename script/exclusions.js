@@ -213,6 +213,7 @@ CR.renderExcludeModal = function renderExcludeModal() {
         });
     }
 
+    CR.blinkElement(dom.excludeCardsGrid, 'grid-in');
     CR.updateExcludeCount();
 };
 
