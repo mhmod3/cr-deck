@@ -77,6 +77,11 @@ body {
     gap: 14px;
 }
 
+/* سكون الصفحة: تظهر الحاوية مرة واحدة عند إخفاء شاشة التحميل */
+.container.ready {
+    animation: riseIn .22s cubic-bezier(.2, .8, .2, 1) both;
+}
+
 /* ===== الترويسة ===== */
 .title-banner {
     text-align: center;
@@ -138,6 +143,12 @@ body {
     transform: translateY(-1px);
 }
 
+.toolbar .btn:active:not(:disabled) {
+    filter: brightness(1.04);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .5);
+    transform: translateY(1px);
+}
+
 .toolbar .btn:focus-visible {
     outline: 2px solid var(--text-strong);
     outline-offset: 3px;
@@ -191,6 +202,10 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.deck-grid.grid-in {
+    animation: fadeIn .18s ease both;
 }
 
 .deck-grid {
@@ -321,6 +336,33 @@ body {
     100% { opacity: 1; transform: scale(1); }
 }
 
+/* حركات سريعة: صعود الظهور وسكون القيم — transform/opacity فقط */
+@keyframes riseIn {
+    0%   { opacity: 0; transform: translateY(6px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes valueSettle {
+    0%   { opacity: .3; transform: scale(.94); }
+    100% { opacity: 1;  transform: scale(1); }
+}
+
+@keyframes towerIn {
+    0%   { opacity: 0; transform: scale(.92); }
+    100% { opacity: 1;  transform: scale(1); }
+}
+
+@keyframes copyPop {
+    0%   { transform: scale(.95); }
+    55%  { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
 /* ===== شريط الإكسير — متماثل حول البرج ===== */
 .battle_stats {
     margin-top: 14px;
@@ -363,6 +405,14 @@ body {
     height: 53px;
     object-fit: contain;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .55));
+}
+
+.battle_stats .value.settle-in {
+    animation: valueSettle .3s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.battle_stats .tower_item img.tower-in {
+    animation: towerIn .3s ease both;
 }
 
 /* مقياس الإكسير — يتقدم لحظة استقرار المتوسط */
@@ -429,7 +479,11 @@ body {
     border-radius: 6px;
     cursor: pointer;
     user-select: none;
-    transition: border-color .15s ease, background .15s ease;
+    transition: border-color .15s ease, background .15s ease, color .15s ease, transform .08s ease;
+}
+
+.options-panel .checkbox-group:active:not(:has(input:disabled)) {
+    transform: scale(.985);
 }
 
 .options-panel .checkbox-group:hover {
@@ -483,7 +537,11 @@ body {
     padding: 7px 12px;
     border-radius: 6px;
     cursor: pointer;
-    transition: border-color .15s ease, color .15s ease, background .15s ease;
+    transition: border-color .15s ease, color .15s ease, background .15s ease, transform .08s ease;
+}
+
+.options-panel .exclude-btn:active {
+    transform: scale(.985);
 }
 
 .options-panel .exclude-btn svg {
@@ -544,7 +602,11 @@ body {
     padding: 0;
     cursor: pointer;
     color: var(--text-muted);
-    transition: border-color .15s ease, color .15s ease;
+    transition: border-color .15s ease, color .15s ease, transform .1s ease;
+}
+
+.round_btn:active:not(:disabled) {
+    transform: scale(.9);
 }
 
 .round_btn svg {
@@ -638,6 +700,7 @@ body {
     cursor: pointer;
     padding: 0 4px;
     line-height: 1;
+    transition: color .12s ease;
 }
 
 #copyPopover .close-btn:hover {
@@ -656,7 +719,16 @@ body {
     padding: 10px 10px;
     border-radius: 4px;
     cursor: pointer;
-    transition: filter .15s ease;
+    transition: filter .15s ease, transform .08s ease;
+}
+
+#copyPopover .btn-open-link:active,
+#copyPopover .btn-copy-link:active {
+    transform: scale(.985);
+}
+
+#copyPopover .btn-copy-link.copy-pop {
+    animation: copyPop .25s ease;
 }
 
 #copyPopover .btn-open-link:hover,
@@ -702,6 +774,7 @@ body {
 
 .error-msg.visible {
     display: block;
+    animation: riseIn .16s ease both;
 }
 
 /* ===== شاشة التحميل ===== */
@@ -732,6 +805,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 14px;
+    animation: riseIn .2s ease both;
 }
 
 #loadingText {
@@ -757,6 +831,7 @@ body {
     height: 100%;
     width: 0%;
     background: var(--accent);
+    transition: width .18s ease;
 }
 
 #skipLoadBtn {
@@ -823,6 +898,7 @@ body {
 
 #excludeModal.visible {
     display: flex;
+    animation: fadeIn .14s ease both;
 }
 
 #excludeModal .modal-content {
@@ -836,6 +912,7 @@ body {
     flex-direction: column;
     overflow: hidden;
     box-shadow: 0 24px 60px rgba(0, 0, 0, .6);
+    animation: riseIn .18s cubic-bezier(.2, .8, .2, 1) both;
 }
 
 #excludeModal .modal-header {
@@ -928,11 +1005,19 @@ body {
     align-items: center;
     text-align: center;
     cursor: pointer;
-    transition: border-color .15s ease;
+    transition: border-color .15s ease, transform .08s ease;
 }
 
 #excludeModal .cards-grid .exclude-card:hover {
     border-color: var(--border-2);
+}
+
+#excludeModal .cards-grid .exclude-card:active {
+    transform: scale(.96);
+}
+
+#excludeModal .cards-grid.grid-in {
+    animation: fadeIn .18s ease both;
 }
 
 #excludeModal .cards-grid .exclude-card .card-img {
@@ -972,6 +1057,7 @@ body {
     display: none;
     align-items: center;
     justify-content: center;
+    animation: fadeIn .15s ease both;
 }
 
 #excludeModal .cards-grid .exclude-card .exclude-overlay .exclude-label {
@@ -1057,6 +1143,7 @@ body {
 
 .site-modal-overlay.visible {
     display: flex;
+    animation: fadeIn .14s ease both;
 }
 
 .site-modal-box {
@@ -1092,6 +1179,7 @@ body {
     cursor: pointer;
     padding: 0 4px;
     line-height: 1;
+    transition: color .12s ease;
 }
 
 .site-modal-close:hover {
@@ -1276,6 +1364,39 @@ body {
     }
     #copyPopover {
         transition: none;
+        transform: none;
+    }
+    .container.ready,
+    #loadingContent,
+    #excludeModal.visible,
+    #excludeModal .modal-content,
+    .site-modal-overlay.visible,
+    .error-msg.visible,
+    .cards-grid.grid-in,
+    .deck-grid.grid-in,
+    .battle_stats .value.settle-in,
+    .battle_stats .tower_item img.tower-in,
+    #copyPopover .btn-copy-link.copy-pop,
+    #excludeModal .cards-grid .exclude-card .exclude-overlay {
+        animation: none;
+    }
+    #loadingBarFill,
+    .round_btn,
+    .options-panel .checkbox-group,
+    .options-panel .exclude-btn,
+    #copyPopover .btn-open-link,
+    #copyPopover .btn-copy-link,
+    #excludeModal .cards-grid .exclude-card {
+        transition: none;
+    }
+    .round_btn:active,
+    .options-panel .checkbox-group:active,
+    .options-panel .exclude-btn:active,
+    .toolbar .btn:active,
+    #copyPopover .btn-open-link:active,
+    #copyPopover .btn-copy-link:active,
+    #excludeModal .cards-grid .exclude-card:active {
+        transform: none;
     }
 }
 
