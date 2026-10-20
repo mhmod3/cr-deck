@@ -5,6 +5,14 @@ window.CR = window.CR || {};
 const CR = window.CR;
 const dom = CR.dom;
 
+// إعادة تشغيل أنيميشن واحد مرة واحدة (removal + reflow + إعادة)
+CR.blinkElement = function blinkElement(el, cls) {
+    if (!el) return;
+    el.classList.remove(cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
+};
+
 CR.showError = function showError(msg) {
     dom.errorMsg.textContent = msg;
     dom.errorMsg.classList.add('visible');
@@ -18,7 +26,7 @@ CR.showPlaceholder = function showPlaceholder() {
     dom.deckContainer.innerHTML = '';
 
     const gridDiv = document.createElement('div');
-    gridDiv.className = 'deck-grid';
+    gridDiv.className = 'deck-grid grid-in';
     for (let i = 0; i < 8; i++) {
         const slot = document.createElement('div');
         slot.className = 'card-slot empty-slot';
@@ -157,6 +165,7 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
             dom.supportStatsImg.src = supportUrl;
             dom.supportStatsImg.alt = supportSlot.cardData.name || 'Tower';
             dom.supportStatsImg.style.visibility = 'visible';
+            CR.blinkElement(dom.supportStatsImg, 'tower-in');
         } else {
             dom.supportStatsImg.removeAttribute('src');
             dom.supportStatsImg.style.visibility = 'hidden';
@@ -181,15 +190,16 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
     const avg = count > 0 ? (totalElixir / count) : 0;
 
     if (skipAnimation) {
-        cardElements.forEach(({ element, finalData }) => {
+        cardElements.forEach(({ element, finalData }, index) => {
             const img = element.querySelector('img');
             img.src = finalData.iconUrl || '';
             img.dataset.cardId = finalData.cardData.id;
-            element.style.animation = 'cardPopIn .2s ease both';
+            element.style.animation = 'cardPopIn .22s cubic-bezier(.2,.8,.2,1) ' + (index * 40) + 'ms both';
         });
         dom.avgElixirDisplay.textContent = avg.toFixed(1);
         dom.avgElixirDisplay.classList.remove('empty-value');
         dom.avgElixirDisplay.closest('.battle_stats').style.setProperty('--avg', avg);
+        CR.blinkElement(dom.avgElixirDisplay, 'settle-in');
         dom.copyBtn.disabled = false;
     } else {
         dom.avgElixirDisplay.textContent = '—';
@@ -210,6 +220,7 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
             dom.avgElixirDisplay.textContent = avg.toFixed(1);
             dom.avgElixirDisplay.classList.remove('empty-value');
             dom.avgElixirDisplay.closest('.battle_stats').style.setProperty('--avg', avg);
+            CR.blinkElement(dom.avgElixirDisplay, 'settle-in');
             dom.copyBtn.disabled = false;
         });
     }
