@@ -63,8 +63,30 @@ dom.excludeModal.addEventListener('click', function(e) {
     }
 });
 
+// البحث في نافذة الاستبعاد — تأخير خفيف حتى لا يُعاد رسم الشبكة مع كل ضغطة
+let searchTimer = null;
 dom.excludeSearchInput.addEventListener('input', function() {
-    CR.renderExcludeModal();
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => CR.renderExcludeModal(), 150);
+});
+
+// إغلاق النوافذ بمفتاح Escape — الأعلى طابقاً أولًا
+document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Escape') return;
+    if (dom.siteHelpModal.classList.contains('visible')) {
+        CR.closeSiteHelp();
+    } else if (dom.siteConfirmModal.classList.contains('visible')) {
+        CR.closeSiteConfirm(false);
+    } else if (dom.excludeModal.classList.contains('visible')) {
+        CR.closeExcludeModalFunc();
+    } else if (dom.copyPopover.classList.contains('visible')) {
+        CR.closePopover();
+    }
+});
+
+// صورة البرج الداعم في شريط الإحصائيات: إخفاؤها إن فشلت
+dom.supportStatsImg.addEventListener('error', function() {
+    this.style.visibility = 'hidden';
 });
 
 // حفظ الخيارات عند تغييرها
@@ -77,28 +99,42 @@ dom.excludeSearchInput.addEventListener('input', function() {
 
 // ===== إشعارات الموقع المخصصة (توضيح وتأكيد) =====
 let confirmCallback = null;
+let lastFocusable = null;
+
+function restoreFocus() {
+    if (lastFocusable && document.contains(lastFocusable) && typeof lastFocusable.focus === 'function') {
+        lastFocusable.focus();
+    }
+    lastFocusable = null;
+}
 
 CR.openSiteHelp = function openSiteHelp(text) {
     if (!dom.siteHelpModal) return;
+    lastFocusable = document.activeElement;
     dom.siteHelpText.textContent = text;
     dom.siteHelpModal.classList.add('visible');
+    dom.closeSiteHelpBtn.focus();
 };
 
 CR.closeSiteHelp = function closeSiteHelp() {
     if (!dom.siteHelpModal) return;
     dom.siteHelpModal.classList.remove('visible');
+    restoreFocus();
 };
 
 CR.openSiteConfirm = function openSiteConfirm(msg, onConfirm) {
     if (!dom.siteConfirmModal) return;
+    lastFocusable = document.activeElement;
     confirmCallback = onConfirm;
     dom.siteConfirmText.textContent = msg;
     dom.siteConfirmModal.classList.add('visible');
+    dom.siteConfirmNoBtn.focus();
 };
 
 CR.closeSiteConfirm = function closeSiteConfirm(accepted) {
     if (!dom.siteConfirmModal) return;
     dom.siteConfirmModal.classList.remove('visible');
+    restoreFocus();
     if (accepted && typeof confirmCallback === 'function') {
         confirmCallback();
     }
@@ -107,11 +143,20 @@ CR.closeSiteConfirm = function closeSiteConfirm(accepted) {
 
 // أحداث أيقونات التوضيح
 document.querySelectorAll('.help-icon').forEach(icon => {
+    const helpText = icon.getAttribute('data-help') || icon.getAttribute('title') || '';
+    icon.setAttribute('aria-label', helpText);
     icon.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        const helpText = this.getAttribute('data-help') || this.getAttribute('title') || '';
         CR.openSiteHelp(helpText);
+    });
+    // وصولية لوحة المفاتيح
+    icon.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            CR.openSiteHelp(helpText);
+        }
     });
 });
 
