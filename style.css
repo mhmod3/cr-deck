@@ -195,6 +195,10 @@ body {
     z-index: 50;
 }
 
+.deck-copy-group #copyBtn {
+    transform: translateX(-3px);
+}
+
 .deck-panel-title {
     display: flex;
     align-items: center;
