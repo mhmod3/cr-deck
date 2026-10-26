@@ -80,9 +80,9 @@ CR.getRarityClass = function getRarityClass(rarity) {
 };
 
 // بطاقة = صورة فقط (كما في example-frontend)
-CR.createCardElement = function createCardElement(slot) {
+CR.createCardElement = function createCardElement(slot, isPending = false) {
     const div = document.createElement('div');
-    div.className = 'card-slot ' + CR.getRarityClass(slot.cardData.rarity);
+    div.className = 'card-slot ' + CR.getRarityClass(slot.cardData.rarity) + (isPending ? ' pending' : '');
 
     const artWrap = document.createElement('div');
     artWrap.className = 'card-art';
@@ -94,18 +94,20 @@ CR.createCardElement = function createCardElement(slot) {
 
     const img = document.createElement('img');
     img.loading = 'eager';
-    img.alt = slot.cardData.name || 'بطاقة';
+    img.alt = '';
     img.dataset.cardId = slot.cardData.id;
 
     img.onerror = function() {
         const id = parseInt(this.dataset.cardId);
         if (id === CR.SPECIAL_CARD_ID) {
             if (this.src === CR.FALLBACK_IMAGE_URL) {
+                this.classList.remove('is-loaded');
                 this.style.display = 'none';
                 return;
             }
             this.src = CR.FALLBACK_IMAGE_URL;
         } else {
+            this.classList.remove('is-loaded');
             this.style.display = 'none';
         }
     };
@@ -120,6 +122,7 @@ CR.animateCardSlot = function animateCardSlot(cardElement, finalSlotData) {
     return new Promise((resolve) => {
         const img = cardElement.querySelector('img');
 
+        cardElement.classList.remove('pending');
         cardElement.classList.add('animating');
 
         let counter = 0;
@@ -135,13 +138,31 @@ CR.animateCardSlot = function animateCardSlot(cardElement, finalSlotData) {
                 img.src = finalSlotData.iconUrl || '';
                 img.dataset.cardId = finalSlotData.cardData.id;
 
-                cardElement.classList.remove('animating');
-                cardElement.classList.add('reveal-anim');
+                const revealCard = () => {
+                    img.alt = finalSlotData.cardData.name || 'بطاقة';
+                    img.classList.add('is-loaded');
+                    cardElement.classList.remove('animating', 'pending');
+                    cardElement.classList.add('reveal-anim');
 
-                setTimeout(() => {
-                    cardElement.classList.remove('reveal-anim');
-                    resolve();
-                }, 600);
+                    setTimeout(() => {
+                        cardElement.classList.remove('reveal-anim');
+                        resolve();
+                    }, 600);
+                };
+
+                if (img.complete && img.naturalWidth > 0) {
+                    revealCard();
+                } else {
+                    let done = false;
+                    const onFinish = () => {
+                        if (done) return;
+                        done = true;
+                        revealCard();
+                    };
+                    img.addEventListener('load', onFinish, { once: true });
+                    img.addEventListener('error', onFinish, { once: true });
+                    setTimeout(onFinish, 300);
+                }
             }
         }, stepDuration);
     });
@@ -160,7 +181,7 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
     gridDiv.className = 'deck-grid';
 
     deckSlots.slice(0, 8).forEach((slot) => {
-        const div = CR.createCardElement(slot);
+        const div = CR.createCardElement(slot, !skipAnimation);
         gridDiv.appendChild(div);
         ids.push(slot.cardData.id);
         cardElements.push({ element: div, finalData: slot });
@@ -209,6 +230,18 @@ CR.renderDeck = function renderDeck(deckSlots, skipAnimation = false) {
             const img = element.querySelector('img');
             img.src = finalData.iconUrl || '';
             img.dataset.cardId = finalData.cardData.id;
+            img.alt = finalData.cardData.name || 'بطاقة';
+
+            const markLoaded = () => img.classList.add('is-loaded');
+            if (img.complete && img.naturalWidth > 0) {
+                markLoaded();
+            } else {
+                img.addEventListener('load', markLoaded, { once: true });
+                img.addEventListener('error', markLoaded, { once: true });
+                setTimeout(markLoaded, 400);
+            }
+
+            element.classList.remove('pending');
             element.querySelector('.card-art').style.animation = 'cardLand .3s cubic-bezier(.2,.8,.2,1) ' + (index * 40) + 'ms both';
         });
         dom.avgElixirDisplay.textContent = avg.toFixed(1);
