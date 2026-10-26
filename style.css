@@ -196,7 +196,7 @@ body {
 }
 
 .deck-copy-group #copyBtn {
-    transform: translateX(-3px);
+    transform: translateX(-9px);
 }
 
 .deck-panel-title {
