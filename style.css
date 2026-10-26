@@ -282,6 +282,19 @@ body {
     object-fit: contain;
     background: transparent;
     padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .18s cubic-bezier(.2, .8, .2, 1);
+}
+
+.card-slot img.is-loaded {
+    opacity: 1;
+    visibility: visible;
+}
+
+.card-slot img:not([src]),
+.card-slot img[src=""] {
+    display: none !important;
 }
 
 .card-art {
@@ -307,13 +320,20 @@ body {
     color: var(--text-faint);
 }
 
-/* أثناء الوامض: السحّابة محايدة — لون الندرة لا يُختم إلا لحظة الكشف */
+/* أثناء الانتظار والوامض: السحّابة محايدة — لون الندرة لا يُختم إلا لحظة الكشف */
+.card-slot.pending,
 .card-slot.animating {
     --sleeve: var(--border);
 }
 
+.card-slot.pending img,
 .card-slot.animating img {
-    display: none;
+    display: none !important;
+}
+
+.card-slot.pending .animating-placeholder {
+    display: flex;
+    opacity: .35;
 }
 
 .card-slot.animating .animating-placeholder {
